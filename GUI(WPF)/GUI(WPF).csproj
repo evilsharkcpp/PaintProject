@@ -1,11 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <RootNamespace>GUI_WPF_</RootNamespace>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
-
-</Project>
+   <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <RootNamespace>GUI_WPF</RootNamespace>
+      <Nullable>enable</Nullable>
+      <UseWPF>true</UseWPF>
+   </PropertyGroup>
+   <ItemGroup>
+      <Content Include="Assets\**">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+   </ItemGroup>
+   <ItemGroup>
+     <None Remove="Assets\Pictures\Icon1.ico" />
+   </ItemGroup>
+   </Project>
