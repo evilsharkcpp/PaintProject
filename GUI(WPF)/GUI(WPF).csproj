@@ -7,12 +7,8 @@
       <Nullable>enable</Nullable>
       <UseWPF>true</UseWPF>
    </PropertyGroup>
+
    <ItemGroup>
-      <Content Include="Assets\**">
-         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-   </ItemGroup>
-   <ItemGroup>
-     <None Remove="Assets\Pictures\Icon1.ico" />
+     <ProjectReference Include="..\Assets\Assets.csproj" />
    </ItemGroup>
    </Project>

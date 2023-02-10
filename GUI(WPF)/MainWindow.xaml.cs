@@ -24,7 +24,6 @@ namespace GUI_WPF
         public MainWindow()
         {
             InitializeComponent();
-            Assembly.GetExecutingAssembly();
         }
     }
 }
