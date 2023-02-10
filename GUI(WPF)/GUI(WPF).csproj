@@ -9,6 +9,10 @@
    </PropertyGroup>
 
    <ItemGroup>
-     <ProjectReference Include="..\Assets\Assets.csproj" />
+     <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
+     <ProjectReference Include="..\Geometry\Geometry.csproj" />
+     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+     <ProjectReference Include="..\IO\IO.csproj" />
+     <ProjectReference Include="..\Logic\Logic.csproj" />
    </ItemGroup>
    </Project>
