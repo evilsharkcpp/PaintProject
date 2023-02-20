@@ -9,6 +9,11 @@
    </PropertyGroup>
 
    <ItemGroup>
+     <PackageReference Include="ReactiveUI" Version="18.4.20" />
+     <PackageReference Include="ReactiveUI.WPF" Version="18.4.20" />
+   </ItemGroup>
+
+   <ItemGroup>
      <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
      <ProjectReference Include="..\Geometry\Geometry.csproj" />
      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />

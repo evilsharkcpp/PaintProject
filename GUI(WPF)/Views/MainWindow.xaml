@@ -4,7 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI_WPF"
+        xmlns:vms="clr-namespace:GUI_WPF.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-   <Grid/>
+   <Window.DataContext>
+      <vms:MainVM/>
+   </Window.DataContext>
+   <Grid>
+     
+   </Grid>
 </Window>

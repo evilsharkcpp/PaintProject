@@ -1,15 +1,17 @@
 ﻿using Interfaces;
-using DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Geometry.Figures
 {
-    internal class Line : IFigure
+    public class Line : IFigure
     {
+        public IEnumerable<(string, object)> Parameters => throw new NotImplementedException();
+
+        public IFigure Clone()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Draw(IGraphics graphics) => graphics.DrawLine();
 
         public bool HasIntersection(IFigure figure)
@@ -22,7 +24,7 @@ namespace Geometry.Figures
             throw new NotImplementedException();
         }
 
-        public bool IsInside(Vector2D p, double eps)
+        public bool IsInside(Vector2 p, double eps)
         {
             throw new NotImplementedException();
         }
@@ -42,12 +44,22 @@ namespace Geometry.Figures
             throw new NotImplementedException();
         }
 
-        public void Translate(Vector2D to)
+        public void Translate(Vector2 to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TrySetParameter(string name, object value)
         {
             throw new NotImplementedException();
         }
 
         public IFigure Union(IFigure second)
+        {
+            throw new NotImplementedException();
+        }
+
+        object ICloneable.Clone()
         {
             throw new NotImplementedException();
         }

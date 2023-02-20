@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI_WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,7 @@ namespace GUI_WPF
         public MainWindow()
         {
             InitializeComponent();
+            //DataContext = new MainVM();
         }
     }
 }
