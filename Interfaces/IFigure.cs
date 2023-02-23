@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    public interface IFigure:ICloneable
+    public interface IFigure:ICloneable,INotifyPropertyChanged
     {
         bool HasIntersection(IFigure figure);
         void Rotate(float angle);
