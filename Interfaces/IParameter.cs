@@ -10,7 +10,6 @@ namespace Interfaces
     public interface IParameter<T>:INotifyPropertyChanged
     {
         string Name { get; }
-        T Value { get; }
-        bool TrySetParameter(string name, T value);
+        T Value { get; set; }
     }
 }
