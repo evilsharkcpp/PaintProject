@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    public interface IParameter
+    public interface IParameter<T>
     {
         string Name { get; }
-        object Value { get; }
-        bool TrySetParameter(string name, object value);
+        T Value { get; }
+        bool TrySetParameter(string name, T value);
     }
 }

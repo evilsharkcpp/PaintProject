@@ -5,7 +5,7 @@ namespace Geometry.Figures
 {
     public class Line : IFigure
     {
-        public IEnumerable<(string, object)> Parameters => throw new NotImplementedException();
+        IEnumerable<IParameter> IFigure.Parameters { get; }
 
         public IFigure Clone()
         {
