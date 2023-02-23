@@ -5,14 +5,19 @@ namespace Geometry.Figures
 {
     public class Line : IFigure
     {
-        IEnumerable<IParameter> IFigure.Parameters { get; }
+        public IEnumerable<IParameter<float>> FloatParameters => throw new NotImplementedException();
+
+        public IEnumerable<IParameter<Vector2>> Vector2Parameters => throw new NotImplementedException();
 
         public IFigure Clone()
         {
             throw new NotImplementedException();
         }
 
-        public void Draw(IGraphics graphics) => graphics.DrawLine();
+        public void Draw(IGraphics graphics)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool HasIntersection(IFigure figure)
         {
@@ -24,17 +29,17 @@ namespace Geometry.Figures
             throw new NotImplementedException();
         }
 
-        public bool IsInside(Vector2 p, double eps)
+        public bool IsInside(Vector2 p, float eps)
         {
             throw new NotImplementedException();
         }
 
-        public void Rotate(double angle)
+        public void Rotate(float angle)
         {
             throw new NotImplementedException();
         }
 
-        public void Scale(double x, double y)
+        public void Scale(float x, float y)
         {
             throw new NotImplementedException();
         }
@@ -45,11 +50,6 @@ namespace Geometry.Figures
         }
 
         public void Translate(Vector2 to)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TrySetParameter(string name, object value)
         {
             throw new NotImplementedException();
         }
