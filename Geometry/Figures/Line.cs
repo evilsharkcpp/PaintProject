@@ -2,9 +2,11 @@
 using Geometry.Transforms;
 using Interfaces;
 using System.Numerics;
+using System.Runtime.Serialization;
 
 namespace Geometry.Figures
 {
+    [DataContract]
     public class Line : IFigure
     {
         protected Point2d _point1;
@@ -17,6 +19,7 @@ namespace Geometry.Figures
             _center.Y = (_point1.Y + _point2.Y) / 2.0;
         }
 
+        [DataMember]
         public Point2d Point1
         {
             get => _point1;
@@ -27,6 +30,7 @@ namespace Geometry.Figures
             }
         }
 
+        [DataMember]
         public Point2d Point2
         {
             get => _point2;
@@ -65,7 +69,7 @@ namespace Geometry.Figures
 
         public void Draw(IGraphics graphics)
         {
-            graphics.DrawLine(_point1, _point2);
+            graphics.DrawLine(_point1, _point2, true, false);
         }
 
 
