@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using DataStructures.Geometry;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    public interface IFigure:ICloneable,INotifyPropertyChanged
+    public interface IFigure : ICloneable
     {
         bool HasIntersection(IFigure figure);
         void Rotate(float angle);
@@ -20,7 +15,9 @@ namespace Interfaces
         IFigure Subtruct(IFigure second);
         void Draw(IGraphics graphics);
         bool IsInside(Vector2 p, float eps);
-        IEnumerable<IParameter<float>> FloatParameters { get; }
-        IEnumerable<IParameter<Vector2>> Vector2Parameters { get; }
+        IEnumerable<IParameter<double>> DoubleParameters { get; }
+        IEnumerable<IParameter<Point2d>> PointParameters { get; }
+        IEnumerable<IParameter<Vector2d>> VectorParameters { get; }
+        Point2d Center { get; }
     }
 }
