@@ -1,29 +1,25 @@
-﻿using DynamicData.Binding;
-using Interfaces;
-using System.ComponentModel;
+﻿using Interfaces;
 
 namespace Geometry
 {
     public class Parameter<T> : IParameter<T>
     {
-        private T _value;
+        private readonly Func<T> _getter;
+        private readonly Action<T> _setter;
 
         public T Value
         {
-            get => _value;
-            set
-            {
-                _value = value;
-            }
+            get => _getter();
+            set => _setter(value);
         }
 
         public string Name { get; protected init; }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public Parameter(string name)
+        public Parameter(string name, Func<T> getter, Action<T> setter)
         {
             Name = name;
+            _getter = getter;
+            _setter = setter;
         }
     }
 }
