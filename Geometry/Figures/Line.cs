@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
 using ReactiveUI;
@@ -9,16 +10,14 @@ using System.Runtime.Serialization;
 namespace Geometry.Figures
 {
     [DataContract]
-    public class Line : ReactiveObject, IFigure
+    public class Line : ParameterizedObject, IFigure
     {
-        protected IParameter<Point2d> _point1Parameter;
-        protected IParameter<Point2d> _point2Parameter;
-
         protected Point2d _point1;
         protected Point2d _point2;
         protected ObservableAsPropertyHelper<Point2d> _center;
 
         [DataMember]
+        [Parameter("Point1")]
         public Point2d Point1
         {
             get => _point1;
@@ -29,6 +28,7 @@ namespace Geometry.Figures
         }
 
         [DataMember]
+        [Parameter("Point2")]
         public Point2d Point2
         {
             get => _point2;
@@ -40,10 +40,6 @@ namespace Geometry.Figures
 
         public Point2d Center => _center.Value;
 
-        public IEnumerable<IParameter<double>> DoubleParameters { get; protected set; }
-        public IEnumerable<IParameter<Point2d>> PointParameters { get; protected set; }
-        public IEnumerable<IParameter<Vector2d>> VectorParameters { get; protected set; }
-
         public Line(Point2d point1 = default, Point2d point2 = default)
         {
             _point1 = point1;
@@ -52,13 +48,6 @@ namespace Geometry.Figures
             _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
                           .Select(t => new Point2d((_point1.X + _point2.X) / 2.0, (_point1.Y + _point2.Y) / 2.0))
                           .ToProperty(this, figure => figure.Center);
-
-            _point1Parameter = new Parameter<Point2d>("Point1", () => Point1, p => Point1 = p);
-            _point2Parameter = new Parameter<Point2d>("Point2", () => Point2, p => Point2 = p);
-
-            DoubleParameters = new List<IParameter<double>>();
-            PointParameters = new List<IParameter<Point2d>>() { _point1Parameter, _point2Parameter };
-            VectorParameters = new List<IParameter<Vector2d>>();
         }
 
         public Line(Line line)
@@ -69,13 +58,6 @@ namespace Geometry.Figures
             _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
                           .Select(t => new Point2d((_point1.X + _point2.X) / 2.0, (_point1.Y + _point2.Y) / 2.0))
                           .ToProperty(this, figure => figure.Center);
-
-            _point1Parameter = new Parameter<Point2d>("Point1", () => Point1, p => Point1 = p);
-            _point2Parameter = new Parameter<Point2d>("Point2", () => Point2, p => Point2 = p);
-
-            DoubleParameters = new List<IParameter<double>>();
-            PointParameters = new List<IParameter<Point2d>>() { _point1Parameter, _point2Parameter };
-            VectorParameters = new List<IParameter<Vector2d>>();
         }
 
         public void Draw(IGraphics graphics)
