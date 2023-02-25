@@ -12,9 +12,6 @@ namespace Geometry.Figures
     [DataContract]
     public class Line : ParameterizedObject, IFigure
     {
-        protected IParameter<Point2d> _point1Parameter;
-        protected IParameter<Point2d> _point2Parameter;
-
         protected Point2d _point1;
         protected Point2d _point2;
         protected ObservableAsPropertyHelper<Point2d> _center;
