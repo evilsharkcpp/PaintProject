@@ -47,7 +47,7 @@ namespace Geometry.Figures
 
         public Line() : this(new Point2d(), new Point2d()) { }
 
-        public Line(Point2d point1, Point2d point2)
+        public Line(Point2d point1 = default, Point2d point2 = default)
         {
             _point1 = point1;
             _point2 = point2;
