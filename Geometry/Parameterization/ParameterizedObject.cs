@@ -106,22 +106,22 @@ namespace Geometry.Parameterization
             foreach (ParameterInfo parameterInfo in parameterInfos[PropertyType.Double])
             {
                 doubleParameters.Add(new Parameter<double>(parameterInfo.Name,
-                                                           parameterInfo.GetMethod?.CreateDelegate<Getter<double>>(),
-                                                           parameterInfo.SetMethod?.CreateDelegate<Setter<double>>()));
+                                                           parameterInfo.GetMethod?.CreateDelegate<Getter<double>>(this),
+                                                           parameterInfo.SetMethod?.CreateDelegate<Setter<double>>(this)));
             }
 
             foreach (ParameterInfo parameterInfo in parameterInfos[PropertyType.Point2d])
             {
                 point2dParameters.Add(new Parameter<Point2d>(parameterInfo.Name,
-                                                             parameterInfo.GetMethod?.CreateDelegate<Getter<Point2d>>(),
-                                                             parameterInfo.SetMethod?.CreateDelegate<Setter<Point2d>>()));
+                                                             parameterInfo.GetMethod?.CreateDelegate<Getter<Point2d>>(this),
+                                                             parameterInfo.SetMethod?.CreateDelegate<Setter<Point2d>>(this)));
             }
 
             foreach (ParameterInfo parameterInfo in parameterInfos[PropertyType.Vector2d])
             {
                 vector2dParameters.Add(new Parameter<Vector2d>(parameterInfo.Name,
-                                                               parameterInfo.GetMethod?.CreateDelegate<Getter<Vector2d>>(),
-                                                               parameterInfo.SetMethod?.CreateDelegate<Setter<Vector2d>>()));
+                                                               parameterInfo.GetMethod?.CreateDelegate<Getter<Vector2d>>(this),
+                                                               parameterInfo.SetMethod?.CreateDelegate<Setter<Vector2d>>(this)));
             }
         }
     }
