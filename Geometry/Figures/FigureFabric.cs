@@ -17,12 +17,12 @@ namespace Geometry.Figures
             {
                 if (typeof(IFigure).IsAssignableFrom(type))
                 {
-                    IEnumerable<Attribute> attributes = type.GetCustomAttributes();
-                    foreach (Attribute attribute in attributes)
+                IEnumerable<Attribute> attributes = type.GetCustomAttributes();
+                foreach (Attribute attribute in attributes)
+                {
+                    if (attribute is FigureAttribute figureAttribute)
                     {
-                        if (attribute is FigureAttribute figureAttribute)
-                        {
-                            AvailableFigures.Add(figureAttribute.Name, type);
+                        AvailableFigures.Add(figureAttribute.Name, type);
                             break;
                         }
                     }
