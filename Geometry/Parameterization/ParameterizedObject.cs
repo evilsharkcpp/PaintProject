@@ -77,6 +77,8 @@ namespace Geometry.Parameterization
                                                                              property.SetMethod));
                                     break;
                             }
+
+                            continue;
                         }
                     }
                 }
