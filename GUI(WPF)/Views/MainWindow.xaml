@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI_WPF"
-        xmlns:vms="clr-namespace:GUI_WPF.ViewModels"
+        xmlns:vms="clr-namespace:Logic.ViewModels;assembly=Logic"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
    <Window.DataContext>

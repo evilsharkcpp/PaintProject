@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace Geometry.Figures
@@ -8,6 +9,8 @@ namespace Geometry.Figures
         public IEnumerable<IParameter<float>> FloatParameters => throw new NotImplementedException();
 
         public IEnumerable<IParameter<Vector2>> Vector2Parameters => throw new NotImplementedException();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public IFigure Clone()
         {

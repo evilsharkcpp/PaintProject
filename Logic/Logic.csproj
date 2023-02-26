@@ -15,4 +15,13 @@
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
    </ItemGroup>
+
+   <ItemGroup>
+     <PackageReference Include="ReactiveUI" Version="18.4.20" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\Geometry\Geometry.csproj" />
+     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+   </ItemGroup>
 </Project>
