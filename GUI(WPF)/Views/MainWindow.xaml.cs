@@ -1,4 +1,4 @@
-﻿using GUI_WPF.ViewModels;
+﻿using Logic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +22,13 @@ namespace GUI_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainVM vm = new MainVM();
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = new MainVM();
+            DataContext = vm;
+            vm.CreateFigure.Subscribe();
         }
+        
     }
 }

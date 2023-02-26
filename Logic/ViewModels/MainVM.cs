@@ -1,18 +1,11 @@
-﻿using Interfaces;
+﻿using Geometry.Figures;
+using Interfaces;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
-using Geometry.Figures;
-using System.Collections.ObjectModel;
-using DynamicData.Kernel;
 
-namespace GUI_WPF.ViewModels
+namespace Logic.ViewModels
 {
-    class MainVM : ILogic
+    public class MainVM : ILogic
     {
         public string Temp { get; set; } = "aaaa";
         public ReactiveCommand<string, IFigure> CreateFigure { get; set; }
@@ -30,8 +23,12 @@ namespace GUI_WPF.ViewModels
         {
             //Temp = "Hellop";
             //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
-            CreateFigure = ReactiveCommand.Create<string, IFigure>(name => {  return new Line(); });
+            CreateFigure = ReactiveCommand.Create<string, IFigure>(OnCreate);
             CreateFigure.Subscribe(value => { Temp = "a"; });
+        }
+        IFigure OnCreate(string name)
+        {
+            return new Line();
         }
     }
 }
