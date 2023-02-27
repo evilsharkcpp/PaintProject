@@ -28,10 +28,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}"/>
+                <Button Style="{StaticResource MyButtonStyle}" Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -43,7 +43,7 @@
             <Grid Background="#FF505050">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -55,14 +55,26 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Прямоугольник">
+                    <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Выделить">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/white_cursor.png" />
                     </Button>
-                    <Button Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Эллипс">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/add_rectangle.png"  />
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить линию">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_line.png"/>
                     </Button>
-                    <Button Grid.Row="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Эллипс">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/add_circle.png" />
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить прямоугольник">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_rectangle.png"  />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="3" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить эллипс">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_circle.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="4" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить треугольник">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_triangle.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="5" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить многоугольник">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_polygon.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="6" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сгруппировать">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/group.png" />
                     </Button>
                     
                 </Grid>

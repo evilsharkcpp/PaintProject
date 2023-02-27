@@ -10,8 +10,16 @@
 
    <ItemGroup>
      <None Remove="Views\Assets\add_circle.png" />
+     <None Remove="Views\Assets\add_line.png" />
+     <None Remove="Views\Assets\add_polygon.png" />
      <None Remove="Views\Assets\add_rectangle.png" />
+     <None Remove="Views\Assets\add_triangle.png" />
+     <None Remove="Views\Assets\group.png" />
      <None Remove="Views\Assets\white_cursor.png" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Resource Include="Views\Assets\group.png" />
    </ItemGroup>
 
    <ItemGroup>
@@ -29,7 +37,10 @@
 
    <ItemGroup>
      <Resource Include="Views\Assets\add_circle.png" />
+     <Resource Include="Views\Assets\add_polygon.png" />
      <Resource Include="Views\Assets\add_rectangle.png" />
+     <Resource Include="Views\Assets\add_triangle.png" />
+     <Resource Include="Views\Assets\add_line.png" />
      <Resource Include="Views\Assets\white_cursor.png" />
    </ItemGroup>
    </Project>
