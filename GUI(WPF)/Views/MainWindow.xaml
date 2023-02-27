@@ -3,14 +3,84 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GUI_WPF"
         xmlns:vms="clr-namespace:Logic.ViewModels;assembly=Logic"
+        d:DesignWidth="1200"
+        d:DesignHeight="800"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-   <Window.DataContext>
-      <vms:MainVM/>
-   </Window.DataContext>
-   <Grid>
-     
-   </Grid>
+        Title="MainWindow" Height="1080" Width="1920">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="#FF505050">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
+                <Button Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="30*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Background="#FF505050">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Прямоугольник">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/white_cursor.png" />
+                    </Button>
+                    <Button Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Эллипс">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/add_rectangle.png"  />
+                    </Button>
+                    <Button Grid.Row="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Эллипс">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/add_circle.png" />
+                    </Button>
+                    
+                </Grid>
+            </Grid>
+            <Canvas Grid.Column="1"/>
+            <Grid Grid.Column="2" Background="#FF505050">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Background="#FF505050">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+        </Grid>
+    </Grid>
 </Window>
