@@ -9,6 +9,12 @@
    </PropertyGroup>
 
    <ItemGroup>
+     <None Remove="Views\Assets\add_circle.png" />
+     <None Remove="Views\Assets\add_rectangle.png" />
+     <None Remove="Views\Assets\white_cursor.png" />
+   </ItemGroup>
+
+   <ItemGroup>
      <PackageReference Include="ReactiveUI" Version="18.4.20" />
      <PackageReference Include="ReactiveUI.WPF" Version="18.4.20" />
    </ItemGroup>
@@ -19,5 +25,11 @@
      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
      <ProjectReference Include="..\IO\IO.csproj" />
      <ProjectReference Include="..\Logic\Logic.csproj" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Resource Include="Views\Assets\add_circle.png" />
+     <Resource Include="Views\Assets\add_rectangle.png" />
+     <Resource Include="Views\Assets\white_cursor.png" />
    </ItemGroup>
    </Project>
