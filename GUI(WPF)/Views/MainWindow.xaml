@@ -17,11 +17,12 @@
         </Grid.RowDefinitions>
         <Grid Background="#FF505050">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33*"/>
-                <ColumnDefinition Width="335*"/>
-                <ColumnDefinition Width="832*"/>
+                <ColumnDefinition Width="27*"/>
+                <ColumnDefinition Width="27*"/>
+                <ColumnDefinition Width="571*"/>
+                <ColumnDefinition Width="1295*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="53*"/>
                     <ColumnDefinition Width="53*"/>
@@ -33,6 +34,12 @@
                 <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="60"/>
                 <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="2,0,0,0" Width="2"/>
             </Grid>
+            <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отменить">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/cancel.png" />
+            </Button>
+            <Button Grid.Column="1" Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Вернуть">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/return.png" />
+            </Button>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -123,10 +130,10 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
+                        <Button Style="{StaticResource MyButtonStyle}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/fill.png"   />
                         </Button>
-                        <Button Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
+                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/stroke.png"  />
                         </Button>
 
@@ -140,16 +147,16 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}">
+                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/x.png"  />
                         </Button>
-                        <Button Grid.Column="2"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/full.png" />
                         </Button>
-                        <Button Grid.Column="3"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/linear_gradient.png"   />
                         </Button>
-                        <Button Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/radial_gradient.png" />
                         </Button>
                     </Grid>
