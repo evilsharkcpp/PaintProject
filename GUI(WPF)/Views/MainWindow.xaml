@@ -6,10 +6,9 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GUI_WPF"
         xmlns:vms="clr-namespace:Logic.ViewModels;assembly=Logic"
-        d:DesignWidth="1200"
-        d:DesignHeight="800"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -18,20 +17,21 @@
         </Grid.RowDefinitions>
         <Grid Background="#FF505050">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="335*"/>
+                <ColumnDefinition Width="832*"/>
             </Grid.ColumnDefinitions>
-            <Grid>
+            <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="65*"/>
+                    <ColumnDefinition Width="164*"/>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource MyButtonStyle}" Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}"/>
-                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}"/>
+                <Button Style="{StaticResource MyButtonStyle}" Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="60"/>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Content="" Background="#FF505050" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="2,0,0,0" Width="2"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -43,10 +43,16 @@
             <Grid Background="#FF505050">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
-                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -73,10 +79,27 @@
                     <Button Style="{StaticResource MyButtonStyle}" Grid.Row="5" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить многоугольник">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_polygon.png" />
                     </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="6" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сгруппировать">
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="6" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить текст">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/A.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="7" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сгруппировать">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/group.png" />
                     </Button>
-                    
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="8" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Разгруппировать">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/ungroup.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="9" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сумма">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/sum.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="10" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Разность">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/diff.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="11" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пересечение">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/intersect.png" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="12" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Исключающее ИЛИ">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/xor.png" />
+                    </Button>
                 </Grid>
             </Grid>
             <Canvas Grid.Column="1"/>
@@ -89,10 +112,31 @@
         </Grid>
         <Grid Grid.Row="2" Background="#FF505050">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="34*"/>
+                <ColumnDefinition Width="125*"/>
+                <ColumnDefinition Width="949*"/>
+                <ColumnDefinition Width="92*"/>
             </Grid.ColumnDefinitions>
-
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="0" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Поворот влево на 90°">
+                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="4" Source="/Views/Assets/left_rotate.png" />
+                </Button>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Поворот вправо на 90°">
+                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="4" Source="/Views/Assets/right_rotate.png" />
+                </Button>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отразить по горизонтали">
+                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="3" Source="/Views/Assets/flip_horizontal.png" />
+                </Button>
+                <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отразить по вертикали">
+                    <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="3" Source="/Views/Assets/flip_vertical.png" />
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
