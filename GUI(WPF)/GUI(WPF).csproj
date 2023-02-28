@@ -9,16 +9,30 @@
    </PropertyGroup>
 
    <ItemGroup>
+     <None Remove="Views\Assets\A.png" />
      <None Remove="Views\Assets\add_circle.png" />
      <None Remove="Views\Assets\add_line.png" />
      <None Remove="Views\Assets\add_polygon.png" />
      <None Remove="Views\Assets\add_rectangle.png" />
      <None Remove="Views\Assets\add_triangle.png" />
+     <None Remove="Views\Assets\diff.png" />
+     <None Remove="Views\Assets\flip_horizontal.png" />
+     <None Remove="Views\Assets\flip_vertical.png" />
      <None Remove="Views\Assets\group.png" />
+     <None Remove="Views\Assets\intersect.png" />
+     <None Remove="Views\Assets\left_rotate.png" />
+     <None Remove="Views\Assets\right_rotate.png" />
+     <None Remove="Views\Assets\sum.png" />
+     <None Remove="Views\Assets\ungroup.png" />
      <None Remove="Views\Assets\white_cursor.png" />
+     <None Remove="Views\Assets\xor.png" />
    </ItemGroup>
 
    <ItemGroup>
+     <Resource Include="Views\Assets\A.png" />
+     <Resource Include="Views\Assets\diff.png" />
+     <Resource Include="Views\Assets\flip_horizontal.png" />
+     <Resource Include="Views\Assets\flip_vertical.png" />
      <Resource Include="Views\Assets\group.png" />
    </ItemGroup>
 
@@ -41,6 +55,12 @@
      <Resource Include="Views\Assets\add_rectangle.png" />
      <Resource Include="Views\Assets\add_triangle.png" />
      <Resource Include="Views\Assets\add_line.png" />
+     <Resource Include="Views\Assets\intersect.png" />
+     <Resource Include="Views\Assets\left_rotate.png" />
+     <Resource Include="Views\Assets\right_rotate.png" />
+     <Resource Include="Views\Assets\sum.png" />
+     <Resource Include="Views\Assets\ungroup.png" />
      <Resource Include="Views\Assets\white_cursor.png" />
+     <Resource Include="Views\Assets\xor.png" />
    </ItemGroup>
    </Project>
