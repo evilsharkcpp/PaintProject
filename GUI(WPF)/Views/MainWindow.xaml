@@ -42,11 +42,12 @@
             </Grid.ColumnDefinitions>
             <Grid Background="#FF505050">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="632*"/>
+                    <RowDefinition Height="375*"/>
                 </Grid.RowDefinitions>
-                <Grid>
+                <Grid Margin="0,0,0,3">
                     <Grid.RowDefinitions>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -100,22 +101,67 @@
                     <Button Style="{StaticResource MyButtonStyle}" Grid.Row="12" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Исключающее ИЛИ">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/xor.png" />
                     </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="13" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/pipette.png"  />
+                    </Button>
                 </Grid>
             </Grid>
             <Canvas Grid.Column="1"/>
             <Grid Grid.Column="2" Background="#FF505050">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="549*"/>
+                    <RowDefinition Height="458*"/>
                 </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="24*"/>
+                        <RowDefinition Height="684*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/fill.png"   />
+                        </Button>
+                        <Button Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/stroke.png"  />
+                        </Button>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/x.png"  />
+                        </Button>
+                        <Button Grid.Column="2"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/full.png" />
+                        </Button>
+                        <Button Grid.Column="3"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/linear_gradient.png"   />
+                        </Button>
+                        <Button Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/radial_gradient.png" />
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Background="#FF505050">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="34*"/>
-                <ColumnDefinition Width="125*"/>
-                <ColumnDefinition Width="949*"/>
-                <ColumnDefinition Width="92*"/>
+                <ColumnDefinition Width="54*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="1399*"/>
+                <ColumnDefinition Width="267*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -136,6 +182,45 @@
                 <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отразить по вертикали">
                     <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="3" Source="/Views/Assets/flip_vertical.png" />
                 </Button>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="59*"/>
+                    <ColumnDefinition Width="170*"/>
+                    <ColumnDefinition Width="38*"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="9*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="X:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12"/>
+                    <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Margin="0,14,0,0" Grid.RowSpan="2" Width="12"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" Foreground="White" Padding="0,0,0,0" Width="16"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="15" Width="16"/>
+
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="53*"/>
+                        <ColumnDefinition Width="34*"/>
+                        <ColumnDefinition Width="34*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Z :" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
+                    <TextBox Grid.Column="1" TextWrapping="Wrap" Text="100%" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF505050" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050" Margin="2,0,2,0">
+                        <Image Source="/Views/Assets/minus.png" Margin="5,0,5,0" />
+                    </Button>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Column="3" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050">
+                        <Image Source="/Views/Assets/plus.png" Margin="5,5,5,5" />
+                    </Button>
+
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
