@@ -52,10 +52,10 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="65*"/>
+                    <ColumnDefinition Width="164*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
