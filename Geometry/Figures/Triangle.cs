@@ -11,14 +11,16 @@ using System.Runtime.Serialization;
 namespace Geometry.Figures
 {
     [DataContract]
-    [Figure("Line")]
-    public class Line : ParameterizedObject, IFigure
+    [Figure("Triangle")]
+    public class Triangle : ParameterizedObject, IFigure
     {
-        private double _lenght;
-        private Vector2d _v;
+        private Vector2d _v1;
+        private Vector2d _v2;
+        private Vector2d _v3;
 
         protected Point2d _point1;
         protected Point2d _point2;
+        protected Point2d _point3;
         protected ObservableAsPropertyHelper<Point2d> _center;
 
         [DataMember]
@@ -43,51 +45,67 @@ namespace Geometry.Figures
             }
         }
 
+        [DataMember]
+        [Parameter("Point3")]
+        public Point2d Point3
+        {
+            get => _point3;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _point3, value);
+            }
+        }
+
         public Point2d Center => _center.Value;
 
-        public Line() : this(new Point2d(), new Point2d()) { }
+        public Triangle() : this(new Point2d(), new Point2d(), new Point2d()) { }
 
-        public Line(Point2d point1, Point2d point2)
+        public Triangle(Point2d point1, Point2d point2, Point2d point3)
         {
             _point1 = point1;
             _point2 = point2;
+            _point3 = point3;
 
-            _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
-                          .Select<(Point2d point1, Point2d point2), Point2d>(t =>
+            _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2, figure => figure.Point3)
+                          .Select<(Point2d point1, Point2d point2, Point2d point3), Point2d>(t =>
                           {
-                              return new Point2d((t.point1.X + t.point2.X) / 2.0, (t.point1.Y + t.point2.Y) / 2.0);
+                              return new Point2d((t.point1.X + t.point2.X + t.point3.X) / 3.0, (t.point1.Y + t.point2.Y + t.point3.Y) / 3.0);
                           })
                           .ToProperty(this, figure => figure.Center);
 
-            this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
-                .Subscribe(Observer.Create<(Point2d point1, Point2d point2)>(t =>
+            this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2, figure => figure.Point3)
+                .Subscribe(Observer.Create<(Point2d point1, Point2d point2, Point2d point3)>(t =>
                 {
-                    _v.X = t.point2.X - t.point1.X;
-                    _v.Y = t.point2.Y - t.point1.Y;
-                    _lenght = _v.Norm;
-                    _v.Normilize();
+                    _v1.X = t.point2.X - t.point1.X;
+                    _v1.Y = t.point2.Y - t.point1.Y;
+                    _v1.Normilize();
+
+                    _v2.X = t.point3.X - t.point2.X;
+                    _v2.Y = t.point3.Y - t.point2.Y;
+                    _v2.Normilize();
+
+                    _v3.X = t.point1.X - t.point3.X;
+                    _v3.Y = t.point1.Y - t.point3.Y;
+                    _v3.Normilize();
                 }));
         }
 
-        public Line(Line line) : this(line._point1, line._point2) { }
+        public Triangle(Triangle triangle) : this(triangle._point1, triangle._point2, triangle._point3) { }
 
         public void Draw(IGraphics graphics)
         {
-            graphics.DrawLine(_point1, _point2, true, false);
+            graphics.DrawTriangle(_point1, _point2, _point3, false, true);
         }
 
 
 
         public bool IsInside(Vector2 p, float eps)
         {
-            Vector2d u = new Vector2d()
-            {
-                X = _point2.X - p.X,
-                Y = _point2.Y - p.Y
-            };
-            double l = u * _v,
-                   h = u ^ _v;
-            return Math.Abs(h) <= eps && l >= -eps && l - _lenght <= eps;
+            double h1 = (p - _point1) ^ _v1,
+                   h2 = (p - _point2) ^ _v2,
+                   h3 = (p - _point3) ^ _v3;
+            return h1 >= -eps && h2 >= -eps && h3 >= -eps ||
+                   h1 <= eps && h2 <= eps && h3 >= eps;
         }
 
         public void Rotate(float angle)
@@ -100,6 +118,7 @@ namespace Geometry.Figures
 
             transform.Apply(_point1, ref _point1);
             transform.Apply(_point2, ref _point2);
+            transform.Apply(_point3, ref _point3);
         }
 
         public void Scale(float x, float y)
@@ -113,12 +132,14 @@ namespace Geometry.Figures
 
             transform.Apply(_point1, ref _point1);
             transform.Apply(_point2, ref _point2);
+            transform.Apply(_point3, ref _point3);
         }
 
         public void Translate(Vector2 to)
         {
             _point1 += to;
             _point2 += to;
+            _point3 += to;
         }
 
 
@@ -147,12 +168,12 @@ namespace Geometry.Figures
 
         public IFigure Clone()
         {
-            return new Line(this);
+            return new Triangle(this);
         }
 
         object ICloneable.Clone()
         {
-            return new Line(this);
+            return new Triangle(this);
         }
     }
 }
