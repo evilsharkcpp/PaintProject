@@ -6,6 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GUI_WPF"
         xmlns:vms="clr-namespace:Logic.ViewModels;assembly=Logic"
+        xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         WindowStartupLocation="CenterScreen">
@@ -211,6 +212,7 @@
                             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/radial_gradient.png" />
                         </Button>
                     </Grid>
+                    <colorpicker:StandardColorPicker x:Name="main" Grid.Row="2"/>
                 </Grid>
             </Grid>
         </Grid>
