@@ -9,6 +9,49 @@
    </PropertyGroup>
 
    <ItemGroup>
+     <None Remove="Views\Assets\A.png" />
+     <None Remove="Views\Assets\add_circle.png" />
+     <None Remove="Views\Assets\add_line.png" />
+     <None Remove="Views\Assets\add_polygon.png" />
+     <None Remove="Views\Assets\add_rectangle.png" />
+     <None Remove="Views\Assets\add_triangle.png" />
+     <None Remove="Views\Assets\cancel.png" />
+     <None Remove="Views\Assets\diff.png" />
+     <None Remove="Views\Assets\fill.png" />
+     <None Remove="Views\Assets\flip_horizontal.png" />
+     <None Remove="Views\Assets\flip_vertical.png" />
+     <None Remove="Views\Assets\full.png" />
+     <None Remove="Views\Assets\group.png" />
+     <None Remove="Views\Assets\intersect.png" />
+     <None Remove="Views\Assets\left_rotate.png" />
+     <None Remove="Views\Assets\linear_gradient.png" />
+     <None Remove="Views\Assets\minus.png" />
+     <None Remove="Views\Assets\pipette.png" />
+     <None Remove="Views\Assets\plus.png" />
+     <None Remove="Views\Assets\radial_gradient.png" />
+     <None Remove="Views\Assets\return.png" />
+     <None Remove="Views\Assets\right_rotate.png" />
+     <None Remove="Views\Assets\stroke.png" />
+     <None Remove="Views\Assets\sum.png" />
+     <None Remove="Views\Assets\ungroup.png" />
+     <None Remove="Views\Assets\white_cursor.png" />
+     <None Remove="Views\Assets\x.png" />
+     <None Remove="Views\Assets\xor.png" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Resource Include="Views\Assets\A.png" />
+     <Resource Include="Views\Assets\cancel.png" />
+     <Resource Include="Views\Assets\diff.png" />
+     <Resource Include="Views\Assets\fill.png" />
+     <Resource Include="Views\Assets\flip_horizontal.png" />
+     <Resource Include="Views\Assets\flip_vertical.png" />
+     <Resource Include="Views\Assets\full.png" />
+     <Resource Include="Views\Assets\group.png" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
      <PackageReference Include="ReactiveUI" Version="18.4.20" />
      <PackageReference Include="ReactiveUI.WPF" Version="18.4.20" />
    </ItemGroup>
@@ -19,5 +62,28 @@
      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
      <ProjectReference Include="..\IO\IO.csproj" />
      <ProjectReference Include="..\Logic\Logic.csproj" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Resource Include="Views\Assets\add_circle.png" />
+     <Resource Include="Views\Assets\add_polygon.png" />
+     <Resource Include="Views\Assets\add_rectangle.png" />
+     <Resource Include="Views\Assets\add_triangle.png" />
+     <Resource Include="Views\Assets\add_line.png" />
+     <Resource Include="Views\Assets\intersect.png" />
+     <Resource Include="Views\Assets\left_rotate.png" />
+     <Resource Include="Views\Assets\linear_gradient.png" />
+     <Resource Include="Views\Assets\minus.png" />
+     <Resource Include="Views\Assets\pipette.png" />
+     <Resource Include="Views\Assets\plus.png" />
+     <Resource Include="Views\Assets\radial_gradient.png" />
+     <Resource Include="Views\Assets\return.png" />
+     <Resource Include="Views\Assets\right_rotate.png" />
+     <Resource Include="Views\Assets\stroke.png" />
+     <Resource Include="Views\Assets\sum.png" />
+     <Resource Include="Views\Assets\ungroup.png" />
+     <Resource Include="Views\Assets\white_cursor.png" />
+     <Resource Include="Views\Assets\x.png" />
+     <Resource Include="Views\Assets\xor.png" />
    </ItemGroup>
    </Project>
