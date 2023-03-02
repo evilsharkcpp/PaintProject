@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using DataStructures;
 
 namespace Interfaces
 {
     public interface IDrawable:ICloneable
     {
-        Vector3 FillColor { get; }
-        Vector3 OutLineColor { get; }
-        double OutLineThickness { get; }
+        Color FillColor { get; set; }
+        Color OutLineColor { get; set; }
+        double OutLineThickness { get; set; }
         new IDrawable Clone();
     }
 }
