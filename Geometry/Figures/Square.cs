@@ -21,16 +21,16 @@ namespace Geometry.Figures
         protected Point2d _point2;
         protected ObservableAsPropertyHelper<Point2d> _center;
 
-        private Vector2 PointCorner(sbyte a, sbyte b)
+        private Point2d PointCorner(sbyte a, sbyte b)
         {
             double X = _center.Value.X + a * _v.X - b * _v.Y;
             double Y = _center.Value.Y + a * _v.Y - b * _v.X;
-            return new Vector2((float)X, (float)Y);
+            return new Point2d((float)X, (float)Y);
         }
 
-        private IEnumerable<Vector2> SquarePoints()
+        private IEnumerable<Point2d> SquarePoints()
         {
-            Vector2[] points = new Vector2[4]
+            Point2d[] points = new Point2d[4]
             {
                 PointCorner(-1,-1),
                 PointCorner(1,-1),
