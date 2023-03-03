@@ -1,45 +1,60 @@
 ﻿using DataStructures.Geometry;
+using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
+using ReactiveUI;
 using System.Numerics;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
+
 
 namespace Geometry.Figures
 {
     [DataContract]
-    internal class Circle : IFigure
+    [Figure("Circle")]
+    internal class Circle : ParameterizedObject, IFigure
     {
         protected Point2d _center;
         protected double _radius;
 
         [DataMember]
-        public Point2d Center => _center;
-        [DataMember]
-        public double Radius => _radius;
+        [Parameter("Center")]
+        public Point2d Center
+        {
+            get => _center;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _center, value);
+            }
+        }
 
-        public IEnumerable<IParameter<double>> DoubleParameters { get; protected set; }
-        public IEnumerable<IParameter<Point2d>> PointParameters { get; protected set; }
-        public IEnumerable<IParameter<Vector2d>> VectorParameters { get; protected set; }
+        [DataMember]
+        [Parameter("Radius")]
+        public double Radius
+        {
+            get => _radius;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _radius, value);
+            }
+        }
+
+        //public IEnumerable<IParameter<double>> DoubleParameters { get; protected set; }
+        //public IEnumerable<IParameter<Point2d>> PointParameters { get; protected set; }
+        //public IEnumerable<IParameter<Vector2d>> VectorParameters { get; protected set; }
+        public Circle() : this( new Point2d(), 0) { }
         public Circle(Point2d center, double radius)
         {
             _center = center;
             _radius = radius;
 
-            DoubleParameters = new List<IParameter<double>>();
-            PointParameters = new List<IParameter<Point2d>>();
-            VectorParameters = new List<IParameter<Vector2d>>();
+            //DoubleParameters = new List<IParameter<double>>();
+            //PointParameters = new List<IParameter<Point2d>>();
+            //VectorParameters = new List<IParameter<Vector2d>>();
         }
 
-        public Circle(Circle circle)
-        {
-            _center = circle._center;
-            _radius = circle._radius;
-
-            DoubleParameters = new List<IParameter<double>>();
-            PointParameters = new List<IParameter<Point2d>>();
-            VectorParameters = new List<IParameter<Vector2d>>();
-
-        }
+        public Circle(Circle circle) : this(circle._center, circle._radius) { }
         public virtual void Draw(IGraphics graphics)
         {
             graphics.DrawCircle(_center, _radius, false, true);
