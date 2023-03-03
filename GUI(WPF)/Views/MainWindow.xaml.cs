@@ -22,7 +22,7 @@ namespace GUI_WPF
     {
         ILogic _vm;
         IGraphics _graphics;
-        IFigure _test;
+        IFigure? _selectedFigure;
         Point _previousPoint;
         Point _mouseDownPoint;
         public Point PreviousPoint
@@ -52,12 +52,12 @@ namespace GUI_WPF
             _graphics = new Graphics.Graphic(canvas);
             DataContext = _vm;
             _vm.CreateFigure.Subscribe();
-            var fabric = FigureFabric.Create();
+            //var fabric = FigureFabric.Create();
             _timer = new DispatcherTimer();
             _timer.Tick += new EventHandler(Draw);
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 17);
             _timer.Start();
-            _test = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(100, 100));
+            //_selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(100, 100));
         }
         private void Draw(object sender, EventArgs e)
         {
@@ -68,18 +68,24 @@ namespace GUI_WPF
                 _graphics.GraphicStyle = item.Item2;
                 item.Item1.Draw(_graphics);
             }
+            if(_selectedFigure != null)
+                _selectedFigure.Draw(_graphics);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _vm.Figures = _vm.Figures.Append((_test, new Drawable(new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B),
+            var fabric = FigureFabric.Create();
+            _selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(0, 0));
+            _vm.Figures = _vm.Figures.Append((_selectedFigure, new Drawable(new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B),
                 new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B))));
             //_test.Draw(_graphics);
         }
 
         private void canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            var point = e.GetPosition(this);
+            var point = e.GetPosition(canvas);
             PreviousPoint = new Point(point.X, point.Y);
+            if(_selectedFigure != null)
+                _selectedFigure.PointParameters.Where(p => p.Name == "Point2").First().Value = new Point2d(PreviousPoint.X, PreviousPoint.Y);
         }
 
     }
