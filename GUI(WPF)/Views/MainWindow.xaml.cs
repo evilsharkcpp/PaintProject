@@ -24,12 +24,22 @@ namespace GUI_WPF
         IGraphics _graphics;
         IFigure _test;
         Point _previousPoint;
+        Point _mouseDownPoint;
         public Point PreviousPoint
         {
             get { return _previousPoint; }
             set
             {
                 _previousPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        public Point MouseDownPoint
+        {
+            get { return _mouseDownPoint; }
+            set
+            {
+                _mouseDownPoint = value;
                 OnPropertyChanged();
             }
         }
