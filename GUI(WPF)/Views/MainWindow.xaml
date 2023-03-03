@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         WindowStartupLocation="CenterScreen"
-        x:Name="mainWindow">
+        x:Name="mainWindow" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -166,7 +166,7 @@
                     </Button>
                 </Grid>
             </Grid>
-            <Canvas x:Name="canvas" Grid.Column="1" MouseMove="canvas_MouseMove" Background="Transparent"/>
+            <Canvas x:Name="canvas" Grid.Column="1" MouseMove="canvas_MouseMove" Background="Transparent" MouseDown="canvas_MouseDown"/>
             <Grid Grid.Column="2" Background="#FF505050">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="549*"/>

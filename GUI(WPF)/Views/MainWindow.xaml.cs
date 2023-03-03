@@ -22,12 +22,22 @@ namespace GUI_WPF
         IGraphics _graphics;
         IFigure _test;
         Point _previousPoint;
+        Point _mouseDownPoint;
         public Point PreviousPoint
         {
             get { return _previousPoint; }
             set
             {
                 _previousPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        public Point MouseDownPoint
+        {
+            get { return _mouseDownPoint; }
+            set
+            {
+                _mouseDownPoint = value;
                 OnPropertyChanged();
             }
         }
@@ -74,6 +84,12 @@ namespace GUI_WPF
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private void canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var point = e.GetPosition(this);
+            MouseDownPoint = new Point(point.X, point.Y);
         }
     }
 }
