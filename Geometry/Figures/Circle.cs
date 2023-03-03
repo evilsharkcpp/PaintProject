@@ -48,10 +48,6 @@ namespace Geometry.Figures
         {
             _center = center;
             _radius = radius;
-
-            //DoubleParameters = new List<IParameter<double>>();
-            //PointParameters = new List<IParameter<Point2d>>();
-            //VectorParameters = new List<IParameter<Vector2d>>();
         }
 
         public Circle(Circle circle) : this(circle._center, circle._radius) { }
