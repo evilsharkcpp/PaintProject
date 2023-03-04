@@ -29,6 +29,6 @@ namespace GUI_WPF
             DataContext = vm;
             vm.CreateFigure.Subscribe();
         }
-        
+
     }
 }

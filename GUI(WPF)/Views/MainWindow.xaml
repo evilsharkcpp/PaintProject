@@ -101,66 +101,45 @@
             </Grid.ColumnDefinitions>
             <Grid Background="#FF505050">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="632*"/>
-                    <RowDefinition Height="375*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="12*"/>
                 </Grid.RowDefinitions>
-                <Grid Margin="0,0,0,3">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="165*"/>
+                        <RowDefinition Height="57*"/>
+                        <RowDefinition Height="116*"/>
+                        <RowDefinition Height="26*"/>
                     </Grid.RowDefinitions>
-                    <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Выделить">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/white_cursor.png" />
+                    <Button Grid.Row="0" Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Выделить" Margin="0,2,0,2">
+                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/white_cursor.png" />
                     </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить линию">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_line.png"/>
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить прямоугольник">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_rectangle.png"  />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="3" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить эллипс">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_circle.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="4" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить треугольник">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_triangle.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="5" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить многоугольник">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_polygon.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="6" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить текст">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/A.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="7" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сгруппировать">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/group.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="8" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Разгруппировать">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/ungroup.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="9" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Сумма">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/sum.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="10" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Разность">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/diff.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="11" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пересечение">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/intersect.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="12" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Исключающее ИЛИ">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/xor.png" />
-                    </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="13" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка">
+                    <StackPanel Grid.Row="1">
+                        <ItemsControl>
+                            <RadioButton ToolTip="Добавить линию" Content="../Views/Assets/add_line.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить прямоугольник" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить эллипс" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить треугольник" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить многоугольник" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить текст" Content="../Views/Assets/A.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <ItemsControl>
+                            <RadioButton ToolTip="Сгруппировать" Content="../Views/Assets/group.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Разгруппировать" Content="../Views/Assets/ungroup.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3">
+                        <ItemsControl>
+                            <RadioButton ToolTip="Сумма" Content="../Views/Assets/sum.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Разность" Content="../Views/Assets/diff.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Пересечение" Content="../Views/Assets/intersect.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Исключающее ИЛИ" Content="../Views/Assets/xor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                        </ItemsControl>
+                    </StackPanel>
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="4" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка" Margin="0,2,0,2">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/pipette.png"  />
                     </Button>
                 </Grid>
