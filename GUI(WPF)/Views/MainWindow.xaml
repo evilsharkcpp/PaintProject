@@ -94,21 +94,20 @@
 
             </Grid>
         </Grid>
-        
-        <Grid Grid.Row="2">
+
+        <Grid  Grid.Row="2" Background="#FFC3C3C3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="30*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Canvas MouseMove="Canvas_MouseMove" MouseLeftButtonDown="Canvas_MouseLeftButtonDown" MouseLeftButtonUp="Canvas_MouseLeftButtonUp" MouseWheel="Canvas_MouseWheel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Background="#FFBFB6B6">
+            <Canvas Name="canvas" MouseMove="canvas_MouseMove" MouseLeftButtonDown="canvas_MouseDown" MouseLeftButtonUp="Canvas_MouseLeftButtonUp" MouseWheel="Canvas_MouseWheel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Background="White">
                 <Canvas.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform x:Name="canvasST"/>
+                        <ScaleTransform x:Name="canvasST" ScaleX="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}"/>
                         <TranslateTransform x:Name="canvasTranslate"/>
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <TextBlock Name="testText" HorizontalAlignment="Center" VerticalAlignment="Center">Some text</TextBlock>
             </Canvas>
             <Grid Panel.ZIndex="2" Background="#FF505050">
                 <Grid.RowDefinitions>
@@ -320,17 +319,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="39*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Content="X:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12"/>
-                    <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Margin="0,14,0,0" Grid.RowSpan="2" Width="12"/>
-               <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=PreviousPoint.X, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="White" Padding="0,0,0,0" Width="16"/>
-               <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=PreviousPoint.Y, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="15" Width="16"/>
+                    <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12" Grid.Row="1"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=PreviousPoint.X, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Foreground="White" Padding="0,0,0,0" FontSize="11"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=PreviousPoint.Y, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" Padding="0,0,0,0" FontSize="11"/>
 
                 </Grid>
                 <Grid Grid.Column="1">
@@ -384,7 +383,7 @@
                     <Button ToolTip="Уменьшить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="2" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050" Margin="2,0,2,0">
                         <Image MouseLeftButtonDown="scaleDownButtonDown" Source="/Views/Assets/minus.png" Margin="5,0,5,0" />
                     </Button>
-                    <Button ToolTip="Увеличить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="3" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050">
+                    <Button MouseLeftButtonDown="scaleUpButtonDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ToolTip="Увеличить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="3" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050">
                         <Image MouseLeftButtonDown="scaleUpButtonDown" Source="/Views/Assets/plus.png" Margin="5,5,5,5" />
                     </Button>
 
