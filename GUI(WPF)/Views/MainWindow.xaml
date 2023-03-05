@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
+        x:Name="mainWindow" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -135,7 +135,7 @@
                     <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Выделить">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/white_cursor.png" />
                     </Button>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить линию">
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить линию" Click="Button_Click">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/add_line.png"/>
                     </Button>
                     <Button Style="{StaticResource MyButtonStyle}" Grid.Row="2" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Добавить прямоугольник">
@@ -270,8 +270,8 @@
                     </Grid.RowDefinitions>
                     <Label Content="X:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12"/>
                     <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Margin="0,14,0,0" Grid.RowSpan="2" Width="12"/>
-                    <Label Grid.Row="0" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" Foreground="White" Padding="0,0,0,0" Width="16"/>
-                    <Label Grid.Row="1" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="15" Width="16"/>
+               <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=PreviousPoint.X, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="White" Padding="0,0,0,0" Width="16"/>
+               <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=PreviousPoint.Y, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="15" Width="16"/>
 
                 </Grid>
                 <Grid Grid.Column="1">

@@ -1,101 +1,107 @@
-﻿using Logic.ViewModels;
+﻿using DataStructures.Geometry;
+using Geometry.Figures;
+using Interfaces;
+using Logic.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using GUI_WPF.Graphics;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GUI_WPF
 {
-   /// <summary>
-   /// Interaction logic for MainWindow.xaml
-   /// </summary>
-   public partial class MainWindow : Window
-   {
-      MainVM vm = new MainVM();
-      const double scaleRate = 1.1;
-      bool canvasTranslateState = false;
-      Point canvasStartP, startTranslate;
-      public MainWindow()
-      {
-         InitializeComponent();
-         Trace.WriteLine("init");
-         DataContext = vm;
-         vm.CreateFigure.Subscribe();
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window, INotifyPropertyChanged
+    {
+        ILogic _vm;
+        IGraphics _graphics;
+        IFigure? _selectedFigure;
+        Point _previousPoint;
+        Point _mouseDownPoint;
+        public Point PreviousPoint
+        {
+            get { return _previousPoint; }
+            set
+            {
+                _previousPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        public Point MouseDownPoint
+        {
+            get { return _mouseDownPoint; }
+            set
+            {
+                _mouseDownPoint = value;
+                OnPropertyChanged();
+            }
+        }
 
-         startTranslate = new Point();
-      }
+        DispatcherTimer _timer;
+        public MainWindow()
+        {
+            InitializeComponent();
+            _vm = new MainVM();
+            _graphics = new Graphics.Graphic(canvas);
+            DataContext = _vm;
+            _vm.CreateFigure.Subscribe();
+            //var fabric = FigureFabric.Create();
+            _timer = new DispatcherTimer();
+            _timer.Tick += new EventHandler(Draw);
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 17);
+            _timer.Start();
+            //_selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(100, 100));
+        }
+        private void Draw(object sender, EventArgs e)
+        {
+            canvas.Children.Clear();
+            if (_vm.Figures == null) return;
+            foreach (var item in _vm.Figures)
+            {
+                _graphics.GraphicStyle = item.Item2;
+                item.Item1.Draw(_graphics);
+            }
+            if(_selectedFigure != null)
+                _selectedFigure.Draw(_graphics);
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var fabric = FigureFabric.Create();
+            _selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(0, 0));
+            _vm.Figures = _vm.Figures.Append((_selectedFigure, new Drawable(new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B),
+                new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B))));
+            //_test.Draw(_graphics);
+        }
 
-      private void scaleUp()
-      {
-         testText.Text = "scale up";
-         canvasST.ScaleX *= scaleRate;
-         canvasST.ScaleY *= scaleRate;
-      }
+        private void canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var point = e.GetPosition(canvas);
+            PreviousPoint = new Point(point.X, point.Y);
+            if(_selectedFigure != null)
+                _selectedFigure.PointParameters.Where(p => p.Name == "Point2").First().Value = new Point2d(PreviousPoint.X, PreviousPoint.Y);
+        }
 
-      private void scaleDown()
-      {
-         testText.Text = "scale down";
-         canvasST.ScaleX /= scaleRate;
-         canvasST.ScaleY /= scaleRate;         
-      }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
-      private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
-      {
-         if (e.Delta > 0) 
-            scaleUp();
-         else 
-            scaleDown();
-      }
-
-      private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-      {
-         Trace.WriteLine("in mouse down");
-         canvasStartP = e.GetPosition(this);
-         startTranslate.X = canvasTranslate.X;
-         startTranslate.Y = canvasTranslate.Y;
-         canvasTranslateState = true;
-      }
-
-      private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-      {
-         canvasTranslateState = false;
-      }
-
-      private void Canvas_MouseMove(object sender, MouseEventArgs e)
-      {
-         if (canvasTranslateState)
-         {
-            Point curPos;
-            curPos.X = e.GetPosition(this).X;
-            curPos.Y = e.GetPosition(this).Y;
-            var sub = Point.Subtract(curPos, canvasStartP);
-            Trace.WriteLine("x " + sub.X + ", y " + sub.Y);
-            Trace.WriteLine("x tr " + canvasTranslate.X + ", y tr " + canvasTranslate.Y);
-            canvasTranslate.X = startTranslate.X + sub.X;
-            canvasTranslate.Y = startTranslate.Y + sub.Y;
-         }
-      }
-
-      private void scaleDownButtonDown(object sender, MouseButtonEventArgs e)
-      {
-         scaleDown();
-      }
-
-      private void scaleUpButtonDown(object sender, MouseButtonEventArgs e)
-      {
-         scaleUp();
-      }
-   }
+        private void canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var point = e.GetPosition(canvas);
+            MouseDownPoint = new Point(point.X, point.Y);
+            if (_selectedFigure != null)
+                _selectedFigure.PointParameters.Where(p => p.Name == "Point1").First().Value = new Point2d(MouseDownPoint.X, MouseDownPoint.Y);
+        }
+    }
 }

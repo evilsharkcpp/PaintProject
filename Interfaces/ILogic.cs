@@ -9,8 +9,8 @@ namespace Interfaces
         public ReactiveCommand<IFigure, int> AddFigure { get; }
         public ReactiveCommand<IFigure, Unit> RemoveFigure { get; }
         public ReactiveCommand<int, IFigure> GetFigureById { get; }
-        IEnumerable<(IFigure, IDrawable)> Figures { get;}
-        IEnumerable<(IFigure, IDrawable)> SelectedFigures { get; }
+        IEnumerable<(IFigure, IDrawable)> Figures { get; set; }
+        IEnumerable<(IFigure, IDrawable)> SelectedFigures { get; set; }
 
     }
 }
