@@ -9,7 +9,8 @@
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -156,42 +157,79 @@
                         <RowDefinition Height="24*"/>
                         <RowDefinition Height="684*"/>
                     </Grid.RowDefinitions>
-                    <Grid>
+                    <Grid Margin="0,0,0,-446" Grid.RowSpan="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Style="{StaticResource MyButtonStyle}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/fill.png"   />
-                        </Button>
-                        <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/stroke.png"  />
-                        </Button>
-
+                        <TabControl Name="вкладки"  Grid.ColumnSpan="2" Background="#FF505050" >
+                            <TabControl.Resources>
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="#FF92988F" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="#FF505050" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+                            <TabItem x:Name="заливка" Background="#FF505050" Foreground="White">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="3" Foreground="White">Заливка</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                            </RadioButton>
+                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                             </RadioButton>
+                                            <RadioButton ToolTip="Линейный градиент" Content="../Views/Assets/linear_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                            </RadioButton>
+                                            <RadioButton ToolTip="Радиальный градиент" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                             </RadioButton>
+                                        </StackPanel>
+                                        <colorpicker:StandardColorPicker x:Name="main1" Grid.Row="2"/>
+                                    </StackPanel>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="Обводка" Background="#FF505050" Foreground="White">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="3">Обводка</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                                </RadioButton>
+                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                                </RadioButton>
+                                        </StackPanel>
+                                        <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2"/>
+                                    </StackPanel>
+                                </TabItem.Content>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.2*"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button ToolTip="Нет заливки" Style="{StaticResource MyButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/x.png"  />
-                        </Button>
-                        <Button ToolTip="Сплошная заливка"  Style="{StaticResource MyButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/full.png" />
-                        </Button>
-                        <Button ToolTip="Линейный градиент" Style="{StaticResource MyButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/linear_gradient.png"   />
-                        </Button>
-                        <Button ToolTip="Радиальный градиент" Style="{StaticResource MyButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-                            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="/Views/Assets/radial_gradient.png" />
-                        </Button>
-                    </Grid>
-                    <colorpicker:StandardColorPicker x:Name="main" Grid.Row="2"/>
                 </Grid>
             </Grid>
         </Grid>
