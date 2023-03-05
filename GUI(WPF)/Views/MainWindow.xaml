@@ -107,40 +107,27 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="26*"/>
-                        <RowDefinition Height="165*"/>
-                        <RowDefinition Height="57*"/>
-                        <RowDefinition Height="116*"/>
-                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="729*"/>
+                        <RowDefinition Height="55*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Выделить" Margin="0,2,0,2">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/white_cursor.png" />
-                    </Button>
-                    <StackPanel Grid.Row="1">
+                    <StackPanel Grid.Row="0">
                         <ItemsControl>
+                            <RadioButton ToolTip="Выделить" Content="../Views/Assets/white_cursor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить линию" Content="../Views/Assets/add_line.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить прямоугольник" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить эллипс" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить треугольник" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить многоугольник" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить текст" Content="../Views/Assets/A.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel Grid.Row="2">
-                        <ItemsControl>
                             <RadioButton ToolTip="Сгруппировать" Content="../Views/Assets/group.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Разгруппировать" Content="../Views/Assets/ungroup.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                        </ItemsControl>
-                    </StackPanel>
-                    <StackPanel Grid.Row="3">
-                        <ItemsControl>
                             <RadioButton ToolTip="Сумма" Content="../Views/Assets/sum.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Разность" Content="../Views/Assets/diff.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Пересечение" Content="../Views/Assets/intersect.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                            <RadioButton ToolTip="Исключающее ИЛИ" Content="../Views/Assets/xor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Исключающее ИЛИ" Content="../Views/Assets/xor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,0"/>
                         </ItemsControl>
                     </StackPanel>
-                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="4" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка" Margin="0,2,0,2">
+                    <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка" Margin="0,2,0,2">
                         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/pipette.png"  />
                     </Button>
                 </Grid>
@@ -197,14 +184,14 @@
                                 <TabItem.Content>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
-                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
-                                             </RadioButton>
-                                            <RadioButton ToolTip="Линейный градиент" Content="../Views/Assets/linear_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
+                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
-                                            <RadioButton ToolTip="Радиальный градиент" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
-                                             </RadioButton>
+                                            <RadioButton ToolTip="Линейный градиент" Content="../Views/Assets/linear_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            </RadioButton>
+                                            <RadioButton ToolTip="Радиальный градиент" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            </RadioButton>
                                         </StackPanel>
                                         <colorpicker:StandardColorPicker x:Name="main1" Grid.Row="2"/>
                                     </StackPanel>
@@ -219,13 +206,69 @@
                                 <TabItem.Content>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
-                                                </RadioButton>
-                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="0,2,0,2">
-                                                </RadioButton>
+                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            </RadioButton>
+                                            <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            </RadioButton>
                                         </StackPanel>
                                         <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2"/>
                                     </StackPanel>
+                                </TabItem.Content>
+                            </TabItem>
+                            <TabItem x:Name="Свойства" Background="#FF505050" Foreground="White">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="3">Свойства</TextBlock>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="172*"/>
+                                            <RowDefinition Height="773*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Margin="0,2,0,2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" Margin="0,2,0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="50*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label ToolTip="Горизонтальная координата" Content="X:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
+                                                <TextBox TextWrapping="Wrap" Text="1px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Grid.Column="1"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" Margin="0,2,0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="50*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label ToolTip="Вертикальная координата" Content="Y:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
+                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="1px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                                            </Grid>
+                                            <Grid Grid.Row="2" Margin="0,2,0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="50*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label ToolTip="Ширина объекта" Content="Ш:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="16"/>
+                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="10px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+
+                                            </Grid>
+                                            <Grid Grid.Row="3" Margin="0,2,0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="50*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label ToolTip="Высота объекта" Content="В:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="10px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                 </TabItem.Content>
                             </TabItem>
                         </TabControl>
