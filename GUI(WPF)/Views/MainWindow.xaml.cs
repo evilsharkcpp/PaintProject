@@ -1,16 +1,10 @@
-﻿using DataStructures.Geometry;
-using Geometry.Figures;
-using Interfaces;
+﻿using Interfaces;
 using Logic.ViewModels;
 using System;
-using System.Linq;
-using System.Windows.Threading;
 using System.Windows;
-using GUI_WPF.Graphics;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Diagnostics;
 
 namespace GUI_WPF
 {
@@ -34,17 +28,17 @@ namespace GUI_WPF
       public string ScaleString
       {
          get { return _scaleString; }
-         set 
+         set
          {
             _scaleString = value;
-            OnPropertyChanged(); 
+            OnPropertyChanged();
          }
       }
 
       public double CanvasScale
       {
-         get { return _canvasScale;  }
-         set 
+         get { return _canvasScale; }
+         set
          {
             _canvasScale = value;
             OnPropertyChanged();
@@ -89,13 +83,9 @@ namespace GUI_WPF
          {
             mouseMovePoint = e.GetPosition(this);
             var sub = Point.Subtract(mouseMovePoint, mouseDownPoint);
-            Trace.WriteLine(sub.X + " " + sub.Y);
-            Trace.WriteLine(canvasTransStartPoint.X + " " + canvasTransStartPoint.Y);
             canvasTranslate.X = canvasTransStartPoint.X + sub.X;
             canvasTranslate.Y = canvasTransStartPoint.Y + sub.Y;
          }
-         if (_selectedFigure != null)
-            _selectedFigure.PointParameters.Where(p => p.Name == "Point2").First().Value = new Point2d(PreviousPoint.X, PreviousPoint.Y);
       }
 
       public event PropertyChangedEventHandler PropertyChanged;
@@ -115,38 +105,34 @@ namespace GUI_WPF
             canvasTransStartPoint.Y = canvasTranslate.Y;
             canvasTranslateState = true;
          }
-         if (_selectedFigure != null)
-            _selectedFigure.PointParameters.Where(p => p.Name == "Point1").First().Value = new Point2d(MouseDownPoint.X, MouseDownPoint.Y);
       }
 
       private void scaleUp()
       {
-         if (CanvasScale < 2.5)
-         {
-            canvasST.CenterX = PreviousPoint.X;
-            canvasST.CenterY = PreviousPoint.Y;
-            CanvasScale = CanvasScale + 0.05;
-            ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
-         }
+         CanvasScale = CanvasScale + 0.05;
+         ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
       }
 
       private void scaleDown()
       {
-         if (CanvasScale > 0.6)
-         {
-            canvasST.CenterX = PreviousPoint.X;
-            canvasST.CenterY = PreviousPoint.Y;
-            CanvasScale = CanvasScale - 0.05;
-            ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
-         }
+         CanvasScale = CanvasScale - 0.05;
+         ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
       }
 
       private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
       {
-         if (e.Delta > 0)
+         if (e.Delta > 0 && CanvasScale < 2.5)
+         {
+            canvasST.CenterX = PreviousPoint.X;
+            canvasST.CenterY = PreviousPoint.Y;
             scaleUp();
-         else
+         }
+         else if (CanvasScale > 0.6)
+         {
+            canvasST.CenterX = PreviousPoint.X;
+            canvasST.CenterY = PreviousPoint.Y;
             scaleDown();
+         }
       }
 
       private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -154,14 +140,24 @@ namespace GUI_WPF
          canvasTranslateState = false;
       }
 
-      private void scaleDownButtonDown(object sender, MouseButtonEventArgs e)
+      private void scaleDownButtonDown(object sender, RoutedEventArgs e)
       {
-         scaleDown();
+         if (CanvasScale > 0.6)
+         {
+            canvasST.CenterX = canvas.ActualWidth / 2.0;
+            canvasST.CenterY = canvas.ActualHeight / 2.0;
+            scaleDown();
+         }
       }
 
-      private void scaleUpButtonDown(object sender, MouseButtonEventArgs e)
+      private void scaleUpButtonDown(object sender, RoutedEventArgs e)
       {
-         scaleUp();
+         if (CanvasScale < 2.5)
+         {
+            canvasST.CenterX = canvas.ActualWidth / 2.0;
+            canvasST.CenterY = canvas.ActualHeight / 2.0;
+            scaleUp();
+         }
       }
    }
 }
