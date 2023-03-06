@@ -1,10 +1,6 @@
-﻿using DataStructures.Geometry;
-using Geometry.Figures;
-using Interfaces;
+﻿using Interfaces;
 using Logic.ViewModels;
 using System;
-using System.Linq;
-using System.Windows.Threading;
 using System.Windows;
 using GUI_WPF.Graphics;
 using System.Windows.Media;
@@ -35,17 +31,17 @@ namespace GUI_WPF
       public string ScaleString
       {
          get { return _scaleString; }
-         set 
+         set
          {
             _scaleString = value;
-            OnPropertyChanged(); 
+            OnPropertyChanged();
          }
       }
 
       public double CanvasScale
       {
-         get { return _canvasScale;  }
-         set 
+         get { return _canvasScale; }
+         set
          {
             _canvasScale = value;
             OnPropertyChanged();
@@ -119,13 +115,9 @@ namespace GUI_WPF
          {
             mouseMovePoint = e.GetPosition(this);
             var sub = Point.Subtract(mouseMovePoint, mouseDownPoint);
-            Trace.WriteLine(sub.X + " " + sub.Y);
-            Trace.WriteLine(canvasTransStartPoint.X + " " + canvasTransStartPoint.Y);
             canvasTranslate.X = canvasTransStartPoint.X + sub.X;
             canvasTranslate.Y = canvasTransStartPoint.Y + sub.Y;
          }
-         if (_selectedFigure != null)
-            _selectedFigure.PointParameters.Where(p => p.Name == "Point2").First().Value = new Point2d(PreviousPoint.X, PreviousPoint.Y);
       }
 
     }
