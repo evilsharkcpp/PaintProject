@@ -28,7 +28,12 @@ namespace Geometry.Transforms
 
         public override void Apply(Vector2d v, ref Vector2d res)
         {
-            v.Sum(_v, ref res);
+            res = v;
+        }
+
+        public override void Inverse()
+        {
+            V = -_v;
         }
     }
 }

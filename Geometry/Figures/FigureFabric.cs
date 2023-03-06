@@ -15,13 +15,16 @@ namespace Geometry.Figures
             Type[] types = Assembly.GetTypes();
             foreach (Type type in types)
             {
-                IEnumerable<Attribute> attributes = type.GetCustomAttributes();
-                foreach (Attribute attribute in attributes)
+                if (typeof(IFigure).IsAssignableFrom(type))
                 {
-                    if (attribute is FigureAttribute figureAttribute)
+                    IEnumerable<Attribute> attributes = type.GetCustomAttributes();
+                    foreach (Attribute attribute in attributes)
                     {
-                        AvailableFigures.Add(figureAttribute.Name, type);
-                        continue;
+                        if (attribute is FigureAttribute figureAttribute)
+                        {
+                            AvailableFigures.Add(figureAttribute.Name, type);
+                            break;
+                        }
                     }
                 }
             }

@@ -13,7 +13,7 @@ namespace Geometry.Transforms
             get => _scaleX;
             set
             {
-                if (value > 0)
+                if (value != _scaleX && value > 0)
                 {
                     _scaleX = value;
                     _matrix.M11 = _scaleX;
@@ -27,7 +27,7 @@ namespace Geometry.Transforms
             get => _scaleY;
             set
             {
-                if (value > 0)
+                if (value != _scaleY && value > 0)
                 {
                     _scaleY = value;
                     _matrix.M22 = _scaleY;
@@ -41,9 +41,12 @@ namespace Geometry.Transforms
             get => _center;
             set
             {
-                _center = value;
-                _matrix.M13 = _center.X * (_scaleX - 1);
-                _matrix.M23 = _center.Y * (_scaleY - 1);
+                if (value != _center)
+                {
+                    _center = value;
+                    _matrix.M13 = _center.X * (_scaleX - 1);
+                    _matrix.M23 = _center.Y * (_scaleY - 1);
+                }
             }
         }
 
@@ -65,6 +68,12 @@ namespace Geometry.Transforms
         {
             res.X = _matrix.M11 * v.X;
             res.Y = _matrix.M22 * v.Y;
+        }
+
+        public override void Inverse()
+        {
+            ScaleX = 1.0 / _scaleX;
+            ScaleY = 1.0 / _scaleY;
         }
     }
 }

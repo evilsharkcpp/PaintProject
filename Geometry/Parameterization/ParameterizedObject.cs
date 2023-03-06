@@ -15,7 +15,7 @@ namespace Geometry.Parameterization
         }
 
 
-        private static readonly Dictionary<Type, Dictionary<PropertyType, IList<ParameterInfo>>> _parameterInfos = new Dictionary<Type, Dictionary<PropertyType, IList<ParameterInfo>>>();
+        private static readonly Dictionary<Type, Dictionary<PropertyType, IList<ParameterInfo>>> _parameterInfos = new();
 
         private static void TryAddType(Type type)
         {

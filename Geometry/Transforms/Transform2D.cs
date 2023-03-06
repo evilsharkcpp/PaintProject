@@ -26,5 +26,10 @@ namespace Geometry.Transforms
             res.X = (_matrix.M11 * v.X + _matrix.M12 * v.Y) / w;
             res.Y = (_matrix.M21 * v.X + _matrix.M22 * v.Y) / w;
         }
+
+        public virtual void Inverse()
+        {
+            _matrix.InverseFrom(_matrix);
+        }
     }
 }

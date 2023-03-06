@@ -43,7 +43,7 @@ namespace Geometry.Figures
             }
         }
 
-        public Point2d Center => _center.Value;
+        public  Point2d Center => _center.Value;
 
         public Line() : this(new Point2d(), new Point2d()) { }
 
@@ -52,12 +52,12 @@ namespace Geometry.Figures
             _point1 = point1;
             _point2 = point2;
 
-            _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
-                          .Select<(Point2d point1, Point2d point2), Point2d>(t =>
-                          {
-                              return new Point2d((t.point1.X + t.point2.X) / 2.0, (t.point1.Y + t.point2.Y) / 2.0);
-                          })
-                          .ToProperty(this, figure => figure.Center);
+            this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
+                .Select<(Point2d point1, Point2d point2), Point2d>(t =>
+                {
+                    return new Point2d((t.point1.X + t.point2.X) / 2.0, (t.point1.Y + t.point2.Y) / 2.0);
+                })
+                .ToProperty(this, figure => figure.Center, out _center);
 
             this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
                 .Subscribe(Observer.Create<(Point2d point1, Point2d point2)>(t =>
@@ -152,7 +152,7 @@ namespace Geometry.Figures
 
         object ICloneable.Clone()
         {
-            return new Line(this);
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,12 +4,18 @@ using System.Runtime.InteropServices;
 namespace DataStructures.Geometry
 {
     [StructLayout(LayoutKind.Explicit, Size = 16)]
-    public struct Point2d
+    public struct Point2d : IEquatable<Point2d>
     {
         [FieldOffset(0)]
         public double X;
         [FieldOffset(8)]
         public double Y;
+
+        public Point2d()
+        {
+            X = 0;
+            Y = 0;
+        }
 
         public Point2d(double x = 0, double y = 0)
         {
@@ -41,6 +47,26 @@ namespace DataStructures.Geometry
         public static Vector2d operator-(Vector2 a, Point2d b)
         {
             return new Vector2d(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static Point2d operator +(Point2d a)
+        {
+            return new Point2d(a.X, a.Y);
+        }
+
+        public static Point2d operator -(Point2d a)
+        {
+            return new Point2d(-a.X, -a.Y);
+        }
+
+        public static bool operator ==(Point2d a, Point2d b)
+        {
+            return a.X == b.X && a.Y == b.Y;
+        }
+
+        public static bool operator !=(Point2d a, Point2d b)
+        {
+            return a.X != b.X || a.Y != b.Y;
         }
 
         public static implicit operator Vector2d(Point2d a)
@@ -76,6 +102,22 @@ namespace DataStructures.Geometry
         {
             res.X = X - a.X;
             res.Y = Y - a.Y;
+        }
+
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Point2d d && Equals(d);
+        }
+
+        public bool Equals(Point2d other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
         }
     }
 }
