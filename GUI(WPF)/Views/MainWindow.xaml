@@ -9,8 +9,8 @@
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
-        WindowStartupLocation="CenterScreen" 
-        WindowState="Maximized">
+        WindowStartupLocation="CenterScreen"
+        x:Name="mainWindow" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -18,7 +18,7 @@
             <RowDefinition Height="35*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Background="#FF505050">
+        <Grid Panel.ZIndex="2" Background="#FF505050">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="27*"/>
                 <ColumnDefinition Width="27*"/>
@@ -44,7 +44,7 @@
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/return.png" />
             </Button>
         </Grid>
-        <Grid Grid.Row="1" Background="#FF505050">
+        <Grid Panel.ZIndex="2" Grid.Row="1" Background="#FF505050">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="22*"/>
                 <ColumnDefinition Width="271*"/>
@@ -94,13 +94,22 @@
 
             </Grid>
         </Grid>
-        <Grid Grid.Row="2">
+
+        <Grid  Grid.Row="2" Background="#FFC3C3C3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="30*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Background="#FF505050">
+            <Canvas Name="canvas" MouseMove="canvas_MouseMove" MouseLeftButtonDown="canvas_MouseDown" MouseLeftButtonUp="Canvas_MouseLeftButtonUp" MouseWheel="Canvas_MouseWheel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Background="White">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="canvasST" ScaleX="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TranslateTransform x:Name="canvasTranslate"/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+            </Canvas>
+            <Grid Panel.ZIndex="2" Background="#FF505050">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="12*"/>
@@ -132,7 +141,6 @@
                     </Button>
                 </Grid>
             </Grid>
-            <Canvas Grid.Column="1"/>
             <Grid Grid.Column="2" Background="#FF505050">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="549*"/>
@@ -276,7 +284,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="3" Background="#FF505050">
+        <Grid Panel.ZIndex="2" Grid.Row="3" Background="#FF505050">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="54*"/>
                 <ColumnDefinition Width="200*"/>
@@ -311,17 +319,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="39*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Content="X:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12"/>
-                    <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Margin="0,14,0,0" Grid.RowSpan="2" Width="12"/>
-                    <Label Grid.Row="0" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" Foreground="White" Padding="0,0,0,0" Width="16"/>
-                    <Label Grid.Row="1" Grid.Column="1" Content="1.0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="15" Width="16"/>
+                    <Label Content="Y:" HorizontalAlignment="Center" Foreground="White" Padding="0,0,0,0" Width="12" Grid.Row="1"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=PreviousPoint.X, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Foreground="White" Padding="0,0,0,0" FontSize="11"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=PreviousPoint.Y, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" Padding="0,0,0,0" FontSize="11"/>
 
                 </Grid>
                 <Grid Grid.Column="1">
@@ -332,12 +340,12 @@
                         <ColumnDefinition Width="34*"/>
                     </Grid.ColumnDefinitions>
                     <Label ToolTip="Масштаб" Content="Z :" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
-                    <TextBox Grid.Column="1" TextWrapping="Wrap" Text="100%" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
-                    <Button ToolTip="Уменьшить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="2" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050" Margin="2,0,2,0">
-                        <Image Source="/Views/Assets/minus.png" Margin="5,0,5,0" />
+                    <TextBox Name="scaleTextBox" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=ScaleString, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                    <Button MouseLeftButtonDown="scaleDownButtonDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ToolTip="Уменьшить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="2" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050" Margin="2,0,2,0">
+                        <Image MouseLeftButtonDown="scaleDownButtonDown" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/Views/Assets/minus.png" Margin="5,0,5,0" />
                     </Button>
-                    <Button ToolTip="Увеличить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="3" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050">
-                        <Image Source="/Views/Assets/plus.png" Margin="5,5,5,5" />
+                    <Button MouseLeftButtonDown="scaleUpButtonDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ToolTip="Увеличить масштаб" Style="{StaticResource MyButtonStyle}" Grid.Column="3" BorderBrush="{x:Null}" Foreground="White" Background="#FF505050">
+                        <Image MouseLeftButtonDown="scaleUpButtonDown" Source="/Views/Assets/plus.png" Margin="5,5,5,5" />
                     </Button>
 
                 </Grid>
