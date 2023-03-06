@@ -45,6 +45,11 @@ namespace Geometry.Figures
 
         public Point2d Center => _center.Value;
 
+        public float Width { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public float Height { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public float Angle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IList<Point2d> Points { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public Line() : this(new Point2d(), new Point2d()) { }
 
         public Line(Point2d point1, Point2d point2)
