@@ -74,6 +74,9 @@ namespace Geometry.Figures
         {
             _point1 = point1;
             _point2 = point2;
+            l1 = 1;
+            l2 = 1;
+
 
             _center = this.WhenAnyValue(figure => figure.Point1, figure => figure.Point2)
                           .Select<(Point2d point1, Point2d point2), Point2d>(t =>
@@ -90,6 +93,12 @@ namespace Geometry.Figures
                     _lenght = _v.Norm;
                     _v.Normilize();
                 }));
+        }
+
+        public Rectangle(Point2d point1, Point2d point2, double l1, double l2) : this(point1, point2)
+        {
+            this.l1 = l1;
+            this.l2 = l2;
         }
 
         public Rectangle(Rectangle rectangle) : this(rectangle._point1, rectangle._point2) { }
