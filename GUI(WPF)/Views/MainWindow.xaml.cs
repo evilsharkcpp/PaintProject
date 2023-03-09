@@ -2,17 +2,9 @@
 using Logic.ViewModels;
 using System;
 using System.Windows;
-using GUI_WPF.Graphics;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Input;
-using Geometry;
 using System.ComponentModel;
-using System.Windows.Threading;
-using DataStructures.Geometry;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace GUI_WPF
 {
@@ -72,44 +64,15 @@ namespace GUI_WPF
             OnPropertyChanged();
          }
       }
-
-      DispatcherTimer _timer;
       public MainWindow()
       {
          InitializeComponent();
          _vm = new MainVM();
          _graphics = new Graphics.Graphic(canvas);
          DataContext = _vm;
-         _vm.CreateFigure.Subscribe();
-         //var fabric = FigureFabric.Create();
-         _timer = new DispatcherTimer();
-         _timer.Tick += new EventHandler(Draw);
-         _timer.Interval = new TimeSpan(0, 0, 0, 0, 17);
-         _timer.Start();
          canvasTransStartPoint = new Point();
          mouseDownPoint = new Point();
          mouseMovePoint = new Point();
-         //_selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(100, 100));
-      }
-      private void Draw(object sender, EventArgs e)
-      {
-         canvas.Children.Clear();
-         if (_vm.Figures == null) return;
-         foreach (var item in _vm.Figures)
-         {
-            _graphics.GraphicStyle = item.Item2;
-            item.Item1.Draw(_graphics);
-         }
-         if (_selectedFigure != null)
-            _selectedFigure.Draw(_graphics);
-      }
-      private void Button_Click(object sender, RoutedEventArgs e)
-      {
-         var fabric = FigureFabric.Create();
-         _selectedFigure = fabric?.CreateFigure("Line", new Point2d(0, 0), new Point2d(0, 0));
-         _vm.Figures = _vm.Figures.Append((_selectedFigure, new Drawable(new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B),
-             new DataStructures.Color(main.SelectedColor.A, main.SelectedColor.R, main.SelectedColor.G, main.SelectedColor.B))));
-         //_test.Draw(_graphics);
       }
 
       private void canvas_MouseMove(object sender, MouseEventArgs e)
@@ -125,5 +88,76 @@ namespace GUI_WPF
          }
       }
 
-    }
+      public event PropertyChangedEventHandler PropertyChanged;
+      protected void OnPropertyChanged([CallerMemberName] string name = null)
+      {
+         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+      }
+
+      private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
+      {
+         var point = e.GetPosition(canvas);
+         MouseDownPoint = new Point(point.X, point.Y);
+         if (Keyboard.IsKeyDown(Key.LeftShift))
+         {
+            mouseDownPoint = e.GetPosition(this);
+            canvasTransStartPoint.X = canvasTranslate.X;
+            canvasTransStartPoint.Y = canvasTranslate.Y;
+            canvasTranslateState = true;
+         }
+      }
+
+      private void scaleUp()
+      {
+         CanvasScale = CanvasScale + 0.05;
+         ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
+      }
+
+      private void scaleDown()
+      {
+         CanvasScale = CanvasScale - 0.05;
+         ScaleString = Math.Round(CanvasScale * 100).ToString() + "%";
+      }
+
+      private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+      {
+         if (e.Delta > 0 && CanvasScale < 2.5)
+         {
+            canvasST.CenterX = PreviousPoint.X;
+            canvasST.CenterY = PreviousPoint.Y;
+            scaleUp();
+         }
+         else if (CanvasScale > 0.6)
+         {
+            canvasST.CenterX = PreviousPoint.X;
+            canvasST.CenterY = PreviousPoint.Y;
+            scaleDown();
+         }
+      }
+
+      private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+      {
+         canvasTranslateState = false;
+      }
+
+      private void scaleDownButtonDown(object sender, RoutedEventArgs e)
+      {
+         if (CanvasScale > 0.6)
+         {
+            canvasST.CenterX = canvas.ActualWidth / 2.0;
+            canvasST.CenterY = canvas.ActualHeight / 2.0;
+            scaleDown();
+         }
+      }
+
+      private void scaleUpButtonDown(object sender, RoutedEventArgs e)
+      {
+         if (CanvasScale < 2.5)
+         {
+            canvasST.CenterX = canvas.ActualWidth / 2.0;
+            canvasST.CenterY = canvas.ActualHeight / 2.0;
+            scaleUp();
+         }
+      }
+   }
 }

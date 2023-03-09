@@ -16,7 +16,7 @@ namespace GUI_WPF.Graphics
 
         public Matrix3d ModelMatrix { get; set; }
 
-        private Canvas _canvas;
+      private Canvas _canvas;
 
         public void DrawEllipse(Point2d start, double a, double b, bool isFill, bool isOutLine)
         {
@@ -34,7 +34,7 @@ namespace GUI_WPF.Graphics
             elllipse.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
                                                            ModelMatrix.M21, ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
-           _canvas.Children.Add(elllipse);
+            _canvas.Children.Add(elllipse);
         }
 
         public void DrawLine(Point2d v1, Point2d v2, bool isFill, bool isOutLine)
@@ -51,8 +51,8 @@ namespace GUI_WPF.Graphics
             c.B = GraphicStyle.OutLineColor.B;
             line.Stroke = new SolidColorBrush(c);
             line.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                       ModelMatrix.M21, ModelMatrix.M22,
-                                                       ModelMatrix.M13, ModelMatrix.M23);
+                                                           ModelMatrix.M21, ModelMatrix.M22,
+                                                           ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(line);
         }
 
@@ -70,8 +70,8 @@ namespace GUI_WPF.Graphics
             c.B = GraphicStyle.OutLineColor.B;
             poly.Stroke = new SolidColorBrush(c);
             poly.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                       ModelMatrix.M21, ModelMatrix.M22,
-                                                       ModelMatrix.M13, ModelMatrix.M23);
+                                                           ModelMatrix.M21, ModelMatrix.M22,
+                                                           ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(poly);
         }
 
@@ -95,8 +95,8 @@ namespace GUI_WPF.Graphics
             Canvas.SetLeft(rect, start.X);
             Canvas.SetTop(rect, start.Y);
             rect.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                       ModelMatrix.M21, ModelMatrix.M22,
-                                                       ModelMatrix.M13, ModelMatrix.M23);
+                                                           ModelMatrix.M21, ModelMatrix.M22,
+                                                           ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(rect);
         }
 
