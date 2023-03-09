@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -50,6 +51,7 @@ namespace Geometry.Transforms
             }
         }
 
+
         public ScaleTransform2D()
         {
             _scaleX = 1;
@@ -70,10 +72,10 @@ namespace Geometry.Transforms
             res.Y = _matrix.M22 * v.Y;
         }
 
-        public override void Inverse()
+        public override void Apply(Vector2 v, ref Vector2d res)
         {
-            ScaleX = 1.0 / _scaleX;
-            ScaleY = 1.0 / _scaleY;
+            res.X = _matrix.M11 * v.X;
+            res.Y = _matrix.M22 * v.Y;
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Interfaces;
+﻿using Geometry.Attributes;
+using Interfaces;
 using System.Reflection;
 
-namespace Geometry.Figures
+namespace Geometry
 {
     public class FigureFabric
     {
@@ -17,12 +18,12 @@ namespace Geometry.Figures
             {
                 if (typeof(IFigure).IsAssignableFrom(type))
                 {
-                IEnumerable<Attribute> attributes = type.GetCustomAttributes();
-                foreach (Attribute attribute in attributes)
-                {
-                    if (attribute is FigureAttribute figureAttribute)
+                    IEnumerable<Attribute> attributes = type.GetCustomAttributes();
+                    foreach (Attribute attribute in attributes)
                     {
-                        AvailableFigures.Add(figureAttribute.Name, type);
+                        if (attribute is FigureAttribute figureAttribute)
+                        {
+                            AvailableFigures.Add(figureAttribute.Name, type);
                             break;
                         }
                     }

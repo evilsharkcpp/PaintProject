@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -31,9 +32,10 @@ namespace Geometry.Transforms
             res = v;
         }
 
-        public override void Inverse()
+        public override void Apply(Vector2 v, ref Vector2d res)
         {
-            V = -_v;
+            res.X = v.X;
+            res.Y = v.Y;
         }
     }
 }

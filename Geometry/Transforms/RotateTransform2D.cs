@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -60,15 +61,10 @@ namespace Geometry.Transforms
             res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;
         }
 
-        public override void Inverse()
+        public override void Apply(Vector2 v, ref Vector2d res)
         {
-            _angle = -_angle;
-
-            _matrix.M21 = -_matrix.M21;
-            _matrix.M12 = -_matrix.M12;
-
-            _matrix.M13 = _center.X * (_matrix.M11 - 1) - _matrix.M21 * _center.Y;
-            _matrix.M23 = _center.Y * (_matrix.M11 - 1) + _matrix.M21 * _center.X;
+            res.X = _matrix.M11 * v.X + _matrix.M12 * v.Y;
+            res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;
         }
     }
 }

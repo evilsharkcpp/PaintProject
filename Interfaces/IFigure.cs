@@ -5,17 +5,22 @@ namespace Interfaces
 {
     public interface IFigure : ICloneable
     {
-        float Width { get; set; }
-        float Height { get; set; }
-        float Angle { get; set; }
-        IList<Point2d> Points { get; set; }
+        Vector2d Size { get; set; }
+        double Angle { get; set; }
+        Point2d Position { get; set; }
+
+        IReadOnlyList<INode> Nodes { get; }
+        IReadOnlyList<IParameter<object>> ExtraProperties { get; }
+
+        void Draw(IGraphics graphics);
+
+        bool IsInside(Vector2 p, double eps);
+
         bool HasIntersection(IFigure figure);
-        new IFigure Clone();
         IFigure Intersect(IFigure second);
         IFigure Union(IFigure second);
         IFigure Subtruct(IFigure second);
-        void Draw(IGraphics graphics);
-        bool IsInside(Vector2 p, float eps);
-        Point2d Center { get; }
+
+        new IFigure Clone();
     }
 }

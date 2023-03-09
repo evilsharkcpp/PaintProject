@@ -1,11 +1,5 @@
-﻿using DataStructures.Geometry;
-using Geometry.Parameterization;
-using Geometry.Transforms;
+﻿using Geometry.Attributes;
 using Interfaces;
-using ReactiveUI;
-using System.Numerics;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Runtime.Serialization;
 
 namespace Geometry.Figures
@@ -14,13 +8,24 @@ namespace Geometry.Figures
     [Figure("FilledCircle")]
     internal class FilledCircle : Circle
     {
-        public FilledCircle(Circle circle) : base(circle) {}
-
-        public FilledCircle(Point2d center, double radius) : base(center, radius) {}
-
-        public override void Draw(IGraphics graphics)
+        public FilledCircle()
         {
-            graphics.DrawCircle(_center, _radius, true, true);
+            _bindSize = true;
+        }
+
+        public FilledCircle(FilledCircle filledCircle) : base(filledCircle)
+        {
+            _bindSize = true;
+        }
+
+        public override IFigure Clone()
+        {
+            return new FilledCircle(this);
+        }
+
+        protected override void OnDraw(IGraphics graphics)
+        {
+            graphics.DrawEllipse(Center, Radius, Radius, true, true);
         }
     }
 }

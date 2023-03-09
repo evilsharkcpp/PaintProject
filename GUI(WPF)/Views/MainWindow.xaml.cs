@@ -8,6 +8,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Input;
+using Geometry;
+using System.ComponentModel;
+using System.Windows.Threading;
+using DataStructures.Geometry;
 
 namespace GUI_WPF
 {

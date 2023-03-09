@@ -1,4 +1,4 @@
-﻿namespace Geometry.Parameterization
+﻿namespace Geometry.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     internal class ParameterAttribute : Attribute
