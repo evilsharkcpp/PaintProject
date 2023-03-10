@@ -14,6 +14,7 @@ namespace IO
         {
             test__create_two_line__JSON();
             test__read_two_line__JSON();
+            test__create_two_line__SWG();
         }
 
         public void test__create_two_line__JSON()
@@ -35,12 +36,31 @@ namespace IO
             jc.WriteFile("two_lines", array);
         }
 
+        public void test__create_two_line__SWG()
+        {
+            Point2d p1 = new Point2d(0, 0);
+            Point2d p2 = new Point2d(95, 95);
+
+            var line = new Geometry.Figures.Line(p1, p2);
+
+            Point2d p21 = new Point2d(130, 200);
+            Point2d p22 = new Point2d(200, 160);
+
+            var line2 = new Geometry.Figures.Line(p21, p22);
+
+            IEnumerable<IFigure> array = new List<IFigure>() { line, line2 };
+
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("two_lines", array);
+        }
+
 
         public void test__read_two_line__JSON()
         {
             JSONConverter jc = new JSONConverter();
 
-            IEnumerable<IFigure> figures = jc.ReadFile("two_lines");
+            IEnumerable<IFigure> figures = jc.ReadFile("two_lines.json");
 
             Console.WriteLine("конец...");
 
