@@ -21,18 +21,19 @@ namespace IO
     {
         public IEnumerable<IFigure> ReadFile(string filename)
         {
-
+            // Проверка на существование файла
             FileValidator.CheckFileExists(filename);
-
-            IEnumerable<IFigure> deserializedFigures;
 
             FileStream fs = new FileStream(filename, FileMode.Open);
             var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
 
-            deserializedFigures = (IEnumerable<IFigure>)ser.ReadObject(fs);
+            IEnumerable<IFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<IFigure>;
             fs.Close();
 
-            return deserializedFigures;
+            if (deserializedFigures != null)
+                return deserializedFigures;
+            else
+                return Enumerable.Empty<IFigure>();
         }
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
