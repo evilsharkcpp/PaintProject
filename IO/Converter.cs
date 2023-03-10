@@ -21,23 +21,24 @@ namespace IO
     {
         public IEnumerable<IFigure> ReadFile(string filename)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Open);
-            XmlDictionaryReader reader =
-                XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-            DataContractSerializer ser = new DataContractSerializer(typeof(Person));
+            IEnumerable<IFigure> deserializedFigures;
 
-            throw new NotImplementedException();
+            FileStream fs = new FileStream(filename, FileMode.Open);
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
+
+            deserializedFigures = (IEnumerable<IFigure>)ser.ReadObject(fs);
+            fs.Close();
+
+            return deserializedFigures;
         }
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
             FileStream stream = new FileStream(filename, FileMode.Create);
 
-            foreach (IFigure figure in figures)
-            {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IFigure));
-                ser.WriteObject(stream, figure);
-            }
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
+            ser.WriteObject(stream, figures);
+
         }
 
     }
