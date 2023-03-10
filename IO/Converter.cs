@@ -14,18 +14,23 @@ using System.Runtime.ConstrainedExecution;
 using DynamicData;
 using System.Runtime.Serialization;
 using System.Xml;
+using Geometry.Figures;
+using ExCSS;
 
 namespace IO
 {
-    internal class JSONConverter : IConverter
+    public class JSONConverter : IConverter
     {
         public IEnumerable<IFigure> ReadFile(string filename)
         {
-            // Проверка на существование файла
-            FileValidator.CheckFileExists(filename);
-
             FileStream fs = new FileStream(filename, FileMode.Open);
-            var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>), 
+                        new Type[] {
+                                typeof(Line),
+                                typeof(Rectangle),
+                                typeof(Triangle),
+                                typeof(Square),
+                            });
 
             IEnumerable<IFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<IFigure>;
             fs.Close();
@@ -38,18 +43,22 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
-            FileValidator.CheckParentDirectory(filename);
-
             FileStream stream = new FileStream(filename, FileMode.Create);
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>),
+                                                new Type[] { 
+                                                    typeof(Line),
+                                                    typeof(Rectangle),
+                                                    typeof(Triangle),
+                                                    typeof(Square),
+                                                });
             ser.WriteObject(stream, figures);
-
+            stream.Close();
         }
 
     }
 
-    internal class SVGConverter : IConverter
+    public class SVGConverter : IConverter
     {
         public IEnumerable<IFigure> ReadFile(string filename)
         {
@@ -62,7 +71,7 @@ namespace IO
 
             foreach (IFigure figure in figures)
             {
-
+                
 
             }
 
