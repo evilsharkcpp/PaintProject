@@ -16,6 +16,11 @@ using System.Runtime.Serialization;
 using System.Xml;
 using Geometry.Figures;
 using ExCSS;
+using Svg;
+using System.Xml.Linq;
+using IO.SVGFigures;
+using System.Data.SqlTypes;
+using System.IO;
 
 namespace IO
 {
@@ -43,7 +48,7 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
-            FileStream stream = new FileStream(filename, FileMode.Create);
+            FileStream stream = new FileStream(filename + ".json", FileMode.Create);
 
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>),
                                                 new Type[] { 
@@ -67,11 +72,58 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
-            FileValidator.CheckParentDirectory(filename);
+            SvgDocument svg_doc = new SvgDocument{ Width = 500, Height = 500};
 
             foreach (IFigure figure in figures)
             {
                 
+                switch (figure.GetType().Name)
+                {
+                    case "Line":
+                        double x1 = figure.PointParameters.ElementAt(0).Value.X;
+                        double y1 = figure.PointParameters.ElementAt(0).Value.Y;
+                        double x2 = figure.PointParameters.ElementAt(1).Value.X;
+                        double y2 = figure.PointParameters.ElementAt(1).Value.Y;
+
+
+                        var line = new SVGLine().Line(x1, y1, x2, y2);
+                        svg_doc.Children.Add(line);
+                        break;
+
+                    case "Rectangle":
+
+                        break;
+
+                    case "Triangle":
+
+                        break;
+
+                    case "Square":
+
+                        break;
+
+                    case "Cicle":
+
+                        break;
+
+                    case "Ellips":
+
+                        break;
+
+                    case "FilledCicrle":
+
+                        break;
+                }
+
+                MemoryStream stream = new MemoryStream();
+                svg_doc.Write(stream);
+
+                string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
+
+                using (StreamWriter writer = new StreamWriter(filename + ".svg"))
+                {
+                    writer.Write(svg_string);
+                }
 
             }
 
