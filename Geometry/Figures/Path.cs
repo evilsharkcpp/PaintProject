@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Geometry.Figures
 {
     [DataContract]
-    [Figure("Line")]
+    [Figure("Path")]
     public class Path : Figure
     {
         public override IFigure Clone()

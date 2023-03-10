@@ -156,36 +156,6 @@ namespace DataStructures.Geometry
             return a._x != b._x || a._y != b._y;
         }
 
-        public static double operator^(Vector2d a, Vector2d b)
-        {
-            return a.X * b.Y - a.Y * b.X;
-        }
-
-        public static double operator^(Vector2 a, Vector2d b)
-        {
-            return a.X * b.Y - a.Y * b.X;
-        }
-
-        public static double operator^(Vector2d a, Vector2 b)
-        {
-            return a.X * b.Y - a.Y * b.X;
-        }
-
-        public static Vector2d operator*(double a, Vector2d b)
-        {
-            return new Vector2d(a * b.X, a * b.Y) { _norm = a * b._norm };
-        }
-
-        public static Vector2d operator*(Vector2d a, double b)
-        {
-            return new Vector2d(b * a.X, b * a.Y) { _norm = b * a._norm };
-        }
-
-        public static Vector2d operator/(Vector2d a, double b)
-        {
-            return new Vector2d(a.X / b, a.Y / b) { _norm = a._norm / b };
-        }
-
         public static implicit operator Vector2(Vector2d a)
         {
             return new Vector2((float)a._x, (float)a._y);
@@ -241,13 +211,6 @@ namespace DataStructures.Geometry
         public override int GetHashCode()
         {
             return HashCode.Combine(_x, _y);
-        }
-
-        public void Normilize()
-        {
-            _x /= Norm;
-            _y /= Norm;
-            _norm = 1;
         }
     }
 }
