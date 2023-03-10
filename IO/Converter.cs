@@ -21,6 +21,9 @@ namespace IO
     {
         public IEnumerable<IFigure> ReadFile(string filename)
         {
+
+            FileValidator.CheckFileExists(filename);
+
             IEnumerable<IFigure> deserializedFigures;
 
             FileStream fs = new FileStream(filename, FileMode.Open);
@@ -34,6 +37,8 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
+            FileValidator.CheckParentDirectory(filename);
+
             FileStream stream = new FileStream(filename, FileMode.Create);
 
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>));
@@ -52,7 +57,7 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
-
+            FileValidator.CheckParentDirectory(filename);
 
             foreach (IFigure figure in figures)
             {
