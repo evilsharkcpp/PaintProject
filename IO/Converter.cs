@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 
 
 using Interfaces;
+using System.Runtime.Serialization.Json;
+using Splat.ModeDetection;
 
 namespace IO
 {
@@ -20,11 +22,12 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<IFigure> figures)
         {
-            string json_string = JsonConvert.SerializeObject(figures);
+            FileStream stream = new FileStream(filename, FileMode.Create);
 
-            using (StreamWriter writer = new StreamWriter(filename))
+            foreach (IFigure figure in figures)
             {
-                writer.Write(json_string);
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IFigure));
+                ser.WriteObject(stream, figure);
             }
         }
 
