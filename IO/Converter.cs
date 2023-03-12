@@ -145,9 +145,20 @@ namespace IO
                         center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
                         radius = (double)svg_circle.Radius;
 
-                        // Непубличный класс
-                        // Circle circle = new Circle(center, radius);
-                        // deserializedFigures.Append(circle);
+                        if (svg_circle.Fill == SvgPaintServer.None)
+                        {
+                            // Непубличный класс
+                            // Circle circle = new Circle(center, radius);
+                            // deserializedFigures.Append(circle);
+                        }
+                        else
+                        {
+                            // Непубличный класс
+                            // FilledCircle filled_circle = new FilledCircle(center, radius);
+                            // deserializedFigures.Append(filled_circle);
+                        }
+
+
                         break;
 
                     case "SvgEllips":
