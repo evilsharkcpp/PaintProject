@@ -1,4 +1,4 @@
-﻿namespace Geometry.Figures
+﻿namespace Geometry.Attributes
 {
     internal class FigureAttribute : Attribute
     {

@@ -5,7 +5,7 @@ namespace Geometry.Parameterization
     public delegate T Getter<T>();
     public delegate void Setter<T>(T value);
 
-    public class Parameter<ValueType> : IParameter<ValueType>
+    internal class Parameter<ValueType> : IParameter<ValueType>
     {
         private readonly Getter<ValueType>? _getter;
         private readonly Setter<ValueType>? _setter;
@@ -22,7 +22,7 @@ namespace Geometry.Parameterization
             {
                 if (_hasGetter)
                 {
-                    return _getter();
+                    return _getter!();
                 }
                 else
                 {
@@ -33,7 +33,7 @@ namespace Geometry.Parameterization
             {
                 if (_hasGetter)
                 {
-                    _setter(value);
+                    _setter!(value);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -22,9 +23,14 @@ namespace Geometry.Transforms
 
         public virtual void Apply(Vector2d v, ref Vector2d res)
         {
-            double w = _matrix.M31 * v.X + _matrix.M32 * v.Y;
-            res.X = (_matrix.M11 * v.X + _matrix.M12 * v.Y) / w;
-            res.Y = (_matrix.M21 * v.X + _matrix.M22 * v.Y) / w;
+            res.X = _matrix.M11 * v.X + _matrix.M12 * v.Y;
+            res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;
+        }
+
+        public virtual void Apply(Vector2 v, ref Vector2d res)
+        {
+            res.X = _matrix.M11 * v.X + _matrix.M12 * v.Y;
+            res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;
         }
     }
 }

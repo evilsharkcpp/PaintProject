@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace DataStructures.Geometry
 {
     [StructLayout(LayoutKind.Explicit, Size = 24)]
-    public struct Vector2d
+    public struct Vector2d : IEquatable<Vector2d>
     {
         [FieldOffset(0)]
         private double _x;
@@ -46,6 +46,13 @@ namespace DataStructures.Geometry
             }
         }
 
+        public Vector2d()
+        {
+            _x = 0;
+            _y = 0;
+            _norm = 0;
+        }
+
         public Vector2d(double x = 0, double y = 0)
         {
             _x = x;
@@ -56,107 +63,132 @@ namespace DataStructures.Geometry
 
         public static Vector2d operator+(Vector2d a, Vector2d b)
         {
-            return new Vector2d(a.X + b.X, a.Y + b.Y);
+            return new Vector2d(a._x + b._x, a._y + b._y);
         }
 
         public static Vector2d operator+(Vector2 a, Vector2d b)
         {
-            return new Vector2d(a.X + b.X, a.Y + b.Y);
+            return new Vector2d(a.X + b._x, a.Y + b._y);
         }
 
         public static Vector2d operator+(Vector2d a, Vector2 b)
         {
-            return new Vector2d(a.X + b.X, a.Y + b.Y);
+            return new Vector2d(a._x + b.X, a._y + b.Y);
         }
 
         public static Vector2d operator-(Vector2d a, Vector2d b)
         {
-            return new Vector2d(a.X - b.X, a.Y - b.Y);
+            return new Vector2d(a._x - b._x, a._y - b._y);
         }
 
         public static Vector2d operator-(Vector2 a, Vector2d b)
         {
-            return new Vector2d(a.X - b.X, a.Y - b.Y);
+            return new Vector2d(a.X - b._x, a.Y - b._y);
         }
 
         public static Vector2d operator-(Vector2d a, Vector2 b)
         {
-            return new Vector2d(a.X - b.X, a.Y - b.Y);
+            return new Vector2d(a._x - b.X, a._y - b.Y);
         }
 
         public static double operator*(Vector2d a, Vector2d b)
         {
-            return a.X * b.X + a.Y * b.Y;
+            return a._x * b._x + a._y * b._y;
         }
 
         public static double operator*(Vector2 a, Vector2d b)
         {
-            return a.X * b.X + a.Y * b.Y;
+            return a.X * b._x + a.Y * b._y;
         }
 
         public static double operator*(Vector2d a, Vector2 b)
         {
-            return a.X * b.X + a.Y * b.Y;
+            return a._x * b.X + a._y * b.Y;
         }
 
         public static double operator^(Vector2d a, Vector2d b)
         {
-            return a.X * b.Y - a.Y * b.X;
+            return a._x * b._y - a._y * b._x;
         }
 
         public static double operator^(Vector2 a, Vector2d b)
         {
-            return a.X * b.Y - a.Y * b.X;
+            return a.X * b._y - a.Y * b._x;
         }
 
         public static double operator^(Vector2d a, Vector2 b)
         {
-            return a.X * b.Y - a.Y * b.X;
+            return a._x * b.Y - a._y * b.X;
         }
 
         public static Vector2d operator*(double a, Vector2d b)
         {
-            return new Vector2d(a * b.X, a * b.Y) { _norm = a * b._norm };
+            return new Vector2d(a * b._x, a * b._y) { _norm = a * b._norm };
         }
 
         public static Vector2d operator*(Vector2d a, double b)
         {
-            return new Vector2d(b * a.X, b * a.Y) { _norm = b * a._norm };
+            return new Vector2d(b * a._x, b * a._y) { _norm = b * a._norm };
         }
 
         public static Vector2d operator/(Vector2d a, double b)
         {
-            return new Vector2d(a.X / b, a.Y / b) { _norm = a._norm / b };
+            return new Vector2d(a._x / b, a._y / b) { _norm = a._norm / b };
+        }
+
+        public static Vector2d operator+(Vector2d a)
+        {
+            return new Vector2d(a._x, a._y);
+        }
+
+        public static Vector2d operator-(Vector2d a)
+        {
+            return new Vector2d(-a._x, -a._y);
+        }
+
+        public static bool operator==(Vector2d a, Vector2d b)
+        {
+            return a._x == b._x && a._y == b._y;
+        }
+
+        public static bool operator!=(Vector2d a, Vector2d b)
+        {
+            return a._x != b._x || a._y != b._y;
         }
 
         public static implicit operator Vector2(Vector2d a)
         {
-            return new Vector2((float)a.X, (float)a.Y);
+            return new Vector2((float)a._x, (float)a._y);
+        }
+
+        public static implicit operator Vector2d(Vector2 a)
+        {
+            return new Vector2(a.X, a.X);
         }
 
 
         public void Sum(Vector2d a, ref Vector2d res)
         {
-            res.X = _x + a.X;
-            res.Y = _y + a.Y;
+            res._x = _x + a._x;
+            res._y = _y + a._y;
         }
 
         public void Sum(Vector2 a, ref Vector2d res)
         {
-            res.X = _x + a.X;
-            res.Y = _y + a.Y;
+            res._x = _x + a.X;
+            res._y = _y + a.Y;
         }
 
         public void Sub(Vector2d a, ref Vector2d res)
         {
-            res.X = _x - a.X;
-            res.Y = _y - a.Y;
+            res._x = _x - a._x;
+            res._y = _y - a._y;
         }
 
         public void Sub(Vector2 a, ref Vector2d res)
         {
-            res.X = _x - a.X;
-            res.Y = _y - a.Y;
+            res._x = _x - a.X;
+            res._y = _y - a.Y;
         }
 
         public void Normilize()
@@ -164,6 +196,21 @@ namespace DataStructures.Geometry
             _x /= Norm;
             _y /= Norm;
             _norm = 1;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Vector2d d && Equals(d);
+        }
+
+        public bool Equals(Vector2d other)
+        {
+            return _x == other._x && _y == other._y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_x, _y);
         }
     }
 }
