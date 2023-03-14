@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ReactiveUI;
 using System.Linq;
-using GUI_WPF.Graphics;
 using System.Windows.Threading;
 using System.Windows.Controls;
+using Logic.Graphics;
 
 namespace GUI_WPF
 {
