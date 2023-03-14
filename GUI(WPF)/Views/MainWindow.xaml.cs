@@ -141,11 +141,15 @@ namespace GUI_WPF
 
         private void AddFigure(IFigure? figure)
         {
-            figure.Size = new DataStructures.Geometry.Vector2d(100, 1000);
-            figure.Position = new DataStructures.Geometry.Point2d(MouseDownPoint.X, MouseDownPoint.Y);
-            _vm.AddFigure.Execute((figure, new Drawable(new DataStructures.Color(main1.SelectedColor.A, main1.SelectedColor.R, main1.SelectedColor.G, main1.SelectedColor.B),
-                new DataStructures.Color(main2.SelectedColor.A, main2.SelectedColor.R, main2.SelectedColor.G, main2.SelectedColor.B)))).Subscribe();
-            _ = SelectedFigure;
+            if (figure != null)
+            {
+                figure.Angle = Math.PI / 4.0;
+                figure.Size = new DataStructures.Geometry.Vector2d(100, 100);
+                figure.Position = new DataStructures.Geometry.Point2d(MouseDownPoint.X, MouseDownPoint.Y);
+                _vm.AddFigure.Execute((figure, new Drawable(new DataStructures.Color(main1.SelectedColor.A, main1.SelectedColor.R, main1.SelectedColor.G, main1.SelectedColor.B),
+                    new DataStructures.Color(main2.SelectedColor.A, main2.SelectedColor.R, main2.SelectedColor.G, main2.SelectedColor.B)))).Subscribe();
+                _ = SelectedFigure;
+            }
         }
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
