@@ -360,58 +360,50 @@ namespace DataStructures.Geometry
 
         public void Product(Vector2d v, ref Vector2d res)
         {
-            double w = _M31 * v.X + _M32 * v.Y;
-            res.X = (_M11 * v.X + _M12 * v.Y) / w;
-            res.Y = (_M21 * v.X + _M22 * v.Y) / w;
+            res.X = _M11 * v.X + _M12 * v.Y;
+            res.Y = _M21 * v.X + _M22 * v.Y;
         }
 
         public void ProductT(Vector2d v, ref Vector2d res)
         {
-            double w = _M13 * v.X + _M23 * v.Y;
-            res.X = (_M11 * v.X + _M21 * v.Y) / w;
-            res.Y = (_M12 * v.X + _M22 * v.Y) / w;
+            res.X = _M11 * v.X + _M21 * v.Y;
+            res.Y = _M12 * v.X + _M22 * v.Y;
         }
 
         public void Product(Vector2 v, ref Vector2d res)
         {
-            double w = _M31 * v.X + _M32 * v.Y;
-            res.X = (_M11 * v.X + _M12 * v.Y) / w;
-            res.Y = (_M21 * v.X + _M22 * v.Y) / w;
+            res.X = _M11 * v.X + _M12 * v.Y;
+            res.Y = _M21 * v.X + _M22 * v.Y;
         }
 
         public void ProductT(Vector2 v, ref Vector2d res)
         {
-            double w = _M13 * v.X + _M23 * v.Y;
-            res.X = (_M11 * v.X + _M21 * v.Y) / w;
-            res.Y = (_M12 * v.X + _M22 * v.Y) / w;
+            res.X = _M11 * v.X + _M21 * v.Y;
+            res.Y = _M12 * v.X + _M22 * v.Y;
         }
 
         public void Product(Vector2d v, ref Vector2 res)
         {
-            double w = _M31 * v.X + _M32 * v.Y;
-            res.X = (float)((_M11 * v.X + _M12 * v.Y) / w);
-            res.Y = (float)((_M21 * v.X + _M22 * v.Y) / w);
+            res.X = (float)(_M11 * v.X + _M12 * v.Y);
+            res.Y = (float)(_M21 * v.X + _M22 * v.Y);
         }
 
         public void ProductT(Vector2d v, ref Vector2 res)
         {
-            double w = _M13 * v.X + _M23 * v.Y;
-            res.X = (float)((_M11 * v.X + _M21 * v.Y) / w);
-            res.Y = (float)((_M12 * v.X + _M22 * v.Y) / w);
+            res.X = (float)(_M11 * v.X + _M21 * v.Y);
+            res.Y = (float)(_M12 * v.X + _M22 * v.Y);
         }
 
         public void Product(Vector2 v, ref Vector2 res)
         {
-            double w = _M31 * v.X + _M32 * v.Y;
-            res.X = (float)((_M11 * v.X + _M12 * v.Y) / w);
-            res.Y = (float)((_M21 * v.X + _M22 * v.Y) / w);
+            res.X = (float)(_M11 * v.X + _M12 * v.Y);
+            res.Y = (float)(_M21 * v.X + _M22 * v.Y);
         }
 
         public void ProductT(Vector2 v, ref Vector2 res)
         {
-            double w = _M13 * v.X + _M23 * v.Y;
-            res.X = (float)((_M11 * v.X + _M21 * v.Y) / w);
-            res.Y = (float)((_M12 * v.X + _M22 * v.Y) / w);
+            res.X = (float)(_M11 * v.X + _M21 * v.Y);
+            res.Y = (float)(_M12 * v.X + _M22 * v.Y);
         }
 
 
