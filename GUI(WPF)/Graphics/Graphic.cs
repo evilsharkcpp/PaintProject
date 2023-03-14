@@ -92,6 +92,7 @@ namespace GUI_WPF.Graphics
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
             rect.Stroke = new SolidColorBrush(c);
+            rect.Fill = new SolidColorBrush(c);
             Canvas.SetLeft(rect, start.X);
             Canvas.SetTop(rect, start.Y);
             rect.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
