@@ -2,7 +2,7 @@
 using System;
 using DataStructures;
 
-namespace GUI_WPF.Graphics
+namespace Logic.Graphics
 {
     public class Drawable : IDrawable
     {
