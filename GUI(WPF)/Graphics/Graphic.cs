@@ -1,5 +1,6 @@
 ﻿using DataStructures.Geometry;
 using Geometry.Figures;
+using Geometry.Transforms;
 using Interfaces;
 using System.Collections.Generic;
 using System.Numerics;
@@ -29,10 +30,11 @@ namespace GUI_WPF.Graphics
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
             elllipse.Stroke = new SolidColorBrush(c);
+            elllipse.StrokeThickness = 0.01;
             Canvas.SetLeft(elllipse, start.X);
             Canvas.SetTop(elllipse, start.Y);
-            elllipse.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                           ModelMatrix.M21, ModelMatrix.M22,
+            elllipse.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                                           -ModelMatrix.M12, -ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(elllipse);
         }
@@ -49,9 +51,14 @@ namespace GUI_WPF.Graphics
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
+            //var trans = new TransformGroup();
+            //trans.Children.Add(new ScaleTransform(ModelMatrix.M11, ModelMatrix.M12));
+            //trans.Children.Add(new RotateTransform(ModelMatrix.M21, ModelMatrix.M22,s));
+            //trans.Children.Add(new TranslateTransform(ModelMatrix.M31, ModelMatrix.M32));
+            line.StrokeThickness = 0.01;
             line.Stroke = new SolidColorBrush(c);
-            line.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                           ModelMatrix.M21, ModelMatrix.M22,
+            line.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                                           -ModelMatrix.M12, -ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(line);
         }
@@ -63,14 +70,15 @@ namespace GUI_WPF.Graphics
             foreach (var p in points)
                 polyPoints.Add(new Point(p.X, p.Y));
             poly.Points = polyPoints;
+            poly.StrokeThickness = 0.01;
             var c = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
             poly.Stroke = new SolidColorBrush(c);
-            poly.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                           ModelMatrix.M21, ModelMatrix.M22,
+            poly.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                                           -ModelMatrix.M12, -ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(poly);
         }
@@ -83,6 +91,7 @@ namespace GUI_WPF.Graphics
 
         public void DrawRectangle(Point2d start, double a, double b, bool isFill, bool isOutLine)
         {
+            //start = start * ModelMatrix;
             var rect = new System.Windows.Shapes.Rectangle();
             rect.Height = a;
             rect.Width = b;
@@ -92,11 +101,14 @@ namespace GUI_WPF.Graphics
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
             rect.Stroke = new SolidColorBrush(c);
-            rect.Fill = new SolidColorBrush(c);
+            rect.StrokeThickness = 0.01;
+            //rect.Fill = new SolidColorBrush(c);
+            //rect.
+            
             Canvas.SetLeft(rect, start.X);
             Canvas.SetTop(rect, start.Y);
-            rect.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M12,
-                                                           ModelMatrix.M21, ModelMatrix.M22,
+            rect.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                                           ModelMatrix.M12, ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(rect);
         }

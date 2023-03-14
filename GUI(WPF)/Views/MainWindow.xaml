@@ -73,8 +73,8 @@
                             <RadioButton ToolTip="Выделить" IsChecked="true" Name="select" Content="../Views/Assets/white_cursor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить линию" CommandParameter="Line" Content="../Views/Assets/add_line.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                      <RadioButton ToolTip="Добавить прямоугольник" CommandParameter="Rectangle" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                            <RadioButton ToolTip="Добавить эллипс" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                            <RadioButton ToolTip="Добавить треугольник" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Добавить эллипс" CommandParameter="Ellipse" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Добавить треугольник" CommandParameter="Triangle" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить многоугольник" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить текст" Content="../Views/Assets/A.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Сгруппировать" Content="../Views/Assets/group.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
