@@ -1,16 +1,18 @@
-﻿using Geometry.Figures;
+﻿using Geometry;
 using Interfaces;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Reactive;
+using System.Reactive.Linq;
 
 namespace Logic.ViewModels
 {
-    public class MainVM : ILogic
+    public class MainVM : ReactiveObject, ILogic
     {
-        public string Temp { get; set; } = "aaaa";
+        [Reactive] public string Temp { get; set; }
         public ReactiveCommand<string, IFigure> CreateFigure { get; set; }
 
-        public ReactiveCommand<IFigure, int> AddFigure => throw new NotImplementedException();
+        public ReactiveCommand<(IFigure, IDrawable), int> AddFigure { get; set; }
 
         public ReactiveCommand<IFigure, Unit> RemoveFigure => throw new NotImplementedException();
 
@@ -24,12 +26,21 @@ namespace Logic.ViewModels
             Figures = new List<(IFigure, IDrawable)>();
             //Temp = "Hellop";
             //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
-            CreateFigure = ReactiveCommand.Create<string, IFigure>(OnCreate);
-            CreateFigure.Subscribe(value => { Temp = "a"; });
+            CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
+            AddFigure = ReactiveCommand.Create<(IFigure, IDrawable), int>((a) => OnAdd(a));
+            //Observable.Subscribe()
         }
-        IFigure OnCreate(string name)
+        IFigure? OnCreate(string name)
         {
-            return new Line();
+            var fabric = FigureFabric.Create();
+            return fabric.CreateFigure(name);
+        }
+
+        int OnAdd((IFigure, IDrawable) figure)
+        {
+            Figures = Figures.Append((figure.Item1, figure.Item2));
+            SelectedFigures = new List<(IFigure, IDrawable)>() { figure };
+            return Figures.Count() - 1;
         }
     }
 }

@@ -69,10 +69,10 @@
                         <RowDefinition Height="55*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
-                        <ItemsControl>
-                            <RadioButton ToolTip="Выделить" Content="../Views/Assets/white_cursor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                            <RadioButton ToolTip="Добавить линию" Content="../Views/Assets/add_line.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                            <RadioButton ToolTip="Добавить прямоугольник" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                        <ItemsControl x:Name="commands">
+                            <RadioButton ToolTip="Выделить" IsChecked="true" Name="select" Content="../Views/Assets/white_cursor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                            <RadioButton ToolTip="Добавить линию" CommandParameter="Line" Content="../Views/Assets/add_line.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Добавить прямоугольник" CommandParameter="Rectangle" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить эллипс" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить треугольник" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                             <RadioButton ToolTip="Добавить многоугольник" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
@@ -106,7 +106,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TabControl Name="вкладки"  Grid.ColumnSpan="2" Background="#FF505050" >
+                        <TabControl Name="вкладки"  Grid.ColumnSpan="2" Background="#FF505050" Visibility="{Binding ElementName=mainWindow, Path=ParamVisibility}" >
                             <TabControl.Resources>
                                 <Style TargetType="TabItem">
                                     <Setter Property="Template">
