@@ -1,21 +1,26 @@
-﻿using DataStructures.Geometry;
-using Geometry.Parameterization;
-using Geometry.Transforms;
+﻿using Geometry.Attributes;
 using Interfaces;
-using ReactiveUI;
-using System.Numerics;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Runtime.Serialization;
 
 namespace Geometry.Figures
 {
+    [DataContract]
+    [Figure("Square")]
     public class Square : Rectangle
     {
-        public Square() : base() {}
-        public Square(Point2d point1, Point2d point2) : base(point1, point2) { }
+        public Square()
+        {
+            _bindSize = true;
+        }
 
-        public Square(Square square) : this(square._point1, square._point2) { }
+        public Square(Square square) : base(square)
+        {
+            _bindSize = true;
+        }
 
+        public override IFigure Clone()
+        {
+            return new Square(this);
+        }
     }
 }

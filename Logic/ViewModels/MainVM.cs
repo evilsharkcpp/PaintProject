@@ -16,11 +16,12 @@ namespace Logic.ViewModels
 
         public ReactiveCommand<int, IFigure> GetFigureById => throw new NotImplementedException();
 
-        public IEnumerable<(IFigure, IDrawable)> Figures { get; }
+        public IEnumerable<(IFigure, IDrawable)> Figures { get; set; }
 
-        public IEnumerable<(IFigure, IDrawable)> SelectedFigures => throw new NotImplementedException();
+        public IEnumerable<(IFigure, IDrawable)> SelectedFigures { get; set; }
         public MainVM()
         {
+            Figures = new List<(IFigure, IDrawable)>();
             //Temp = "Hellop";
             //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
             CreateFigure = ReactiveCommand.Create<string, IFigure>(OnCreate);

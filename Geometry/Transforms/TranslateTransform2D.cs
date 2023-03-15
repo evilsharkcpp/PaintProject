@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -28,7 +29,13 @@ namespace Geometry.Transforms
 
         public override void Apply(Vector2d v, ref Vector2d res)
         {
-            v.Sum(_v, ref res);
+            res = v;
+        }
+
+        public override void Apply(Vector2 v, ref Vector2d res)
+        {
+            res.X = v.X;
+            res.Y = v.Y;
         }
     }
 }

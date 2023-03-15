@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using System.Numerics;
 
 namespace Geometry.Transforms
 {
@@ -12,15 +13,18 @@ namespace Geometry.Transforms
             get => _angle;
             set
             {
-                _angle = value;
-                _matrix.M11 = Math.Cos(_angle);
-                _matrix.M21 = Math.Sin(_angle);
+                if (value != _angle)
+                {
+                    _angle = value;
+                    _matrix.M11 = Math.Cos(_angle);
+                    _matrix.M21 = Math.Sin(_angle);
 
-                _matrix.M12 = -_matrix.M21;
-                _matrix.M13 = _center.X * (_matrix.M11 - 1) - _matrix.M21 * _center.Y;
+                    _matrix.M12 = -_matrix.M21;
+                    _matrix.M13 = _center.X * (_matrix.M11 - 1) - _matrix.M21 * _center.Y;
 
-                _matrix.M22 = _matrix.M11;
-                _matrix.M23 = _center.Y * (_matrix.M11 - 1) + _matrix.M21 * _center.X;
+                    _matrix.M22 = _matrix.M11;
+                    _matrix.M23 = _center.Y * (_matrix.M11 - 1) + _matrix.M21 * _center.X;
+                }
             }
         }
 
@@ -29,9 +33,12 @@ namespace Geometry.Transforms
             get => _center;
             set
             {
-                _center = value;
-                _matrix.M13 = _center.X * (_matrix.M11 - 1) - _matrix.M21 * _center.Y;
-                _matrix.M23 = _center.Y * (_matrix.M11 - 1) + _matrix.M21 * _center.X;
+                if (value != _center)
+                {
+                    _center = value;
+                    _matrix.M13 = _center.X * (_matrix.M11 - 1) - _matrix.M21 * _center.Y;
+                    _matrix.M23 = _center.Y * (_matrix.M11 - 1) + _matrix.M21 * _center.X;
+                }
             }
         }
 
@@ -49,6 +56,12 @@ namespace Geometry.Transforms
         }
 
         public override void Apply(Vector2d v, ref Vector2d res)
+        {
+            res.X = _matrix.M11 * v.X + _matrix.M12 * v.Y;
+            res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;
+        }
+
+        public override void Apply(Vector2 v, ref Vector2d res)
         {
             res.X = _matrix.M11 * v.X + _matrix.M12 * v.Y;
             res.Y = _matrix.M21 * v.X + _matrix.M22 * v.Y;

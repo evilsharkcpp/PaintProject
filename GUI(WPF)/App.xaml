@@ -23,6 +23,29 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="myRadioButtonStyle" TargetType="RadioButton">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border Name="border"
+                                BorderThickness="1" BorderBrush="Transparent" CornerRadius="3" Background="{TemplateBinding Background}" Padding="8">
+                                <Image Source="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="LightGray" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#00C314" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+           
+
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
