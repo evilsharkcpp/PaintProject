@@ -1,62 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-
+﻿using System.Text;
 using Interfaces;
 using System.Runtime.Serialization.Json;
-using Splat.ModeDetection;
-using System.Runtime.ConstrainedExecution;
 using DynamicData;
-using System.Runtime.Serialization;
-using System.Xml;
 using Geometry.Figures;
 using ExCSS;
 using Svg;
 using System.Xml.Linq;
-using IO.SVGFigures;
+using IO.ConvertedFigures;
 using System.Data.SqlTypes;
 using System.IO;
 using DataStructures.Geometry;
+using DataStructures;
+using DataStructures.СonvertibleFigures;
+using Color = DataStructures.Color;
 
 namespace IO
 {
     public class JSONConverter : IConverter
     {
-        public IEnumerable<IFigure> ReadFile(string filename)
+        public IEnumerable<ConvertibleFigure> ReadFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open);
-            var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>), 
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>), 
                         new Type[] {
-                                typeof(Line),
-                                typeof(Rectangle),
-                                typeof(Triangle),
-                                typeof(Square),
+                                typeof(ConvertibleLine),
+                                typeof(ConvertibleSquare),
+                                typeof(ConvertibleFilledCircle),
+                                typeof(ConvertibleEllips),
+                                typeof(ConvertibleTriangle),
+                                typeof(ConvertibleRectangle),
+                                typeof(СonvertibleCircle),
                             });
 
-            IEnumerable<IFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<IFigure>;
+            IEnumerable<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<ConvertibleFigure>;
             fs.Close();
 
             if (deserializedFigures != null)
                 return deserializedFigures;
             else
-                return Enumerable.Empty<IFigure>();
+                return Enumerable.Empty<ConvertibleFigure>();
         }
 
-        public void WriteFile(string filename, IEnumerable<IFigure> figures)
+        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
             FileStream stream = new FileStream(filename + ".json", FileMode.Create);
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>),
-                                                new Type[] { 
-                                                    typeof(Line),
-                                                    typeof(Rectangle),
-                                                    typeof(Triangle),
-                                                    typeof(Square),
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
+                                                new Type[] {
+                                                    typeof(ConvertibleLine),
+                                                    typeof(ConvertibleSquare),
+                                                    typeof(ConvertibleFilledCircle),
+                                                    typeof(ConvertibleEllips),
+                                                    typeof(ConvertibleTriangle),
+                                                    typeof(ConvertibleRectangle),
+                                                    typeof(СonvertibleCircle),
                                                 });
             ser.WriteObject(stream, figures);
             stream.Close();
@@ -66,52 +63,58 @@ namespace IO
 
     public class SVGConverter : IConverter
     {
-        public IEnumerable<IFigure> ReadFile(string filename)
+        public IEnumerable<ConvertibleFigure> ReadFile(string filename)
         {
-            List<IFigure> deserializedFigures = new List<IFigure>();
+            List<ConvertibleFigure> deserializedFigures = new List<ConvertibleFigure>();
 
             var svgDocument = SvgDocument.Open(filename);
 
             Point2d p1, p2, p3, center;
-            double radius;
+            Color color = new Color(0,0,0,1);
+
+            double radius, width, height;
 
             foreach (SvgElement svg_elem in svgDocument.Children)
             {
-                switch (svg_elem.GetType().Name)
+                switch (svg_elem)
                 {
-                    case "SvgLine":
+                    case SvgLine:
                         SvgLine? svg_line = svg_elem as SvgLine;
 
                         p1 = new Point2d((float)svg_line.StartX, (float)svg_line.StartY);
                         p2 = new Point2d((float)svg_line.EndX, (float)svg_line.EndY);
 
-                        Line line = new Line(p1, p2);
+
+                        ConvertibleLine line = new ConvertibleLine(p1, p2, color);
+                        
                         deserializedFigures.Add(line);
 
                         break;
 
-                    case "SvgRectangle":
+                    case SvgRectangle:
                         SvgRectangle? svg_rect = svg_elem as SvgRectangle;
 
                         p1 = new Point2d((float)svg_rect.X, (float)svg_rect.Y);
-                        p2 = new Point2d(p1.X + (float)svg_rect.Width, p1.Y + (float)svg_rect.Height);
+
+                        width = (float)svg_rect.Width;
+                        height = (float)svg_rect.Height;
 
                         // Проверка равества сторон
                         if (svg_rect.Width == svg_rect.Height)
                         {
                             // Если стороны равны - получим квадрат
-                            Square square = new Square(p1, p2);
+                            ConvertibleSquare square = new ConvertibleSquare(p1, width, height, color);
                             deserializedFigures.Add(square);
                         }
                         else
                         {
                             // Если стороны разные - получим прямоугольник
-                            Rectangle rectangle = new Rectangle(p1, p2);
+                            ConvertibleRectangle rectangle = new ConvertibleRectangle(p1, width, height, color);
                             deserializedFigures.Add(rectangle);
                         }
                         break;
 
-                    case "SvgPolygon":
+                    case SvgPolygon:
                         SvgPolygon? svg_polygon = svg_elem as SvgPolygon;
 
                         // Проверка числа точек
@@ -122,7 +125,7 @@ namespace IO
                             p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
                             p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
 
-                            Triangle triangle = new Triangle(p1, p2, p3);
+                            ConvertibleTriangle triangle = new ConvertibleTriangle(p1, p2, p3, color);
                             deserializedFigures.Add(triangle);
                         }
                         else
@@ -139,7 +142,7 @@ namespace IO
 
                         break;
 
-                    case "SvgCircle":
+                    case SvgCircle:
                         SvgCircle? svg_circle = svg_elem as SvgCircle;
 
                         center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
@@ -161,7 +164,7 @@ namespace IO
 
                         break;
 
-                    case "SvgEllips":
+                    case SvgEllipse:
                         SvgEllipse? svg_ellips = svg_elem as SvgEllipse;
 
                         center = new Point2d((double)svg_ellips.CenterX, (double)svg_ellips.CenterY);
@@ -180,51 +183,53 @@ namespace IO
             if (deserializedFigures != null)
                 return deserializedFigures;
             else
-                return Enumerable.Empty<IFigure>();
+                return Enumerable.Empty<ConvertibleFigure>();
         }
 
 
-        public void WriteFile(string filename, IEnumerable<IFigure> figures)
+        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
             SvgDocument svg_doc = new SvgDocument{ Width = 500, Height = 500};
 
-            foreach (IFigure figure in figures)
+            foreach (ConvertibleFigure figure in figures)
             {
                 
-                switch (figure.GetType().Name)
+                switch (figure)
                 {
-                    case "Line":
-                        double x1 = figure.PointParameters.ElementAt(0).Value.X;
-                        double y1 = figure.PointParameters.ElementAt(0).Value.Y;
-                        double x2 = figure.PointParameters.ElementAt(1).Value.X;
-                        double y2 = figure.PointParameters.ElementAt(1).Value.Y;
+                    case ConvertibleLine:
+                        ConvertibleLine c_line = (ConvertibleLine)figure;
+
+                        double x1 = c_line.point1.X;
+                        double y1 = c_line.point1.Y;
+                        double x2 = c_line.point2.X;
+                        double y2 = c_line.point2.Y;
 
 
-                        var line = new SVGLine().Line(x1, y1, x2, y2);
-                        svg_doc.Children.Add(line);
+/*                        var line = new SVGLine().Line(x1, y1, x2, y2);
+                        svg_doc.Children.Add(line);*/
                         break;
 
-                    case "Rectangle":
-
-                        break;
-
-                    case "Triangle":
-
-                        break;
-
-                    case "Square":
+                    case ConvertibleRectangle:
 
                         break;
 
-                    case "Cicle":
+                    case ConvertibleTriangle:
 
                         break;
 
-                    case "Ellips":
+                    case ConvertibleSquare:
 
                         break;
 
-                    case "FilledCicrle":
+                    case СonvertibleCircle:
+
+                        break;
+
+                    case ConvertibleEllips:
+
+                        break;
+
+                    case ConvertibleFilledCircle:
 
                         break;
                 }

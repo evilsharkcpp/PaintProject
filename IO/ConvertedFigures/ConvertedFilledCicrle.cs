@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IO.SVGFigures
+namespace IO.ConvertedFigures
 {
-    public class SVGFilledCicrle
+    public class ConvertedFilledCicrle : ConvertedFigure
     {
     }
 }

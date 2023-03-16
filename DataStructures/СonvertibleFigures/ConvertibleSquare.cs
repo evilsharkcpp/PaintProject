@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DataStructures.СonvertibleFigures
 {
     [DataContract(Name = "Square")]
-    public class СonvertibleSquare : ConvertibleFigure
+    public class ConvertibleSquare : ConvertibleFigure
     {
         // Левая верхняя точка
         [DataMember(Name = "Position")]
@@ -22,7 +22,7 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "Color")]
         public Color color;
 
-        public СonvertibleSquare(Point2d point1, double width, double height, Color color)
+        public ConvertibleSquare(Point2d point1, double width, double height, Color color)
         {
             this.point1 = point1;
             this.width = width;

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DataStructures.СonvertibleFigures
 {
     [DataContract(Name = "FilledCircle")]
-    public class СonvertibleFilledCicrle : ConvertibleFigure
+    public class ConvertibleFilledCircle : ConvertibleFigure
     {
         // Координаты центра
         [DataMember(Name = "Center")]
@@ -22,7 +22,7 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "FillColor")]
         public Color fill_color;
 
-        public СonvertibleFilledCicrle(Point2d center, double radius, Color color, Color fill_color)
+        public ConvertibleFilledCircle(Point2d center, double radius, Color color, Color fill_color)
         {
             this.center = center;
             this.radius = radius;

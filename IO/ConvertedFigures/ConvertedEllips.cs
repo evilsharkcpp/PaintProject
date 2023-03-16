@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Runtime.Serialization;
+using System.Xml.Linq;
 
-namespace IO.SVGFigures
+namespace IO.ConvertedFigures
 {
-    public class SVGEllips
+    [DataContract(Name = "Ellips")]
+    public class ConvertedEllips : ConvertedFigure
     {
         public SvgEllipse Ellips(double cx, double cy, double rx, double ry)
         {

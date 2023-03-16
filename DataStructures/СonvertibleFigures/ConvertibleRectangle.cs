@@ -1,5 +1,4 @@
-﻿using Svg;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +11,7 @@ using System.Xml.Linq;
 namespace DataStructures.СonvertibleFigures
 {
     [DataContract(Name = "Rectangle")]
-    public class СonvertibleRectangle : ConvertibleFigure
+    public class ConvertibleRectangle : ConvertibleFigure
     {
         // Левая верхняя прямоугольника
         [DataMember(Name = "Position")]
@@ -30,7 +29,7 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "Color")]
         public Color color;
 
-        public СonvertibleRectangle(Point2d point1, double width, double height, Color color)
+        public ConvertibleRectangle(Point2d point1, double width, double height, Color color)
         {
             this.point1 = point1;
             this.width = width;

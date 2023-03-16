@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataStructures.Geometry;
+using System.Runtime.Serialization;
 
 namespace DataStructures
 {
-    public class ConvertibleFigure
+    [DataContract(Name = "ConvertibleFigure")]
+    public abstract class ConvertibleFigure
     {
+ 
     }
 }

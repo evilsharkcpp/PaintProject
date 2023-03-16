@@ -4,7 +4,7 @@ using DataStructures.Geometry;
 namespace DataStructures.СonvertibleFigures
 {
     [DataContract(Name = "Ellips")]
-    public class СonvertibleEllips : ConvertibleFigure
+    public class ConvertibleEllips : ConvertibleFigure
     {
         // Координаты центра
         [DataMember(Name = "Center")]
@@ -22,7 +22,7 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "Color")]
         public Color color;
 
-        public СonvertibleEllips(Point2d center, double radiusX, double radiusY, Color color)
+        public ConvertibleEllips(Point2d center, double radiusX, double radiusY, Color color)
         {
             this.center = center;
             this.radiusX = radiusX;

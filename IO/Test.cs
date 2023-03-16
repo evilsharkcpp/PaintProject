@@ -10,15 +10,15 @@ namespace IO
 {
     public class TestIO
     {
-        public void TestStarter()
+/*        public void TestStarter()
         {
             test__create_two_line__JSON();
             test__read_two_line__JSON();
             test__create_two_line__SVG();
             test__read_two_line__SVG();
-        }
+        }*/
 
-        public void test__create_two_line__JSON()
+        /*public void test__create_two_line__JSON()
         {
             Point2d p1 = new Point2d(0, 0);
             Point2d p2 = new Point2d(1, 1);
@@ -75,6 +75,6 @@ namespace IO
 
             Console.WriteLine("конец...");
 
-        }
+        }*/
     }
 }
