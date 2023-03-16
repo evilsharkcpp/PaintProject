@@ -2,6 +2,8 @@
 using Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Drawing;
+using System.Numerics;
 using System.Reactive;
 using System.Reactive.Linq;
 
@@ -15,6 +17,8 @@ namespace Logic.ViewModels
         public ReactiveCommand<(IFigure, IDrawable), int> AddFigure { get; set; }
 
         public ReactiveCommand<IFigure, Unit> RemoveFigure { get; }
+        public ReactiveCommand<Point, Unit> SelectFigure { get; }
+
 
         public ReactiveCommand<int, IFigure> GetFigureById => throw new NotImplementedException();
 
@@ -29,6 +33,8 @@ namespace Logic.ViewModels
             CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
             AddFigure = ReactiveCommand.Create<(IFigure, IDrawable), int>((a) => OnAdd(a));
             RemoveFigure = ReactiveCommand.Create<IFigure, Unit>((a) => OnRemove(a));
+            SelectFigure = ReactiveCommand.Create<Point, Unit>((a) => OnSelectFigure(a));
+
 
             //Observable.Subscribe()
         }
@@ -48,6 +54,21 @@ namespace Logic.ViewModels
         {
             Figures = Figures.Where(item => item.Item1 != figure);
             SelectedFigures = SelectedFigures.Where(item => item.Item1 != figure);
+            return Unit.Default;
+        }
+        private Unit OnSelectFigure(Point point)
+        {
+            List<(IFigure, IDrawable)> selectedFigures = new List<(IFigure, IDrawable)>();
+
+            foreach (var figure in Figures.Reverse())
+            {
+                if (figure.Item1.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5))
+                {
+                    selectedFigures.Add(figure);
+                    break;
+                }
+            }
+            SelectedFigures = selectedFigures;
             return Unit.Default;
         }
 
