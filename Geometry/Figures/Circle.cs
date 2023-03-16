@@ -1,26 +1,31 @@
 ﻿using Geometry.Attributes;
 using Interfaces;
+using ReactiveUI;
+using System.Numerics;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
+
 
 namespace Geometry.Figures
 {
     [DataContract]
-    [Figure("Square")]
-    public class Square : Rectangle
+    [Figure("Circle")]
+    public class Circle : Ellipse
     {
-        public Square()
+        public Circle()
         {
             _bindSize = true;
         }
 
-        public Square(Square square) : base(square)
+        public Circle(Circle circle) : base(circle)
         {
             _bindSize = true;
         }
 
         public override IFigure Clone()
         {
-            return new Square(this);
+            return new Circle(this);
         }
-    }
+    }    
 }
