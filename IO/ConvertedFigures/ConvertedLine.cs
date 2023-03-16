@@ -12,7 +12,7 @@ using Svg.Transforms;
 namespace IO.ConvertedFigures
 {
     [DataContract(Name = "Line")]
-    public class ConvertedLine : ConvertedFigure
+    public class ConvertedLine
     {
         [DataMember(Name = "Point1")]
         public Point2d point1;

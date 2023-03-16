@@ -12,7 +12,7 @@ using System.Xml.Linq;
 namespace IO.ConvertedFigures
 {
     [DataContract(Name = "Triangle")]
-    public class ConvertedTriangle : ConvertedFigure
+    public class ConvertedTriangle
     {
         [DataMember(Name = "Point1")]
         public Point2d point1;

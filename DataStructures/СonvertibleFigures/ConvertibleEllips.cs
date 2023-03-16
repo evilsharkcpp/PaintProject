@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using DataStructures.Geometry;
 
-namespace DataStructures.СonvertibleFigures
+namespace DataStructures.ConvertibleFigures
 {
     [DataContract(Name = "Ellips")]
     public class ConvertibleEllips : ConvertibleFigure
@@ -10,15 +10,15 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "Center")]
         public Point2d center;
 
-        // Длина радиуса по оси X
+        // Длина радиуCа по оCи X
         [DataMember(Name = "RadiusX")]
         public double radiusX;
 
-        // Длина радиуса по оси Y
+        // Длина радиуCа по оCи Y
         [DataMember(Name = "RadiusY")]
         public double radiusY;
 
-        // Цвет границы эллипса
+        // Цвет границы эллипCа
         [DataMember(Name = "Color")]
         public Color color;
 

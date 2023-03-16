@@ -1,12 +1,12 @@
 ﻿using System.Runtime.Serialization;
 using DataStructures.Geometry;
 
-namespace DataStructures.СonvertibleFigures
+namespace DataStructures.ConvertibleFigures
 {
     [DataContract(Name = "Line")]
     public class ConvertibleLine : ConvertibleFigure
     {
-        // Стартовая точка
+        // Cтартовая точка
         [DataMember(Name = "Point1")]
         public Point2d point1;
 

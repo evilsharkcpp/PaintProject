@@ -11,7 +11,7 @@ using System.Data.SqlTypes;
 using System.IO;
 using DataStructures.Geometry;
 using DataStructures;
-using DataStructures.СonvertibleFigures;
+using DataStructures.ConvertibleFigures;
 using Color = DataStructures.Color;
 
 namespace IO
@@ -29,7 +29,7 @@ namespace IO
                                 typeof(ConvertibleEllips),
                                 typeof(ConvertibleTriangle),
                                 typeof(ConvertibleRectangle),
-                                typeof(СonvertibleCircle),
+                                typeof(ConvertibleCircle),
                             });
 
             IEnumerable<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<ConvertibleFigure>;
@@ -53,7 +53,7 @@ namespace IO
                                                     typeof(ConvertibleEllips),
                                                     typeof(ConvertibleTriangle),
                                                     typeof(ConvertibleRectangle),
-                                                    typeof(СonvertibleCircle),
+                                                    typeof(ConvertibleCircle),
                                                 });
             ser.WriteObject(stream, figures);
             stream.Close();
@@ -99,16 +99,16 @@ namespace IO
                         width = (float)svg_rect.Width;
                         height = (float)svg_rect.Height;
 
-                        // Проверка равества сторон
+                        // Проверка равеCтва Cторон
                         if (svg_rect.Width == svg_rect.Height)
                         {
-                            // Если стороны равны - получим квадрат
+                            // ЕCли Cтороны равны - получим квадрат
                             ConvertibleSquare square = new ConvertibleSquare(p1, width, height, color);
                             deserializedFigures.Add(square);
                         }
                         else
                         {
-                            // Если стороны разные - получим прямоугольник
+                            // ЕCли Cтороны разные - получим прямоугольник
                             ConvertibleRectangle rectangle = new ConvertibleRectangle(p1, width, height, color);
                             deserializedFigures.Add(rectangle);
                         }
@@ -117,10 +117,10 @@ namespace IO
                     case SvgPolygon:
                         SvgPolygon? svg_polygon = svg_elem as SvgPolygon;
 
-                        // Проверка числа точек
+                        // Проверка чиCла точек
                         if (svg_polygon.Points.Count() == 8)
                         {
-                            // Если 8 чисел (3 точки + 1 точка для замыкания) - поучим треугольник
+                            // ЕCли 8 чиCел (3 точки + 1 точка для замыкания) - поучим треугольник
                             p1 = new Point2d((float)svg_polygon.Points[0], (float)svg_polygon.Points[1]);
                             p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
                             p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
@@ -135,7 +135,7 @@ namespace IO
                             for (int i = 0; i < svg_polygon.Points.Count(); i += 2)
                                 points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i+1]));
 
-                            // Пока не существует
+                            // Пока не CущеCтвует
 /*                          Poligon poligon = new Poligon();
                             deserializedFigures.Add(poligon);*/
                         }
@@ -150,13 +150,13 @@ namespace IO
 
                         if (svg_circle.Fill == SvgPaintServer.None)
                         {
-                            // Непубличный класс
+                            // Непубличный клаCC
                             // Circle circle = new Circle(center, radius);
                             // deserializedFigures.Append(circle);
                         }
                         else
                         {
-                            // Непубличный класс
+                            // Непубличный клаCC
                             // FilledCircle filled_circle = new FilledCircle(center, radius);
                             // deserializedFigures.Append(filled_circle);
                         }
@@ -173,7 +173,7 @@ namespace IO
 
 
 
-                        // Непубличный класс
+                        // Непубличный клаCC
                         // Ellipse ellipse = new SvgEllipse();
                         // deserializedFigures.Append(ellipse);
                         break;
@@ -221,7 +221,7 @@ namespace IO
 
                         break;
 
-                    case СonvertibleCircle:
+                    case ConvertibleCircle:
 
                         break;
 

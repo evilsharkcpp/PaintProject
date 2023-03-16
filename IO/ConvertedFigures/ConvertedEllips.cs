@@ -11,7 +11,7 @@ using System.Xml.Linq;
 namespace IO.ConvertedFigures
 {
     [DataContract(Name = "Ellips")]
-    public class ConvertedEllips : ConvertedFigure
+    public class ConvertedEllips
     {
         public SvgEllipse Ellips(double cx, double cy, double rx, double ry)
         {

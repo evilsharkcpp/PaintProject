@@ -1,7 +1,7 @@
 ﻿using DataStructures.Geometry;
 using System.Runtime.Serialization;
 
-namespace DataStructures.СonvertibleFigures
+namespace DataStructures.ConvertibleFigures
 {
     [DataContract(Name = "FilledCircle")]
     public class ConvertibleFilledCircle : ConvertibleFigure
@@ -10,7 +10,7 @@ namespace DataStructures.СonvertibleFigures
         [DataMember(Name = "Center")]
         public Point2d center;
 
-        // Длина радиуса
+        // Длина радиуCа
         [DataMember(Name = "Radius")]
         public double radius;
 

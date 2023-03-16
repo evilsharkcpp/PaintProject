@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IO.ConvertedFigures
 {
-    public class ConvertedFilledCicrle : ConvertedFigure
+    public class ConvertedFilledCicrle
     {
     }
 }

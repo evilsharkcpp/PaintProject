@@ -12,7 +12,7 @@ using System.Xml.Linq;
 namespace IO.Converted
 {
     [DataContract(Name = "Circle")]
-    public class ConvertedCircle : ConvertedFigure
+    public class ConvertedCircle
     {
         [DataMember(Name = "Center")]
         public Point2d Center;

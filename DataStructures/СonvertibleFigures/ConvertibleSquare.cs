@@ -1,7 +1,7 @@
 ﻿using DataStructures.Geometry;
 using System.Runtime.Serialization;
 
-namespace DataStructures.СonvertibleFigures
+namespace DataStructures.ConvertibleFigures
 {
     [DataContract(Name = "Square")]
     public class ConvertibleSquare : ConvertibleFigure

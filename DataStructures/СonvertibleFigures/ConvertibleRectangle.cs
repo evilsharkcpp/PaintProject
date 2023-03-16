@@ -8,7 +8,7 @@ using DataStructures.Geometry;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 
-namespace DataStructures.СonvertibleFigures
+namespace DataStructures.ConvertibleFigures
 {
     [DataContract(Name = "Rectangle")]
     public class ConvertibleRectangle : ConvertibleFigure
