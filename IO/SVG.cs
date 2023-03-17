@@ -1,6 +1,7 @@
 ﻿using DataStructures;
 using DataStructures.ConvertibleFigures;
 using DataStructures.Geometry;
+using ExCSS;
 using Svg;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using Color = System.Drawing.Color;
 
 namespace IO
 {
     public class SVG
     {
-        Color color = new Color(1, 0, 0, 0);
-        Color fill_color = new Color(1, 0, 0, 0);
+        DataStructures.Color color = new DataStructures.Color(1, 0, 0, 0);
+        DataStructures.Color fill_color = new DataStructures.Color(1, 0, 0, 0);
 
 
         //
@@ -118,7 +121,8 @@ namespace IO
                 RadiusX = (SvgUnit)c_ellipse.radiusX,
                 RadiusY = (SvgUnit)c_ellipse.radiusY,
 
-                Stroke = new SvgColourServer()
+                Stroke = new SvgColourServer(),
+                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -135,63 +139,52 @@ namespace IO
                 CenterY = (SvgUnit)cy,
                 Radius = (SvgUnit)r,
 
-                Stroke = new SvgColourServer()
+                Stroke = new SvgColourServer(),
+                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
-        public SvgPolygon getSvgRectangle(ConvertibleRectangle c_rect)
+        public SvgRectangle getSvgRectangle(ConvertibleRectangle c_rect)
         {
             double x1 = c_rect.point1.X;
             double y1 = c_rect.point1.Y;
 
-            double x2 = x1 + c_rect.width;
-            double y2 = y1;
+            double width = c_rect.width;
+            double height = c_rect.height;
 
-            double x3 = x1;
-            double y3 = y1 + c_rect.height;
 
-            double x4 = x1 + c_rect.width;
-            double y4 = y1 + c_rect.height;
-
-            return new SvgPolygon
+            return new SvgRectangle
             {
-                Points = new SvgPointCollection
-                {
-                    new SvgUnit((float)x1), new SvgUnit((float)y1),
-                    new SvgUnit((float)x2), new SvgUnit((float)y2),
-                    new SvgUnit((float)x3), new SvgUnit((float)y3),
-                    new SvgUnit((float)x4), new SvgUnit((float)y4)
-                },
+                X = new SvgUnit((float)x1),
+                Y = new SvgUnit((float)y1),
 
-                Stroke = new SvgColourServer()
+                Width = new SvgUnit((float)width),
+                Height = new SvgUnit((float)height),
+
+                Stroke = new SvgColourServer(),
+                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
-        public SvgPolygon getSvgSquare(ConvertibleSquare c_rect)
+        public SvgRectangle getSvgSquare(ConvertibleSquare c_rect)
         {
             double x1 = c_rect.point1.X;
             double y1 = c_rect.point1.Y;
 
-            double x2 = x1 + c_rect.width;
-            double y2 = y1;
+            double width = c_rect.width;
+            double height = c_rect.height;
 
-            double x3 = x1;
-            double y3 = y1 + c_rect.height;
 
-            double x4 = x1 + c_rect.width;
-            double y4 = y1 + c_rect.height;
-
-            return new SvgPolygon
+            return new SvgRectangle
             {
-                Points = new SvgPointCollection
-                {
-                    new SvgUnit((float)x1), new SvgUnit((float)y1),
-                    new SvgUnit((float)x2), new SvgUnit((float)y2),
-                    new SvgUnit((float)x3), new SvgUnit((float)y3),
-                    new SvgUnit((float)x4), new SvgUnit((float)y4)
-                },
+                X = new SvgUnit((float)x1),
+                Y = new SvgUnit((float)y1),
 
-                Stroke = new SvgColourServer()
+                Width = new SvgUnit((float)width),
+                Height = new SvgUnit((float)height),
+
+                Stroke = new SvgColourServer(),
+                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -219,7 +212,8 @@ namespace IO
                 },
 
 
-                Stroke = new SvgColourServer()
+                Stroke = new SvgColourServer(),
+                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 

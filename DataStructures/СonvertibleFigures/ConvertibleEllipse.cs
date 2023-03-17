@@ -10,15 +10,15 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Center")]
         public Point2d center;
 
-        // Длина радиуCа по оCи X
+        // Длина радиуса по оси X
         [DataMember(Name = "RadiusX")]
         public double radiusX;
 
-        // Длина радиуCа по оCи Y
+        // Длина радиуса по оси Y
         [DataMember(Name = "RadiusY")]
         public double radiusY;
 
-        // Цвет границы эллипCа
+        // Цвет границы эллипса
         [DataMember(Name = "Color")]
         public Color color;
 

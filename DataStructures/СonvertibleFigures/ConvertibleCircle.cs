@@ -12,7 +12,7 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Center")]
         public Point2d center;
 
-        // Длина радиуCа
+        // Длина радиуса
         [DataMember(Name = "Radius")]
         public double radius;
 

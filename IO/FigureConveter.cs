@@ -66,6 +66,7 @@ namespace IO
 
                         ifigure.Size = new Vector2d(width, heigth);
                         ifigure.Position = new Point2d(c_triangle.point1.X, c_triangle.point2.Y);
+                        
 
 
                         ifigures.Append(ifigure);
