@@ -9,7 +9,7 @@ namespace Interfaces
 {
     public interface IConverter
     {
-        IEnumerable<ConvertibleFigure> ReadFile(string filename);
+        IEnumerable<IFigure> ReadFile(string filename);
         void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures);
     }
 }

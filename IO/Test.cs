@@ -63,7 +63,7 @@ namespace IO
         {
             JSONConverter jc = new JSONConverter();
 
-            IEnumerable<ConvertibleFigure> figures = jc.ReadFile("two_lines.json");
+            IEnumerable<IFigure> figures = jc.ReadFile("two_lines.json");
 
             Console.WriteLine("конец...");
 
@@ -73,7 +73,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<ConvertibleFigure> figures = jc.ReadFile("two_lines.svg");
+            IEnumerable<IFigure> figures = jc.ReadFile("two_lines.svg");
 
             Console.WriteLine("конец...");
 

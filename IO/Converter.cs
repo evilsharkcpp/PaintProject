@@ -6,12 +6,15 @@ using DataStructures.Geometry;
 using DataStructures;
 using DataStructures.ConvertibleFigures;
 using Color = DataStructures.Color;
+using System.Collections.Generic;
+using Geometry;
+using Geometry.Figures;
 
 namespace IO
 {
     public class JSONConverter : IConverter
     {
-        public IEnumerable<ConvertibleFigure> ReadFile(string filename)
+        public IEnumerable<IFigure> ReadFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open);
             var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>), 
@@ -25,13 +28,19 @@ namespace IO
                                 typeof(ConvertibleCircle),
                             });
 
-            IEnumerable<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<ConvertibleFigure>;
+            List<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as List<ConvertibleFigure>;
             fs.Close();
 
             if (deserializedFigures != null)
-                return deserializedFigures;
+            {
+                FigureConveter fc = new FigureConveter();
+
+                List<IFigure> ifigures = fc.convertToIFigure(deserializedFigures);
+
+                return ifigures;
+            }
             else
-                return Enumerable.Empty<ConvertibleFigure>();
+                return Enumerable.Empty<IFigure>();
         }
 
         public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
@@ -48,6 +57,7 @@ namespace IO
                                                     typeof(ConvertibleRectangle),
                                                     typeof(ConvertibleCircle),
                                                 });
+
             ser.WriteObject(stream, figures);
             stream.Close();
         }
@@ -56,7 +66,7 @@ namespace IO
 
     public class SVGConverter : IConverter
     {
-        public IEnumerable<ConvertibleFigure> ReadFile(string filename)
+        public IEnumerable<IFigure> ReadFile(string filename)
         {
             List<ConvertibleFigure> deserializedFigures = new List<ConvertibleFigure>();
 
@@ -135,9 +145,15 @@ namespace IO
             }
 
             if (deserializedFigures != null)
-                return deserializedFigures;
+            {
+                FigureConveter fc = new FigureConveter();
+
+                List<IFigure> ifigures = fc.convertToIFigure(deserializedFigures);
+
+                return ifigures;
+            }
             else
-                return Enumerable.Empty<ConvertibleFigure>();
+                return Enumerable.Empty<IFigure>();
         }
 
 
