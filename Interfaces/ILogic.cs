@@ -1,5 +1,4 @@
-﻿using DataStructures.Geometry;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.Reactive;
 
 namespace Interfaces
@@ -8,10 +7,9 @@ namespace Interfaces
     {
         public ReactiveCommand<string, IFigure> CreateFigure { get; }
         public ReactiveCommand<(IFigure, IDrawable), int> AddFigure { get; }
-        public ReactiveCommand<Point2d, Unit> SelectFigure { get; }
         public ReactiveCommand<IFigure, Unit> RemoveFigure { get; }
-        public ReactiveCommand<int, IFigure> GetFigureById { get; }
-        IEnumerable<(IFigure, IDrawable)> Figures { get; set; }
+        public ReactiveCommand<int, (IFigure, IDrawable)> GetFigureById { get; }
+        public IReadOnlyDictionary<int, (IFigure, IDrawable)> Figures { get; set; }
         IEnumerable<(IFigure, IDrawable)> SelectedFigures { get; set; }
 
     }
