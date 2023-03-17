@@ -63,7 +63,7 @@ namespace GUI_WPF.Graphics
             line.StrokeThickness = 0.01;
             line.Stroke = new SolidColorBrush(c);
             line.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           -ModelMatrix.M12, -ModelMatrix.M22,
+                                                           ModelMatrix.M12, ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             _canvas.Children.Add(line);
         }
