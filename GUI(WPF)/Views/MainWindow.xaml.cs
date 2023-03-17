@@ -69,10 +69,12 @@ namespace GUI_WPF
                 OnPropertyChanged();
             }
         }
-        public (IFigure, IDrawable) SelectedFigure
+        public (IFigure?, IDrawable?) SelectedFigure
         {
             get
             {
+                if (_vm == null)
+                    return (null, null);
                 var selected = _vm.SelectedFigures.LastOrDefault();
                 if (selected.Item1 == null)
                     ParamVisibility = Visibility.Hidden;
@@ -144,7 +146,7 @@ namespace GUI_WPF
             if (figure != null)
             {
                 //figure.Angle = Math.PI / 4.0;
-                figure.Size = new DataStructures.Geometry.Vector2d(500, 340);
+                figure.Size = new DataStructures.Geometry.Vector2d(250, 125);
                 figure.Position = new DataStructures.Geometry.Point2d(MouseDownPoint.X, MouseDownPoint.Y);
                 _vm.AddFigure.Execute((figure, new Drawable(new DataStructures.Color(main1.SelectedColor.A, main1.SelectedColor.R, main1.SelectedColor.G, main1.SelectedColor.B),
                     new DataStructures.Color(main2.SelectedColor.A, main2.SelectedColor.R, main2.SelectedColor.G, main2.SelectedColor.B)))).Subscribe();
@@ -159,6 +161,11 @@ namespace GUI_WPF
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
+                if(button.Name == select.Name)
+                {
+                    _vm.SelectFigure.Execute(new DataStructures.Geometry.Point2d(point.X, point.Y)).Subscribe();
+                    _ = SelectedFigure;
+                }
                 var param = button.CommandParameter;
                 if(param != null)
                 {

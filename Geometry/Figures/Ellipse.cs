@@ -12,6 +12,13 @@ namespace Geometry.Figures
         protected static Point2d Center = new Point2d(0, 0);
         protected static double Radius = 1;
 
+        static Ellipse()
+        {
+
+            Center.X = -Radius;
+            Center.Y = -Radius;
+        }
+
         public Ellipse() { }
 
         public Ellipse(Ellipse ellipse) : base(ellipse) { }

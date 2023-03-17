@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using ReactiveUI.Fody.Helpers;
 using System.Numerics;
 
 namespace Interfaces
@@ -7,7 +8,7 @@ namespace Interfaces
     {
         Vector2d Size { get; set; }
         double Angle { get; set; }
-        Point2d Position { get; set; }
+        [Reactive] Point2d Position { get; set; }
 
         IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IParameter<object>> ExtraProperties { get; }
