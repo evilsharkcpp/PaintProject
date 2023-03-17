@@ -1,14 +1,7 @@
 ﻿using System.Text;
 using Interfaces;
 using System.Runtime.Serialization.Json;
-using DynamicData;
-using Geometry.Figures;
-using ExCSS;
 using Svg;
-using System.Xml.Linq;
-using IO.ConvertedFigures;
-using System.Data.SqlTypes;
-using System.IO;
 using DataStructures.Geometry;
 using DataStructures;
 using DataStructures.ConvertibleFigures;
@@ -26,7 +19,7 @@ namespace IO
                                 typeof(ConvertibleLine),
                                 typeof(ConvertibleSquare),
                                 typeof(ConvertibleFilledCircle),
-                                typeof(ConvertibleEllips),
+                                typeof(ConvertibleEllipse),
                                 typeof(ConvertibleTriangle),
                                 typeof(ConvertibleRectangle),
                                 typeof(ConvertibleCircle),
@@ -50,7 +43,7 @@ namespace IO
                                                     typeof(ConvertibleLine),
                                                     typeof(ConvertibleSquare),
                                                     typeof(ConvertibleFilledCircle),
-                                                    typeof(ConvertibleEllips),
+                                                    typeof(ConvertibleEllipse),
                                                     typeof(ConvertibleTriangle),
                                                     typeof(ConvertibleRectangle),
                                                     typeof(ConvertibleCircle),
@@ -68,11 +61,7 @@ namespace IO
             List<ConvertibleFigure> deserializedFigures = new List<ConvertibleFigure>();
 
             var svgDocument = SvgDocument.Open(filename);
-
-            Point2d p1, p2, p3, center;
-            Color color = new Color(0,0,0,1);
-
-            double radius, width, height;
+            SVG svg_convert = new SVG();
 
             foreach (SvgElement svg_elem in svgDocument.Children)
             {
@@ -80,36 +69,24 @@ namespace IO
                 {
                     case SvgLine:
                         SvgLine? svg_line = svg_elem as SvgLine;
-
-                        p1 = new Point2d((float)svg_line.StartX, (float)svg_line.StartY);
-                        p2 = new Point2d((float)svg_line.EndX, (float)svg_line.EndY);
-
-
-                        ConvertibleLine line = new ConvertibleLine(p1, p2, color);
-                        
+                        ConvertibleLine line = svg_convert.getLine(svg_line);         
                         deserializedFigures.Add(line);
-
                         break;
 
                     case SvgRectangle:
                         SvgRectangle? svg_rect = svg_elem as SvgRectangle;
 
-                        p1 = new Point2d((float)svg_rect.X, (float)svg_rect.Y);
-
-                        width = (float)svg_rect.Width;
-                        height = (float)svg_rect.Height;
-
-                        // Проверка равеCтва Cторон
+                        // Проверка равеcтва cторон
                         if (svg_rect.Width == svg_rect.Height)
                         {
-                            // ЕCли Cтороны равны - получим квадрат
-                            ConvertibleSquare square = new ConvertibleSquare(p1, width, height, color);
+                            // Еcли cтороны равны - получим квадрат
+                            ConvertibleSquare square = svg_convert.getSquare(svg_rect);
                             deserializedFigures.Add(square);
                         }
                         else
                         {
-                            // ЕCли Cтороны разные - получим прямоугольник
-                            ConvertibleRectangle rectangle = new ConvertibleRectangle(p1, width, height, color);
+                            // Еcли cтороны разные - получим прямоугольник
+                            ConvertibleRectangle rectangle = svg_convert.getRectangle(svg_rect);
                             deserializedFigures.Add(rectangle);
                         }
                         break;
@@ -117,15 +94,10 @@ namespace IO
                     case SvgPolygon:
                         SvgPolygon? svg_polygon = svg_elem as SvgPolygon;
 
-                        // Проверка чиCла точек
+                        // Проверка чиcла точек
                         if (svg_polygon.Points.Count() == 8)
                         {
-                            // ЕCли 8 чиCел (3 точки + 1 точка для замыкания) - поучим треугольник
-                            p1 = new Point2d((float)svg_polygon.Points[0], (float)svg_polygon.Points[1]);
-                            p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
-                            p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
-
-                            ConvertibleTriangle triangle = new ConvertibleTriangle(p1, p2, p3, color);
+                            ConvertibleTriangle triangle = svg_convert.getTriangle(svg_polygon);
                             deserializedFigures.Add(triangle);
                         }
                         else
@@ -135,9 +107,6 @@ namespace IO
                             for (int i = 0; i < svg_polygon.Points.Count(); i += 2)
                                 points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i+1]));
 
-                            // Пока не CущеCтвует
-/*                          Poligon poligon = new Poligon();
-                            deserializedFigures.Add(poligon);*/
                         }
 
                         break;
@@ -145,37 +114,22 @@ namespace IO
                     case SvgCircle:
                         SvgCircle? svg_circle = svg_elem as SvgCircle;
 
-                        center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
-                        radius = (double)svg_circle.Radius;
-
                         if (svg_circle.Fill == SvgPaintServer.None)
                         {
-                            // Непубличный клаCC
-                            // Circle circle = new Circle(center, radius);
-                            // deserializedFigures.Append(circle);
+                            ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
+                            deserializedFigures.Append(circle);
                         }
                         else
                         {
-                            // Непубличный клаCC
-                            // FilledCircle filled_circle = new FilledCircle(center, radius);
-                            // deserializedFigures.Append(filled_circle);
+                            ConvertibleFilledCircle fill_circle = svg_convert.getFilledCircle(svg_circle);
+                            deserializedFigures.Append(fill_circle);
                         }
-
-
                         break;
 
                     case SvgEllipse:
-                        SvgEllipse? svg_ellips = svg_elem as SvgEllipse;
-
-                        center = new Point2d((double)svg_ellips.CenterX, (double)svg_ellips.CenterY);
-                        double radius_x = (double)svg_ellips.RadiusX;
-                        double radius_y = (double)svg_ellips.RadiusY;
-
-
-
-                        // Непубличный клаCC
-                        // Ellipse ellipse = new SvgEllipse();
-                        // deserializedFigures.Append(ellipse);
+                        SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
+                        ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
+                        deserializedFigures.Append(ellips);
                         break;
                 }
             }
@@ -190,6 +144,8 @@ namespace IO
         public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
             SvgDocument svg_doc = new SvgDocument{ Width = 500, Height = 500};
+            SVG svg_convert = new SVG();
+
 
             foreach (ConvertibleFigure figure in figures)
             {
@@ -199,39 +155,51 @@ namespace IO
                     case ConvertibleLine:
                         ConvertibleLine c_line = (ConvertibleLine)figure;
 
-                        double x1 = c_line.point1.X;
-                        double y1 = c_line.point1.Y;
-                        double x2 = c_line.point2.X;
-                        double y2 = c_line.point2.Y;
+                        var line = svg_convert.getSvgLine(c_line);
+                        svg_doc.Children.Add(line);
 
-
-/*                        var line = new SVGLine().Line(x1, y1, x2, y2);
-                        svg_doc.Children.Add(line);*/
                         break;
 
                     case ConvertibleRectangle:
+                        ConvertibleRectangle c_rectangle = (ConvertibleRectangle)figure;
+
+                        var rectangle = svg_convert.getSvgRectangle(c_rectangle);
+                        svg_doc.Children.Add(rectangle);
 
                         break;
 
                     case ConvertibleTriangle:
+                        ConvertibleTriangle c_triangle = (ConvertibleTriangle)figure;
+
+                        var triangle = svg_convert.getSvgTriangle(c_triangle);
+                        svg_doc.Children.Add(triangle);
 
                         break;
 
                     case ConvertibleSquare:
+                        ConvertibleSquare c_square = (ConvertibleSquare)figure;
+
+                        var square = svg_convert.getSvgSquare(c_square);
+                        svg_doc.Children.Add(square);
 
                         break;
 
                     case ConvertibleCircle:
+                        ConvertibleCircle c_circle = (ConvertibleCircle)figure;
+
+                        var circle = svg_convert.getSvgCircle(c_circle);
+                        svg_doc.Children.Add(circle);
 
                         break;
 
-                    case ConvertibleEllips:
+                    case ConvertibleEllipse:
+                        ConvertibleEllipse c_ellipse = (ConvertibleEllipse)figure;
+
+                        var ellipse = svg_convert.getSvgEllipse(c_ellipse);
+                        svg_doc.Children.Add(ellipse);
 
                         break;
 
-                    case ConvertibleFilledCircle:
-
-                        break;
                 }
 
                 MemoryStream stream = new MemoryStream();
