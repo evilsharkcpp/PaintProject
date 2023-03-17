@@ -1,4 +1,5 @@
-﻿using Geometry;
+﻿using DataStructures.Geometry;
+using Geometry;
 using Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -17,7 +18,7 @@ namespace Logic.ViewModels
         public ReactiveCommand<(IFigure, IDrawable), int> AddFigure { get; set; }
 
         public ReactiveCommand<IFigure, Unit> RemoveFigure { get; }
-        public ReactiveCommand<Point, Unit> SelectFigure { get; }
+        public ReactiveCommand<Point2d, Unit> SelectFigure { get; }
 
 
         public ReactiveCommand<int, IFigure> GetFigureById => throw new NotImplementedException();
@@ -33,7 +34,7 @@ namespace Logic.ViewModels
             CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
             AddFigure = ReactiveCommand.Create<(IFigure, IDrawable), int>((a) => OnAdd(a));
             RemoveFigure = ReactiveCommand.Create<IFigure, Unit>((a) => OnRemove(a));
-            SelectFigure = ReactiveCommand.Create<Point, Unit>((a) => OnSelectFigure(a));
+            SelectFigure = ReactiveCommand.Create<Point2d, Unit>((a) => OnSelectFigure(a));
 
 
             //Observable.Subscribe()
@@ -56,7 +57,7 @@ namespace Logic.ViewModels
             SelectedFigures = SelectedFigures.Where(item => item.Item1 != figure);
             return Unit.Default;
         }
-        private Unit OnSelectFigure(Point point)
+        private Unit OnSelectFigure(Point2d point)
         {
             List<(IFigure, IDrawable)> selectedFigures = new List<(IFigure, IDrawable)>();
 

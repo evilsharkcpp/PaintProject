@@ -16,7 +16,7 @@ namespace Geometry.Figures
         static Rectangle()
         {
             Postition.X = -Width / 2.0;
-            Postition.Y = Height / 2.0;
+            Postition.Y = -Height / 2.0;
         }
 
         public Rectangle() { }

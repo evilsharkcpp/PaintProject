@@ -93,7 +93,7 @@ namespace Geometry.Figures
         {
             Vector2d v = new Vector2d();
             _transform.ApplyInv(p, ref v);
-            return IsInside(v, eps);
+            return IsInside(new Point2d(v.X, v.Y), eps);
         }
 
         public bool HasIntersection(IFigure figure)

@@ -31,11 +31,16 @@ namespace GUI_WPF.Graphics
             c.B = GraphicStyle.OutLineColor.B;
             elllipse.Stroke = new SolidColorBrush(c);
             elllipse.StrokeThickness = 0.01;
-            Canvas.SetLeft(elllipse, start.X);
-            Canvas.SetTop(elllipse, start.Y);
-            elllipse.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           -ModelMatrix.M12, -ModelMatrix.M22,
-                                                           ModelMatrix.M13, ModelMatrix.M23);
+            elllipse.RenderTransform = new TransformGroup()
+            {
+                Children = new TransformCollection(new Transform[]
+                {
+                    new TranslateTransform(start.X, start.Y),
+                    new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                        ModelMatrix.M12, ModelMatrix.M22,
+                                        ModelMatrix.M13, ModelMatrix.M23)
+                })
+            };
             _canvas.Children.Add(elllipse);
         }
 
@@ -103,13 +108,18 @@ namespace GUI_WPF.Graphics
             rect.Stroke = new SolidColorBrush(c);
             rect.StrokeThickness = 0.01;
             //rect.Fill = new SolidColorBrush(c);
-            //rect.
-            
-            Canvas.SetLeft(rect, start.X);
-            Canvas.SetTop(rect, start.Y);
-            rect.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           ModelMatrix.M12, ModelMatrix.M22,
-                                                           ModelMatrix.M13, ModelMatrix.M23);
+            //rect. 
+
+            rect.RenderTransform = new TransformGroup()
+            {
+                Children = new TransformCollection(new Transform[]
+                {
+                    new TranslateTransform(start.X, start.Y),
+                    new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
+                                        ModelMatrix.M12, ModelMatrix.M22,
+                                        ModelMatrix.M13, ModelMatrix.M23)
+                })
+            };
             _canvas.Children.Add(rect);
         }
 
