@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,73 +10,151 @@ using System.Threading.Tasks;
 
 namespace IO
 {
-    //public class TestIO
-    //{
-    //    public void TestStarter()
-    //    {
-    //        test__create_two_line__JSON();
-    //        test__read_two_line__JSON();
-    //        test__create_two_line__SVG();
-    //        test__read_two_line__SVG();
-    //    }
+    public class TestIO
+    {
+        public void TestStarter()
+        {
+            test__create_two_line__JSON();
+            test__read_two_line__JSON();
+            test__create_two_line__SVG();
+            test__read_two_line__SVG();
 
-    //    public void test__create_two_line__JSON()
-    //    {
-    //        Point2d p1 = new Point2d(0, 0);
-    //        Point2d p2 = new Point2d(1, 1);
+            test__create_square__SVG();
+            test__create_rectangle__SVG();
+            test__create_circle__SVG();
+            test__create_ellipse__SVG();
+            test__create_triangle__SVG();
+        }
 
-    //        var line = new Geometry.Figures.Line(p1, p2);
+        public void test__create_two_line__JSON()
+        {
+            Point2d p1 = new Point2d(0, 0);
+            Point2d p2 = new Point2d(1, 1);
 
-    //        Point2d p21 = new Point2d(5, 7);
-    //        Point2d p22 = new Point2d(3, 8);
+            var line = new ConvertibleLine(p1, p2, new Color(0, 0, 0, 1));
 
-    //        var line2 = new Geometry.Figures.Line(p21, p22);
+            Point2d p21 = new Point2d(5, 7);
+            Point2d p22 = new Point2d(3, 8);
 
-    //        IEnumerable<IFigure> array = new List<IFigure>() { line, line2 };
+            var line2 = new ConvertibleLine(p21, p22, new Color(0, 0, 0, 1));
 
-    //        JSONConverter jc = new JSONConverter();
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { line, line2 };
 
-    //        jc.WriteFile("two_lines", array);
-    //    }
+            JSONConverter jc = new JSONConverter();
 
-    //    public void test__create_two_line__SVG()
-    //    {
-    //        Point2d p1 = new Point2d(0, 0);
-    //        Point2d p2 = new Point2d(95, 95);
+            jc.WriteFile("two_lines", array);
+        }
 
-    //        var line = new Geometry.Figures.Line(p1, p2);
+        public void test__create_two_line__SVG()
+        {
+            Point2d p1 = new Point2d(0, 0);
+            Point2d p2 = new Point2d(95, 95);
 
-    //        Point2d p21 = new Point2d(130, 200);
-    //        Point2d p22 = new Point2d(200, 160);
+            var line = new ConvertibleLine(p1, p2, new Color(0, 0, 0, 1));
 
-    //        var line2 = new Geometry.Figures.Line(p21, p22);
+            Point2d p21 = new Point2d(130, 200);
+            Point2d p22 = new Point2d(200, 160);
 
-    //        IEnumerable<IFigure> array = new List<IFigure>() { line, line2 };
+            var line2 = new ConvertibleLine(p21, p22, new Color(0, 0, 0, 1));
 
-    //        SVGConverter jc = new SVGConverter();
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { line, line2 };
 
-    //        jc.WriteFile("two_lines", array);
-    //    }
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("two_lines", array);
+        }
+
+        public void test__create_square__SVG()
+        {
+            Point2d p1 = new Point2d(10, 10);
+
+            var square = new ConvertibleSquare(p1, width: 100, height: 100, new Color(1, 0, 0, 0));
 
 
-    //    public void test__read_two_line__JSON()
-    //    {
-    //        JSONConverter jc = new JSONConverter();
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { square };
 
-    //        IEnumerable<IFigure> figures = jc.ReadFile("two_lines.json");
+            SVGConverter jc = new SVGConverter();
 
-    //        Console.WriteLine("конец...");
+            jc.WriteFile("square", array);
+        }
 
-    //    }
+        public void test__create_rectangle__SVG()
+        {
+            Point2d p1 = new Point2d(10, 10);
 
-    //    public void test__read_two_line__SVG()
-    //    {
-    //        SVGConverter jc = new SVGConverter();
+            var rectangle = new ConvertibleRectangle(p1, width: 100, height: 300, new Color(1, 0, 0, 0));
 
-    //        IEnumerable<IFigure> figures = jc.ReadFile("two_lines.svg");
 
-    //        Console.WriteLine("конец...");
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { rectangle };
 
-    //    }
-    //}
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("rectangle", array);
+        }
+
+        public void test__create_triangle__SVG()
+        {
+            Point2d p1 = new Point2d(10, 10);
+            Point2d p2 = new Point2d(40, 100);
+            Point2d p3 = new Point2d(100, 100);
+
+
+            var triangle = new ConvertibleTriangle(p1, p2, p3, new Color(1, 0, 0, 0));
+
+
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { triangle };
+
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("triangle", array);
+        }
+
+        public void test__create_circle__SVG()
+        {
+            Point2d p1 = new Point2d(100, 100);
+
+            var circle = new ConvertibleCircle(p1, radius: 50, new Color(1, 0, 0, 0));
+
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle };
+
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("circle", array);
+        }
+
+
+        public void test__create_ellipse__SVG()
+        {
+            Point2d p1 = new Point2d(150, 150);
+
+            var circle = new ConvertibleEllipse(p1, radiusX: 100, radiusY: 50, new Color(1, 0, 0, 0));
+
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle };
+
+            SVGConverter jc = new SVGConverter();
+
+            jc.WriteFile("ellipse", array);
+        }
+
+
+        public void test__read_two_line__JSON()
+        {
+            JSONConverter jc = new JSONConverter();
+
+            IEnumerable<IFigure> figures = jc.ReadFile("two_lines.json");
+
+            Console.WriteLine("конец...");
+
+        }
+
+        public void test__read_two_line__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<IFigure> figures = jc.ReadFile("two_lines.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+    }
 }
