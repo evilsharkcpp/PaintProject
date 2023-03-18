@@ -112,10 +112,10 @@ namespace GUI_WPF.Graphics
             c2.G = GraphicStyle.FillColor.G;
             c2.B = GraphicStyle.FillColor.B;
             rect.Stroke = new SolidColorBrush(c);
-            rect.Fill= new SolidColorBrush(c2);
+            //rect.Fill= new SolidColorBrush(c2);
             rect.StrokeThickness = 0.01;
             if(!GraphicStyle.IsNoFill)
-                rect.Fill = new SolidColorBrush(c);
+                rect.Fill = new SolidColorBrush(c2);
             //rect. 
 
             rect.RenderTransform = new TransformGroup()

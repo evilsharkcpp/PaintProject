@@ -141,7 +141,7 @@
                                 <TabItem.Content>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <RadioButton ToolTip="Нет заливки" IsChecked="{Binding ElementName=mainWindow, Path=SelectedFigure.Drawable.IsNoFill, Mode=OneWay, FallbackValue=true}" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            <RadioButton ToolTip="Нет заливки" IsChecked="{Binding ElementName=mainWindow, Path=SelectedFigure.Drawable.IsNoFill, Mode=TwoWay, FallbackValue=true, UpdateSourceTrigger=PropertyChanged}" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
                                             <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>

@@ -13,7 +13,7 @@ namespace Logic.Graphics
         public Color OutLineColor { get; set; }
 
         public double OutLineThickness { get; set; }
-        private bool _isNoFill;
+        private bool _isNoFill = true;
         public bool IsNoFill
         {
             get => _isNoFill;
