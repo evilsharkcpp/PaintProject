@@ -25,12 +25,22 @@ namespace GUI_WPF.Graphics
             elllipse.Height = a;
             elllipse.Width = b;
             var c = new Color();
+            var c2 = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
-            elllipse.Stroke = new SolidColorBrush(c);
+
+            c2.A = GraphicStyle.FillColor.A;
+            c2.R = GraphicStyle.FillColor.R;
+            c2.G = GraphicStyle.FillColor.G;
+            c2.B = GraphicStyle.FillColor.B;
             elllipse.StrokeThickness = 0.01;
+            if (!GraphicStyle.IsNoOutLine)
+                elllipse.Stroke = new SolidColorBrush(c);
+
+            if (!GraphicStyle.IsNoFill)
+                elllipse.Fill = new SolidColorBrush(c2);
             elllipse.RenderTransform = new TransformGroup()
             {
                 Children = new TransformCollection(new Transform[]
@@ -52,16 +62,28 @@ namespace GUI_WPF.Graphics
             line.X2 = v2.X;
             line.Y2 = v2.Y;
             var c = new Color();
+            var c2 = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
+
+            c2.A = GraphicStyle.FillColor.A;
+            c2.R = GraphicStyle.FillColor.R;
+            c2.G = GraphicStyle.FillColor.G;
+            c2.B = GraphicStyle.FillColor.B;
+            line.StrokeThickness = 0.01;
+            if (!GraphicStyle.IsNoOutLine)
+                line.Stroke = new SolidColorBrush(c);
+
+            if (!GraphicStyle.IsNoFill)
+                line.Fill = new SolidColorBrush(c2);
             //var trans = new TransformGroup();
             //trans.Children.Add(new ScaleTransform(ModelMatrix.M11, ModelMatrix.M12));
             //trans.Children.Add(new RotateTransform(ModelMatrix.M21, ModelMatrix.M22,s));
             //trans.Children.Add(new TranslateTransform(ModelMatrix.M31, ModelMatrix.M32));
-            line.StrokeThickness = 0.01;
-            line.Stroke = new SolidColorBrush(c);
+            //line.StrokeThickness = 0.01;
+            //line.Stroke = new SolidColorBrush(c);
             line.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
                                                            ModelMatrix.M12, ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
@@ -77,11 +99,21 @@ namespace GUI_WPF.Graphics
             poly.Points = polyPoints;
             poly.StrokeThickness = 0.01;
             var c = new Color();
+            var c2 = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
-            poly.Stroke = new SolidColorBrush(c);
+
+            c2.A = GraphicStyle.FillColor.A;
+            c2.R = GraphicStyle.FillColor.R;
+            c2.G = GraphicStyle.FillColor.G;
+            c2.B = GraphicStyle.FillColor.B;
+            if (!GraphicStyle.IsNoOutLine)
+                poly.Stroke = new SolidColorBrush(c);
+
+            if (!GraphicStyle.IsNoFill)
+                poly.Fill = new SolidColorBrush(c2);
             poly.RenderTransform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
                                                            -ModelMatrix.M12, -ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
@@ -101,13 +133,22 @@ namespace GUI_WPF.Graphics
             rect.Height = a;
             rect.Width = b;
             var c = new Color();
+            var c2 = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
-            rect.Stroke = new SolidColorBrush(c);
+            
+            c2.A = GraphicStyle.FillColor.A;
+            c2.R = GraphicStyle.FillColor.R;
+            c2.G = GraphicStyle.FillColor.G;
+            c2.B = GraphicStyle.FillColor.B;
             rect.StrokeThickness = 0.01;
-            //rect.Fill = new SolidColorBrush(c);
+            if (!GraphicStyle.IsNoOutLine)
+                rect.Stroke = new SolidColorBrush(c);
+            
+            if(!GraphicStyle.IsNoFill)
+                rect.Fill = new SolidColorBrush(c2);
             //rect. 
 
             rect.RenderTransform = new TransformGroup()

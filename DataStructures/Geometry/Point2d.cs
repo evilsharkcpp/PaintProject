@@ -11,16 +11,18 @@ namespace DataStructures.Geometry
         [FieldOffset(8)]
         private double _y;
 
-        public double X 
+        public double X
         { 
             get => _x;
             set => _x = value;
         }
+
         public double Y
         {
             get => _y;
             set => _y = value;
         }
+
         public Point2d()
         {
             _x = 0;
