@@ -101,13 +101,21 @@ namespace GUI_WPF.Graphics
             rect.Height = a;
             rect.Width = b;
             var c = new Color();
+            var c2 = new Color();
             c.A = GraphicStyle.OutLineColor.A;
             c.R = GraphicStyle.OutLineColor.R;
             c.G = GraphicStyle.OutLineColor.G;
             c.B = GraphicStyle.OutLineColor.B;
+            
+            c2.A = GraphicStyle.FillColor.A;
+            c2.R = GraphicStyle.FillColor.R;
+            c2.G = GraphicStyle.FillColor.G;
+            c2.B = GraphicStyle.FillColor.B;
             rect.Stroke = new SolidColorBrush(c);
+            rect.Fill= new SolidColorBrush(c2);
             rect.StrokeThickness = 0.01;
-            //rect.Fill = new SolidColorBrush(c);
+            if(!GraphicStyle.IsNoFill)
+                rect.Fill = new SolidColorBrush(c);
             //rect. 
 
             rect.RenderTransform = new TransformGroup()

@@ -1,5 +1,7 @@
-﻿using Geometry;
+﻿using DataStructures.Geometry;
+using Geometry;
 using Interfaces;
+using Logic.Graphics;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Drawing;
@@ -15,35 +17,36 @@ namespace Logic.ViewModels
         [Reactive] public string Temp { get; set; }
         public ReactiveCommand<string, IFigure> CreateFigure { get; set; }
 
-        public ReactiveCommand<(IFigure, IDrawable), int> AddFigure { get; set; }
+        public ReactiveCommand<IDrawableObject, int> AddFigure { get; set; }
 
         public ReactiveCommand<int, Unit> RemoveFigure { get; }
-        public ReactiveCommand<Point, int> SelectFigure { get; }
+        public ReactiveCommand<Point2d, int> SelectFigure { get; }
 
-        public ReactiveCommand<int, (IFigure, IDrawable)?> GetFigureById { get; }
+        public ReactiveCommand<int, IDrawableObject?> GetFigureById { get; }
 
-        private Dictionary<int, (IFigure, IDrawable)> _figures;
-        public IReadOnlyDictionary<int, (IFigure, IDrawable)> Figures => _figures;
+        private Dictionary<int, IDrawableObject> _figures;
+        public IReadOnlyDictionary<int, IDrawableObject> Figures => _figures;
 
-        public IEnumerable<(IFigure, IDrawable)> SelectedFigures { get; set; }
+        public IEnumerable<IDrawableObject> SelectedFigures { get; set; }
         private int _currentId = 0;
         public MainVM()
         {
-            _figures = new Dictionary<int,(IFigure, IDrawable)>();
+            _figures = new Dictionary<int,IDrawableObject>();
+            SelectedFigures= new List<IDrawableObject>();
             //Temp = "Hellop";
             //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
             CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
-            AddFigure = ReactiveCommand.Create<(IFigure, IDrawable), int>((a) => OnAdd(a));
+            AddFigure = ReactiveCommand.Create<IDrawableObject, int>((a) => OnAdd(a));
             RemoveFigure = ReactiveCommand.Create<int, Unit>((a) => OnRemove(a));
-            SelectFigure = ReactiveCommand.Create<Point, int>((a) => OnSelectFigure(a));
-            GetFigureById = ReactiveCommand.Create<int, (IFigure, IDrawable)?>((a) => OnGetFigureById(a));
+            SelectFigure = ReactiveCommand.Create<Point2d, int>((a) => OnSelectFigure(a));
+            GetFigureById = ReactiveCommand.Create<int, IDrawableObject?>((a) => OnGetFigureById(a));
 
             //Observable.Subscribe()
         }
 
-        (IFigure, IDrawable)? OnGetFigureById(int id)
+        IDrawableObject? OnGetFigureById(int id)
         {
-            return _figures.TryGetValue(id, out (IFigure, IDrawable) figure) ? figure : null;
+            return _figures.TryGetValue(id, out IDrawableObject figure) ? figure : null;
         }
         IFigure? OnCreate(string name)
         {
@@ -51,9 +54,10 @@ namespace Logic.ViewModels
             return fabric.CreateFigure(name);
         }
 
-        int OnAdd((IFigure, IDrawable) figure)
+        int OnAdd(IDrawableObject figure)
         {
             _figures.Add(_currentId++, figure);
+            SelectedFigures = SelectedFigures.Append(figure);
             return _currentId - 1;
         }
         private Unit OnRemove(int id)
@@ -61,9 +65,9 @@ namespace Logic.ViewModels
             _figures.Remove(id);
             return Unit.Default;
         }
-        private int OnSelectFigure(Point point)
+        private int OnSelectFigure(Point2d point)
         {
-            KeyValuePair<int, (IFigure, IDrawable)> selectedFigures = _figures.Where(pair => pair.Value.Item1.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5)).First();
+            KeyValuePair<int, IDrawableObject> selectedFigures = _figures.Where(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5)).First();
             return selectedFigures.Key;
         }
 

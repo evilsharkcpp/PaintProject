@@ -141,7 +141,7 @@
                                 <TabItem.Content>
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <RadioButton ToolTip="Нет заливки" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                            <RadioButton ToolTip="Нет заливки" IsChecked="{Binding ElementName=mainWindow, Path=SelectedFigure.Drawable.IsNoFill, Mode=OneWay, FallbackValue=true}" Content="../Views/Assets/x.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
                                             <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
@@ -150,7 +150,7 @@
                                             <RadioButton ToolTip="Радиальный градиент" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
                                         </StackPanel>
-                                        <colorpicker:StandardColorPicker x:Name="main1" Grid.Row="2"/>
+                                        <colorpicker:StandardColorPicker x:Name="main1" Grid.Row="2" ColorChanged="main1_ColorChanged"/>
                                     </StackPanel>
                                 </TabItem.Content>
                             </TabItem>
@@ -168,7 +168,7 @@
                                             <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                             </RadioButton>
                                         </StackPanel>
-                                        <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2"/>
+                                        <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2" ColorChanged="main2_ColorChanged"/>
                                     </StackPanel>
                                 </TabItem.Content>
                             </TabItem>
@@ -197,7 +197,7 @@
                                                     <ColumnDefinition Width="50*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label ToolTip="Горизонтальная координата" Content="X:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
-                                                <TextBox TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Item1.Position.X}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Grid.Column="1"/>
+                                                <TextBox TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Figure.Position.X, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Grid.Column="1"/>
                                             </Grid>
                                             <Grid Grid.Row="1" Margin="0,2,0,1">
                                                 <Grid.ColumnDefinitions>
@@ -205,7 +205,7 @@
                                                     <ColumnDefinition Width="50*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label ToolTip="Вертикальная координата" Content="Y:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12"/>
-                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="1px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                                    <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Figure.Position.Y, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
                                             </Grid>
                                             <Grid Grid.Row="2" Margin="0,2,0,2">
                                                 <Grid.ColumnDefinitions>
@@ -213,7 +213,7 @@
                                                     <ColumnDefinition Width="50*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label ToolTip="Ширина объекта" Content="Ш:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="16"/>
-                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="10px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                                    <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Figure.Size.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
 
                                             </Grid>
                                             <Grid Grid.Row="3" Margin="0,2,0,2">
@@ -222,7 +222,7 @@
                                                     <ColumnDefinition Width="50*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label ToolTip="Высота объекта" Content="В:" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="12" Margin="0,0,2,0"/>
-                                                <TextBox Grid.Column="1" TextWrapping="Wrap" Text="10px" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
+                                    <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Figure.Size.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}"/>
                                             </Grid>
                                         </Grid>
                                     </Grid>
