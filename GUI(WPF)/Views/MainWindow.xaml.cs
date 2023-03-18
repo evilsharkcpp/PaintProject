@@ -184,6 +184,14 @@ namespace GUI_WPF
            
             var point = e.GetPosition(canvas);
             MouseDownPoint = new Point(point.X, point.Y);
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                mouseDownPoint = e.GetPosition(this);
+                canvasTransStartPoint.X = canvasTranslate.X;
+                canvasTransStartPoint.Y = canvasTranslate.Y;
+                canvasTranslateState = true;
+                return;
+            }
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
@@ -200,13 +208,7 @@ namespace GUI_WPF
                 }
                 select.IsChecked = true;
             }
-            if (Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                mouseDownPoint = e.GetPosition(this);
-                canvasTransStartPoint.X = canvasTranslate.X;
-                canvasTransStartPoint.Y = canvasTranslate.Y;
-                canvasTranslateState = true;
-            }
+            
         }
 
         private void scaleUp()

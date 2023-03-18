@@ -23,7 +23,16 @@ namespace Logic.Graphics
                 OnPropertyChanged();
             }
         }
-        public bool IsOutLine { get; set; }
+        private bool _isNoOutLine = false;
+        public bool IsNoOutLine 
+        { 
+            get => _isNoOutLine;
+            set
+            {
+                _isNoOutLine = value;
+                OnPropertyChanged();
+            } 
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
