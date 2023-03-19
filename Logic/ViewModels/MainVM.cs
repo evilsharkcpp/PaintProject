@@ -67,11 +67,11 @@ namespace Logic.ViewModels
         }
         private int OnSelectFigure(Point2d point)
         {
-            SelectedFigures = Enumerable.Empty<IDrawableObject>();
+            // SelectedFigures = Enumerable.Empty<IDrawableObject>();
             KeyValuePair<int, IDrawableObject> selectedFigures = _figures.First(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5));
             var selectedFigure = OnGetFigureById(selectedFigures.Key);
-            if (selectedFigure != null)
-                SelectedFigures = SelectedFigures.Append(selectedFigure);
+            // if (selectedFigure != null)
+            //    SelectedFigures = SelectedFigures.Append(selectedFigure);
             return selectedFigures.Key;
         }
 
