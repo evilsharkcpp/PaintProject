@@ -9,9 +9,5 @@ namespace DataStructures
         // Угол поворота
         [DataMember(Name = "Angle")]
         public double angle;
-
-        // Цвет границы
-        [DataMember(Name = "Color")]
-        public Color color;
     }
 }
