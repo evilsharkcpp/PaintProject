@@ -3,92 +3,231 @@ using Geometry;
 using Interfaces;
 using Logic.Graphics;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Reactive;
 using System.Reactive.Linq;
 
 namespace Logic.ViewModels
 {
-    public class MainVM : ReactiveObject, ILogic
+    public class MainVM : Logic
     {
-        [Reactive] public string Temp { get; set; }
-        public ReactiveCommand<string, IFigure> CreateFigure { get; set; }
-
-        public ReactiveCommand<IDrawableObject, int> AddFigure { get; set; }
-
-        public ReactiveCommand<int, Unit> RemoveFigure { get; }
-        public ReactiveCommand<Point2d, int> SelectFigure { get; }
-
-        public ReactiveCommand<int, IDrawableObject?> GetFigureById { get; }
+        private int _currentId = 0;
 
         private Dictionary<int, IDrawableObject> _figures;
-        public IReadOnlyDictionary<int, IDrawableObject> Figures => _figures;
+        private SortedSet<int> _sortedFiguresID;
 
-        public Point2d DefaultSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int StackStateSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private Dictionary<int, bool> _isSelected;
+        private int _selectedFigure;
+        private List<int> _selectedFigures;
 
-        public int StateIndex => throw new NotImplementedException();
+        public override IReadOnlyDictionary<int, IDrawableObject> Figures => _figures;
+        public override IEnumerable<int> SelectedFigures => _selectedFigures;
 
-        public IEnumerable<int> SelectedFigures { get; set; }
 
-        ReactiveCommand<int, bool> ILogic.RemoveFigure => throw new NotImplementedException();
-
-        public ReactiveCommand<Rect, int> SelectFigures => throw new NotImplementedException();
-
-        public ReactiveCommand<Stream, bool> Save => throw new NotImplementedException();
-
-        public ReactiveCommand<Stream, bool> Load => throw new NotImplementedException();
-
-        public ReactiveCommand<Unit, bool> Undo => throw new NotImplementedException();
-
-        public ReactiveCommand<Unit, bool> Redo => throw new NotImplementedException();
-
-        public ReactiveCommand<IGraphics, bool> Draw => throw new NotImplementedException();
-
-        private int _currentId = 0;
         public MainVM()
         {
-            _figures = new Dictionary<int,IDrawableObject>();
-            SelectedFigures = new List<int>();
-            //Temp = "Hellop";
-            //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
-            CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
-            AddFigure = ReactiveCommand.Create<IDrawableObject, int>((a) => OnAdd(a));
-            RemoveFigure = ReactiveCommand.Create<int, Unit>((a) => OnRemove(a));
-            SelectFigure = ReactiveCommand.Create<Point2d, int>((a) => OnSelectFigure(a));
-            GetFigureById = ReactiveCommand.Create<int, IDrawableObject?>((a) => OnGetFigureById(a));
+            _figures = new Dictionary<int, IDrawableObject>();
+            _sortedFiguresID = new SortedSet<int>(Comparer<int>.Create((id1, id2) =>
+            {
+                int cmp = -1;
+                if (_figures[id1].Figure is not null &&
+                    _figures[id2].Figure is not null)
+                {
+                    cmp = _figures[id1].Figure!.ZIndex.CompareTo(_figures[id2].Figure!.ZIndex);
+                }
+                return cmp;
+            }));
 
-            //Observable.Subscribe()
+            _isSelected = new Dictionary<int, bool>();
+            _selectedFigures = new List<int>();
         }
 
-        IDrawableObject? OnGetFigureById(int id)
+
+        private void ResetSelect()
         {
-            return _figures.TryGetValue(id, out IDrawableObject figure) ? figure : null;
+            foreach (KeyValuePair<int, IDrawableObject> pair in _figures)
+            {
+                _isSelected[pair.Key] = false;
+            }
+
+            _selectedFigure = -1;
+            _selectedFigures.Clear();
         }
-        IFigure? OnCreate(string name)
+
+
+        protected override IFigure? OnCreate(string name)
         {
-            var fabric = FigureFabric.Create();
+            ResetSelect();
+
+            FigureFabric fabric = FigureFabric.Create();
+            IFigure? figure = fabric.CreateFigure(name);
+            if (figure is not null)
+            {
+                figure.Size = DefaultSize;
+            }
+
             return fabric.CreateFigure(name);
         }
 
-        int OnAdd(IDrawableObject figure)
+        protected override int OnAdd(IDrawableObject figure)
         {
-            _figures.Add(_currentId++, figure);
-            SelectedFigures = SelectedFigures.Append(_currentId - 1);
+            ResetSelect();
+
+            _figures.Add(_currentId, figure);
+            _sortedFiguresID.Add(_currentId);
+            _isSelected.Add(_currentId++, false);
             return _currentId - 1;
         }
-        private Unit OnRemove(int id)
+
+        protected override bool OnRemove(int id)
         {
-            _figures.Remove(id);
-            return Unit.Default;
+            ResetSelect();
+
+            bool successfully = false;
+            if (_figures.Remove(id))
+            {
+                _sortedFiguresID.Remove(id);
+                _isSelected.Remove(id);
+                successfully = true;
+            }
+
+            return successfully;
         }
-        private int OnSelectFigure(Point2d point)
+
+        protected override int OnSelectFigure(Point2d point)
         {
-            KeyValuePair<int, IDrawableObject> selectedFigures = _figures.Where(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), (float)1e-5)).First();
-            return selectedFigures.Key;
+            bool found = _selectedFigure < 0;
+            int proxySelectedFigureID = -1, selectedFigureID = -1;
+            Vector2 p = new Vector2((float)point.X, (float)point.Y);
+            foreach (KeyValuePair<int, IDrawableObject> pair in _figures)
+            {
+                if (found)
+                {
+                    if (pair.Value.Figure is not null &&
+                        pair.Value.Figure.IsInside(p, 3))
+                    {
+                        selectedFigureID = pair.Key;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (proxySelectedFigureID == -1)
+                    {
+                        if (pair.Value.Figure is not null &&
+                            pair.Value.Figure.IsInside(p, 3))
+                        {
+                            proxySelectedFigureID = pair.Key;
+                        }
+                    }
+                    found = pair.Key == _selectedFigure;
+                }
+            }
+
+
+            _selectedFigure = selectedFigureID != -1 ? selectedFigureID : proxySelectedFigureID;
+            _selectedFigures.Clear();
+            if (_selectedFigure >= 0)
+            {
+                _selectedFigures.Add(_selectedFigure);
+                _isSelected[_selectedFigure] = true;
+            }
+            return _selectedFigure;
+        }
+
+        protected override bool OnSelectFigures(Rect rect)
+        {
+            _selectedFigures.Clear();
+            _selectedFigures.AddRange(_figures.Where(pair =>
+            {
+                bool successfully = false;
+
+                if (pair.Value.Figure is not null)
+                {
+                    successfully = pair.Value.Figure.InArea(rect, 3);
+                    _isSelected[pair.Key] = successfully;
+                }
+
+                return successfully;
+            }).Select(pair => pair.Key));
+
+            return false;
+        }
+
+        protected override IEnumerable<(string, ReactiveCommand<Point2d, bool>)> OnGetContextCommands()
+        {
+
+            return new List<(string, ReactiveCommand<Point2d, bool>)>();
+        }
+
+        protected override bool OnSave(Stream a)
+        {
+
+            return false;
+        }
+
+        protected override bool OnLoad(Stream a)
+        {
+
+            return false;
+        }
+
+        protected override bool OnUndo()
+        {
+
+            return false;
+        }
+
+        protected override bool OnRedo()
+        {
+
+            return false;
+        }
+
+        protected override bool OnDraw(IGraphics graphics)
+        {
+            Point2d start = new Point2d(double.MaxValue, double.MaxValue),
+                    end = new Point2d(double.MinValue, double.MinValue);
+            foreach (int id in _sortedFiguresID)
+            {
+                IDrawableObject drawableObject = _figures[id];
+                if (drawableObject.Drawable is not null &&
+                    drawableObject.Figure is not null)
+                {
+                    graphics.GraphicStyle = drawableObject.Drawable;
+
+                    IFigure figure = drawableObject.Figure;
+                    figure.Draw(graphics);
+
+                    if (_isSelected[id])
+                    {
+                        if (figure.Position.X < start.X)
+                            start.X = figure.Position.X;
+
+                        if (figure.Position.Y < start.Y)
+                            start.Y = figure.Position.Y;
+
+                        if (figure.Position.X + figure.Size.X > end.X)
+                            end.X = figure.Position.X + figure.Size.X;
+
+                        if (figure.Position.Y + figure.Size.Y > end.Y)
+                            end.Y = figure.Position.Y + figure.Size.Y;
+                    }
+                }
+            }
+
+            if (_selectedFigures.Count > 0)
+            {
+                start.X -= 5;
+                start.Y -= 5;
+                end.X += 5;
+                end.Y += 5;
+
+                graphics.GraphicStyle = SelectionStyle;
+                graphics.ModelMatrix = new Matrix3d();
+                graphics.DrawRectangle(start, end.X - start.X, end.Y - start.Y, false, true);
+            }
+
+            return true;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Interfaces
         Vector2d Size { get; set; }
         double Angle { get; set; }
         [Reactive] Point2d Position { get; set; }
+        int ZIndex { get; }
 
         IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IParameter<object>> ExtraProperties { get; }
