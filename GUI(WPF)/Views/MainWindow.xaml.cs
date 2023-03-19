@@ -33,12 +33,12 @@ namespace GUI_WPF
         bool canvasTranslateState = false;
 
         private Point2d _selectedPosition;
-        public Point2d SelectedPosition 
-        { 
+        public Point2d SelectedPosition
+        {
             get
             {
                 var s = SelectedFigure;
-                if(s != null)
+                if (s != null)
                 {
                     return s.Figure.Position;
                 }
@@ -123,6 +123,9 @@ namespace GUI_WPF
             }
         }
 
+        bool isMove = false;
+        private Point2d startFigureMovePosition;
+
         DispatcherTimer _timer;
         public MainWindow()
         {
@@ -142,7 +145,7 @@ namespace GUI_WPF
         void Draw(object sender, EventArgs e)
         {
             canvas.Children.Clear();
-            foreach(var item in _vm.Figures)
+            foreach (var item in _vm.Figures)
             {
                 _graphics.GraphicStyle = item.Value.Drawable;
                 item.Value.Figure.Draw(_graphics);
@@ -158,6 +161,11 @@ namespace GUI_WPF
                 var sub = Point.Subtract(mouseMovePoint, mouseDownPoint);
                 canvasTranslate.X = canvasTransStartPoint.X + sub.X;
                 canvasTranslate.Y = canvasTransStartPoint.Y + sub.Y;
+            }
+            else if (isMove)
+            {
+                var sub = new Point2d(point.X - startFigureMovePosition.X, point.Y - startFigureMovePosition.Y);
+                SelectedFigure.Figure.Position = sub;
             }
         }
 
@@ -181,7 +189,7 @@ namespace GUI_WPF
         }
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           
+
             var point = e.GetPosition(canvas);
             MouseDownPoint = new Point(point.X, point.Y);
             if (Keyboard.IsKeyDown(Key.LeftShift))
@@ -195,20 +203,22 @@ namespace GUI_WPF
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
-                if(button.Name == select.Name)
+                if (button.Name == select.Name)
                 {
                     _vm.SelectFigure.Execute(new DataStructures.Geometry.Point2d(point.X, point.Y)).Subscribe();
                     _ = SelectedFigure;
+                    isMove = true;
+                    startFigureMovePosition = SelectedFigure.Figure.Position;
                 }
                 var param = button.CommandParameter;
-                if(param != null)
+                if (param != null)
                 {
                     _vm.CreateFigure.Execute(param.ToString()).Subscribe();
-                    
+
                 }
                 select.IsChecked = true;
             }
-            
+
         }
 
         private void scaleUp()
@@ -242,6 +252,7 @@ namespace GUI_WPF
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             canvasTranslateState = false;
+            isMove = false;
         }
 
         private void scaleDownButtonDown(object sender, RoutedEventArgs e)
@@ -267,7 +278,7 @@ namespace GUI_WPF
         private void main1_ColorChanged(object sender, RoutedEventArgs e)
         {
             var picker = sender as ColorPicker.StandardColorPicker;
-            if(SelectedFigure != null)
+            if (SelectedFigure != null)
             {
                 SelectedFigure.Drawable.FillColor = new DataStructures.Color(picker.SelectedColor.A, picker.SelectedColor.R, picker.SelectedColor.G, picker.SelectedColor.B);
             }
