@@ -142,11 +142,8 @@ namespace GUI_WPF
         void Draw(object sender, EventArgs e)
         {
             canvas.Children.Clear();
-            foreach(var item in _vm.Figures)
-            {
-                _graphics.GraphicStyle = item.Value.Drawable;
-                item.Value.Figure.Draw(_graphics);
-            }
+
+            _vm.Draw.Execute(_graphics).Subscribe();
         }
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {

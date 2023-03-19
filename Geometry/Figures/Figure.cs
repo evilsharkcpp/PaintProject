@@ -63,6 +63,8 @@ namespace Geometry.Figures
             }
         }
 
+        public int ZIndex => 0;
+
 
         public Figure()
         {
@@ -91,9 +93,9 @@ namespace Geometry.Figures
 
         public bool IsInside(Vector2 p, float eps)
         {
-            Vector2d v = new Vector2d();
-            _transform.ApplyInv(p, ref v);
-            return IsInside(new Point2d(v.X, v.Y), eps / Math.Max(Size.X, Size.Y));
+            Point2d v = new Point2d();
+            _transform.ApplyInv((Point2d)p, ref v);
+            return IsInside(v, eps / Math.Max(Size.X, Size.Y));
         }
 
         public bool InArea(Rect rect, float eps)
