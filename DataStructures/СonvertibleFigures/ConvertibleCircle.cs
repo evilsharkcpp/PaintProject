@@ -16,14 +16,12 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Radius")]
         public double radius;
 
-        // Цвет границы круга
-        [DataMember(Name = "Color")]
-        public Color color;
 
-        public ConvertibleCircle(Point2d center, double radius, Color color)
+        public ConvertibleCircle(Point2d center, double radius, double angle, Color color)
         {
             this.center = center;
             this.radius = radius;
+            this.angle = angle;
             this.color = color;
         }
     }

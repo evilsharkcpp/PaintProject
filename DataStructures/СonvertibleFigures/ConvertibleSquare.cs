@@ -18,15 +18,13 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Height")]
         public double height;
 
-        // Цвет границы квадрата
-        [DataMember(Name = "Color")]
-        public Color color;
 
-        public ConvertibleSquare(Point2d point1, double width, double height, Color color)
+        public ConvertibleSquare(Point2d point1, double width, double height, double angle, Color color)
         {
             this.point1 = point1;
             this.width = width;
             this.height = height;
+            this.angle = angle;
             this.color = color;
         }
     }

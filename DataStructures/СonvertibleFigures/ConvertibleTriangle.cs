@@ -18,15 +18,12 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Point3")]
         public Point2d point3;
 
-        // Цвет границы треугольника
-        [DataMember(Name = "Color")]
-        public Color color;
-
-        public ConvertibleTriangle(Point2d point1, Point2d point2, Point2d point3, Color color)
+        public ConvertibleTriangle(Point2d point1, Point2d point2, Point2d point3, double angle, Color color)
         {
             this.point1 = point1;
             this.point2 = point2;
             this.point3 = point3;
+            this.angle = angle;
             this.color = color;
         }
 

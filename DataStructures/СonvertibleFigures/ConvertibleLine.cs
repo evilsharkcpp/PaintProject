@@ -14,14 +14,12 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Point2")]
         public Point2d point2;
 
-        // Цвет линии
-        [DataMember(Name = "Color")]
-        public Color color;
 
-        public ConvertibleLine(Point2d point1, Point2d point2, Color color )
+        public ConvertibleLine(Point2d point1, Point2d point2, double angle, Color color )
         {
             this.point1 = point1;
             this.point2 = point2;
+            this.angle = angle;
             this.color = color;
         }
     }
