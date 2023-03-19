@@ -101,12 +101,15 @@ namespace GUI_WPF
                     return null;
                 if (_vm.SelectedFigures == null)
                     return null;
-                var selected = _vm.Figures.TryGetValue(_vm.SelectedFigures.LastOrDefault(), out IDrawableObject? drawableObject) ? drawableObject : null;
-                if (selected == null)
+                var selected = _vm.SelectedFigures.Count() == 0;
+                if (selected)
+                {
                     ParamVisibility = Visibility.Hidden;
+                    return null;
+                }
                 else
                     ParamVisibility = Visibility.Visible;
-                return selected;
+                return _vm.Figures[_vm.SelectedFigures.Last()];
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
@@ -142,7 +145,6 @@ namespace GUI_WPF
         void Draw(object sender, EventArgs e)
         {
             canvas.Children.Clear();
-
             _vm.Draw.Execute(_graphics).Subscribe();
         }
         private void canvas_MouseMove(object sender, MouseEventArgs e)

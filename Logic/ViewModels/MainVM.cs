@@ -33,6 +33,8 @@ namespace Logic.ViewModels
                     _figures[id2].Figure is not null)
                 {
                     cmp = _figures[id1].Figure!.ZIndex.CompareTo(_figures[id2].Figure!.ZIndex);
+                    if (cmp == 0)
+                        cmp = -1;
                 }
                 return cmp;
             }));
@@ -75,6 +77,10 @@ namespace Logic.ViewModels
             _figures.Add(_currentId, figure);
             _sortedFiguresID.Add(_currentId);
             _isSelected.Add(_currentId++, false);
+            _selectedFigure = _currentId - 1;
+            _selectedFigures.Clear();
+            _selectedFigures.Add(_selectedFigure);
+            _isSelected[_selectedFigure] = true;
             return _currentId - 1;
         }
 
