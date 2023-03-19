@@ -27,13 +27,12 @@ namespace Logic.ViewModels
         private Dictionary<int, IDrawableObject> _figures;
         public IReadOnlyDictionary<int, IDrawableObject> Figures => _figures;
 
-        public IEnumerable<IDrawableObject> SelectedFigures { get; set; }
         public Point2d DefaultSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int StackStateSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public int StateIndex => throw new NotImplementedException();
 
-        IEnumerable<int> ILogic.SelectedFigures { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IEnumerable<int> SelectedFigures { get; set; }
 
         ReactiveCommand<int, bool> ILogic.RemoveFigure => throw new NotImplementedException();
 
@@ -53,7 +52,7 @@ namespace Logic.ViewModels
         public MainVM()
         {
             _figures = new Dictionary<int,IDrawableObject>();
-            SelectedFigures= new List<IDrawableObject>();
+            SelectedFigures = new List<int>();
             //Temp = "Hellop";
             //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
             CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
@@ -78,7 +77,7 @@ namespace Logic.ViewModels
         int OnAdd(IDrawableObject figure)
         {
             _figures.Add(_currentId++, figure);
-            SelectedFigures = SelectedFigures.Append(figure);
+            SelectedFigures = SelectedFigures.Append(_currentId - 1);
             return _currentId - 1;
         }
         private Unit OnRemove(int id)
