@@ -2,7 +2,7 @@
 using System;
 using DataStructures;
 
-namespace GUI_WPF.Graphics
+namespace Logic.Graphics
 {
     public class Drawable : IDrawable
     {
@@ -25,6 +25,11 @@ namespace GUI_WPF.Graphics
         {
             FillColor  = fill;
             OutLineColor = stroke; 
+        }
+        public Drawable()
+        {
+            FillColor = new Color(0, 0, 0, 0);
+            OutLineColor = new Color(255, 0, 0, 0);
         }
     }
 }

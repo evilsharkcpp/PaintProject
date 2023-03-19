@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace DataStructures.Geometry
@@ -340,6 +341,69 @@ namespace DataStructures.Geometry
             res[6] = _M31 * mat._M11 + _M32 * mat._M12 + _M33 * mat._M13;
             res[7] = _M31 * mat._M21 + _M32 * mat._M22 + _M33 * mat._M23;
             res[8] = _M31 * mat._M31 + _M32 * mat._M32 + _M33 * mat._M33;
+        }
+
+
+        public void Product(Point2d v, ref Point2d res)
+        {
+            double w = _M31 * v.X + _M32 * v.Y + _M33;
+            res.X = (_M11 * v.X + _M12 * v.Y + _M13) / w;
+            res.Y = (_M21 * v.X + _M22 * v.Y + _M23) / w;
+        }
+
+        public void ProductT(Point2d v, ref Point2d res)
+        {
+            double w = _M13 * v.X + _M23 * v.Y + _M33;
+            res.X = (_M11 * v.X + _M21 * v.Y + _M31) / w;
+            res.Y = (_M12 * v.X + _M22 * v.Y + _M32) / w;
+        }
+
+        public void Product(Vector2d v, ref Vector2d res)
+        {
+            res.X = _M11 * v.X + _M12 * v.Y;
+            res.Y = _M21 * v.X + _M22 * v.Y;
+        }
+
+        public void ProductT(Vector2d v, ref Vector2d res)
+        {
+            res.X = _M11 * v.X + _M21 * v.Y;
+            res.Y = _M12 * v.X + _M22 * v.Y;
+        }
+
+        public void Product(Vector2 v, ref Vector2d res)
+        {
+            res.X = _M11 * v.X + _M12 * v.Y;
+            res.Y = _M21 * v.X + _M22 * v.Y;
+        }
+
+        public void ProductT(Vector2 v, ref Vector2d res)
+        {
+            res.X = _M11 * v.X + _M21 * v.Y;
+            res.Y = _M12 * v.X + _M22 * v.Y;
+        }
+
+        public void Product(Vector2d v, ref Vector2 res)
+        {
+            res.X = (float)(_M11 * v.X + _M12 * v.Y);
+            res.Y = (float)(_M21 * v.X + _M22 * v.Y);
+        }
+
+        public void ProductT(Vector2d v, ref Vector2 res)
+        {
+            res.X = (float)(_M11 * v.X + _M21 * v.Y);
+            res.Y = (float)(_M12 * v.X + _M22 * v.Y);
+        }
+
+        public void Product(Vector2 v, ref Vector2 res)
+        {
+            res.X = (float)(_M11 * v.X + _M12 * v.Y);
+            res.Y = (float)(_M21 * v.X + _M22 * v.Y);
+        }
+
+        public void ProductT(Vector2 v, ref Vector2 res)
+        {
+            res.X = (float)(_M11 * v.X + _M21 * v.Y);
+            res.Y = (float)(_M12 * v.X + _M22 * v.Y);
         }
 
 

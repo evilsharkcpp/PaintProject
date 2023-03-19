@@ -17,7 +17,7 @@ namespace IO
         public IEnumerable<IFigure> ReadFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open);
-            var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>), 
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
                         new Type[] {
                                 typeof(ConvertibleLine),
                                 typeof(ConvertibleSquare),
@@ -79,7 +79,7 @@ namespace IO
                 {
                     case SvgLine:
                         SvgLine? svg_line = svg_elem as SvgLine;
-                        ConvertibleLine line = svg_convert.getLine(svg_line);         
+                        ConvertibleLine line = svg_convert.getLine(svg_line);
                         deserializedFigures.Add(line);
                         break;
 
@@ -115,7 +115,7 @@ namespace IO
                             List<Point2d> points = new List<Point2d>();
 
                             for (int i = 0; i < svg_polygon.Points.Count(); i += 2)
-                                points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i+1]));
+                                points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i + 1]));
 
                         }
 
@@ -159,13 +159,13 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
-            SvgDocument svg_doc = new SvgDocument{ Width = 500, Height = 500};
+            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
             SVG svg_convert = new SVG();
 
 
             foreach (ConvertibleFigure figure in figures)
             {
-                
+
                 switch (figure)
                 {
                     case ConvertibleLine:

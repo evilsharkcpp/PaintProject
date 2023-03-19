@@ -26,13 +26,10 @@ namespace Geometry.Transforms
                     _sin = Math.Sin(_angle);
 
                     _matrix.M11 = _scaleX * _cos;
-                    _matrix.M12 = -_scaleY * _sin;
+                    _matrix.M12 = -_scaleX * _sin;
 
-                    _matrix.M21 = _scaleX * _sin;
+                    _matrix.M21 = _scaleY * _sin;
                     _matrix.M22 = _scaleY * _cos;
-
-                    _matrix.M13 = _matrix.M11 * _v.X + _matrix.M12 * _v.Y;
-                    _matrix.M23 = _matrix.M21 * _v.X + _matrix.M22 * _v.Y;
                 }
             }
         }
@@ -47,11 +44,9 @@ namespace Geometry.Transforms
                     _scaleX = value;
 
                     _matrix.M11 = _scaleX * _cos;
+                    _matrix.M12 = -_scaleX * _sin;
 
-                    _matrix.M21 = _scaleX * _sin;
-
-                    _matrix.M13 = _matrix.M11 * _v.X + _matrix.M12 * _v.Y;
-                    _matrix.M23 = _matrix.M21 * _v.X + _matrix.M22 * _v.Y;
+                    _matrix.M13 = _v.X + _scaleX;
                 }
             }
         }
@@ -65,12 +60,10 @@ namespace Geometry.Transforms
                 {
                     _scaleY = value;
 
-                    _matrix.M12 = -_scaleY * _sin;
-
+                    _matrix.M21 = _scaleY * _sin;
                     _matrix.M22 = _scaleY * _cos;
 
-                    _matrix.M13 = _matrix.M11 * _v.X + _matrix.M12 * _v.Y;
-                    _matrix.M23 = _matrix.M21 * _v.X + _matrix.M22 * _v.Y;
+                    _matrix.M23 = _v.Y + _scaleY;
                 }
             }
         }
@@ -82,8 +75,8 @@ namespace Geometry.Transforms
             {
                 _v = value;
 
-                _matrix.M13 = _matrix.M11 * _v.X + _matrix.M12 * _v.Y;
-                _matrix.M23 = _matrix.M21 * _v.X + _matrix.M22 * _v.Y;
+                _matrix.M13 = _v.X + _scaleX;
+                _matrix.M23 = _v.Y + _scaleY;
             }
         }
 

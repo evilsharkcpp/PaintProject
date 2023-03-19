@@ -31,7 +31,7 @@ namespace IO
             Point2d p1 = new Point2d(0, 0);
             Point2d p2 = new Point2d(1, 1);
 
-            var line = new ConvertibleLine(p1, p2, new Color(0,0,0,1));
+            var line = new ConvertibleLine(p1, p2, new Color(0, 0, 0, 1));
 
             Point2d p21 = new Point2d(5, 7);
             Point2d p22 = new Point2d(3, 8);
@@ -112,7 +112,7 @@ namespace IO
         public void test__create_circle__SVG()
         {
             Point2d p1 = new Point2d(100, 100);
-           
+
             var circle = new ConvertibleCircle(p1, radius: 50, new Color(1, 0, 0, 0));
 
             IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle };
