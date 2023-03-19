@@ -34,6 +34,11 @@ namespace Geometry.Figures
                    Postition.Y - Math.Abs(p.Y) >= -eps;
         }
 
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IFigure Clone()
         {
             return new Rectangle(this);

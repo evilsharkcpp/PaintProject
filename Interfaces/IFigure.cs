@@ -15,7 +15,8 @@ namespace Interfaces
 
         void Draw(IGraphics graphics);
 
-        bool IsInside(Vector2 p, double eps);
+        bool IsInside(Vector2 p, float eps);
+        bool InArea(Rect rect, float eps);
 
         bool HasIntersection(IFigure figure);
         IFigure Intersect(IFigure second);

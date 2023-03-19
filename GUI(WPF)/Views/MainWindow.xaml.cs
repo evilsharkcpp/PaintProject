@@ -101,7 +101,7 @@ namespace GUI_WPF
                     return null;
                 if (_vm.SelectedFigures == null)
                     return null;
-                var selected = _vm.SelectedFigures.LastOrDefault();
+                var selected = _vm.Figures.TryGetValue(_vm.SelectedFigures.LastOrDefault(), out IDrawableObject? drawableObject) ? drawableObject : null;
                 if (selected == null)
                     ParamVisibility = Visibility.Hidden;
                 else
@@ -184,14 +184,6 @@ namespace GUI_WPF
            
             var point = e.GetPosition(canvas);
             MouseDownPoint = new Point(point.X, point.Y);
-            if (Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                mouseDownPoint = e.GetPosition(this);
-                canvasTransStartPoint.X = canvasTranslate.X;
-                canvasTransStartPoint.Y = canvasTranslate.Y;
-                canvasTranslateState = true;
-                return;
-            }
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
@@ -208,7 +200,13 @@ namespace GUI_WPF
                 }
                 select.IsChecked = true;
             }
-            
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                mouseDownPoint = e.GetPosition(this);
+                canvasTransStartPoint.X = canvasTranslate.X;
+                canvasTransStartPoint.Y = canvasTranslate.Y;
+                canvasTranslateState = true;
+            }
         }
 
         private void scaleUp()

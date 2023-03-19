@@ -46,6 +46,11 @@ namespace Geometry.Figures
             return Math.Abs(h) <= eps && l / V.Norm >= -eps && l - 1 <= eps;
         }
 
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IFigure Clone()
         {
             return new Line(this);

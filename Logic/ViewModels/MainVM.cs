@@ -28,6 +28,27 @@ namespace Logic.ViewModels
         public IReadOnlyDictionary<int, IDrawableObject> Figures => _figures;
 
         public IEnumerable<IDrawableObject> SelectedFigures { get; set; }
+        public Point2d DefaultSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int StackStateSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public int StateIndex => throw new NotImplementedException();
+
+        IEnumerable<int> ILogic.SelectedFigures { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        ReactiveCommand<int, bool> ILogic.RemoveFigure => throw new NotImplementedException();
+
+        public ReactiveCommand<Rect, int> SelectFigures => throw new NotImplementedException();
+
+        public ReactiveCommand<Stream, bool> Save => throw new NotImplementedException();
+
+        public ReactiveCommand<Stream, bool> Load => throw new NotImplementedException();
+
+        public ReactiveCommand<Unit, bool> Undo => throw new NotImplementedException();
+
+        public ReactiveCommand<Unit, bool> Redo => throw new NotImplementedException();
+
+        public ReactiveCommand<IGraphics, bool> Draw => throw new NotImplementedException();
+
         private int _currentId = 0;
         public MainVM()
         {
@@ -67,9 +88,8 @@ namespace Logic.ViewModels
         }
         private int OnSelectFigure(Point2d point)
         {
-            KeyValuePair<int, IDrawableObject> selectedFigures = _figures.Where(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5)).First();
+            KeyValuePair<int, IDrawableObject> selectedFigures = _figures.Where(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), (float)1e-5)).First();
             return selectedFigures.Key;
         }
-
     }
 }
