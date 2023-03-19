@@ -31,12 +31,12 @@ namespace IO
             Point2d p1 = new Point2d(0, 0);
             Point2d p2 = new Point2d(1, 1);
 
-            var line = new ConvertibleLine(p1, p2, new Color(0, 0, 0, 1));
+            var line = new ConvertibleLine(p1, p2, 45);
 
             Point2d p21 = new Point2d(5, 7);
             Point2d p22 = new Point2d(3, 8);
 
-            var line2 = new ConvertibleLine(p21, p22, new Color(0, 0, 0, 1));
+            var line2 = new ConvertibleLine(p21, p22, 45);
 
             IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { line, line2 };
 
@@ -47,17 +47,22 @@ namespace IO
 
         public void test__create_two_line__SVG()
         {
-            Point2d p1 = new Point2d(0, 0);
-            Point2d p2 = new Point2d(95, 95);
+            Point2d p1 = new Point2d(10, 10);
+            Point2d p2 = new Point2d(200, 10);
 
-            var line = new ConvertibleLine(p1, p2, new Color(0, 0, 0, 1));
+            var line = new ConvertibleLine(p1, p2, 45);
 
             Point2d p21 = new Point2d(130, 200);
-            Point2d p22 = new Point2d(200, 160);
+            Point2d p22 = new Point2d(200, 200);
 
-            var line2 = new ConvertibleLine(p21, p22, new Color(0, 0, 0, 1));
+            var line2 = new ConvertibleLine(p21, p22, 78);
 
-            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { line, line2 };
+
+            var line3 = new ConvertibleLine(p1, p2, 0);
+
+            var line4 = new ConvertibleLine(p21, p22, 0);
+
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { line, line2, line3, line4 };
 
             SVGConverter jc = new SVGConverter();
 
@@ -66,12 +71,13 @@ namespace IO
 
         public void test__create_square__SVG()
         {
-            Point2d p1 = new Point2d(10, 10);
+            Point2d p1 = new Point2d(200, 200);
 
-            var square = new ConvertibleSquare(p1, width: 100, height: 100, new Color(1, 0, 0, 0));
+            var square0 = new ConvertibleSquare(p1, width: 100, height: 100, 0);
+            var square = new ConvertibleSquare(p1, width: 100, height: 100, 35);
 
 
-            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { square };
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { square, square0 };
 
             SVGConverter jc = new SVGConverter();
 
@@ -80,12 +86,14 @@ namespace IO
 
         public void test__create_rectangle__SVG()
         {
-            Point2d p1 = new Point2d(10, 10);
+            Point2d p1 = new Point2d(200, 200);
 
-            var rectangle = new ConvertibleRectangle(p1, width: 100, height: 300, new Color(1, 0, 0, 0));
+            var rectangle0 = new ConvertibleRectangle(p1, width: 100, height: 300, 0);
+
+            var rectangle = new ConvertibleRectangle(p1, width: 100, height: 300, 40);
 
 
-            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { rectangle };
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { rectangle, rectangle0 };
 
             SVGConverter jc = new SVGConverter();
 
@@ -94,15 +102,16 @@ namespace IO
 
         public void test__create_triangle__SVG()
         {
-            Point2d p1 = new Point2d(10, 10);
-            Point2d p2 = new Point2d(40, 100);
-            Point2d p3 = new Point2d(100, 100);
+            Point2d p1 = new Point2d(10, 100);
+            Point2d p2 = new Point2d(60, 20);
+            Point2d p3 = new Point2d(110, 100);
+
+            var triangle0 = new ConvertibleTriangle(p1, p2, p3, 0);
+
+            var triangle = new ConvertibleTriangle(p1, p2, p3, 270);
 
 
-            var triangle = new ConvertibleTriangle(p1, p2, p3, new Color(1, 0, 0, 0));
-
-
-            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { triangle };
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { triangle, triangle0 };
 
             SVGConverter jc = new SVGConverter();
 
@@ -113,7 +122,7 @@ namespace IO
         {
             Point2d p1 = new Point2d(100, 100);
 
-            var circle = new ConvertibleCircle(p1, radius: 50, new Color(1, 0, 0, 0));
+            var circle = new ConvertibleCircle(p1, radius: 50, 0);
 
             IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle };
 
@@ -127,9 +136,11 @@ namespace IO
         {
             Point2d p1 = new Point2d(150, 150);
 
-            var circle = new ConvertibleEllipse(p1, radiusX: 100, radiusY: 50, new Color(1, 0, 0, 0));
+            var circle0 = new ConvertibleEllipse(p1, radiusX: 100, radiusY: 50, 0);
 
-            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle };
+            var circle = new ConvertibleEllipse(p1, radiusX: 100, radiusY: 50, 45);
+
+            IEnumerable<ConvertibleFigure> array = new List<ConvertibleFigure>() { circle, circle0 };
 
             SVGConverter jc = new SVGConverter();
 

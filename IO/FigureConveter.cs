@@ -46,8 +46,8 @@ namespace IO
 
                         ifigure = figure_fabric.CreateFigure("Rectangle");
 
-                        width = c_rectangle.width;
-                        heigth = c_rectangle.height;
+                        width = c_rectangle.Width;
+                        heigth = c_rectangle.Height;
 
                         ifigure.Size = new Vector2d(width, heigth);
                         ifigure.Position = c_rectangle.point1;
@@ -76,8 +76,8 @@ namespace IO
 
                         ifigure = figure_fabric.CreateFigure("Square");
 
-                        width = c_square.width;
-                        heigth = c_square.height;
+                        width = c_square.Width;
+                        heigth = c_square.Height;
 
                         ifigure.Size = new Vector2d(width, heigth);
                         ifigure.Position = c_square.point1;

@@ -17,12 +17,19 @@ namespace DataStructures.ConvertibleFigures
         public double radius;
 
 
-        public ConvertibleCircle(Point2d center, double radius, double angle, Color color)
+        public ConvertibleCircle(Point2d center, double radius, double angle)
         {
             this.center = center;
             this.radius = radius;
             this.angle = angle;
-            this.color = color;
+
+            Height = radius * 2;
+            Width = radius * 2;
+
+            double px = center.X - radius;
+            double py = center.Y - radius;
+
+            position = new Point2d(px, py);
         }
     }
 }
