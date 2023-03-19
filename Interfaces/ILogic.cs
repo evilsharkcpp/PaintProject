@@ -14,6 +14,8 @@ namespace Interfaces
         public ReactiveCommand<int, IDrawableObject> GetFigureById { get; }
         public IReadOnlyDictionary<int, IDrawableObject> Figures { get; }
         IEnumerable<IDrawableObject> SelectedFigures { get; set; }
+        public ReactiveCommand<string, Unit> SaveFile { get; }
+        public ReactiveCommand<string, IEnumerable<(IFigure, IDrawable)>> OpenFile { get; }
 
-    }
+}
 }

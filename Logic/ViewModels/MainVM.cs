@@ -4,11 +4,13 @@ using Interfaces;
 using Logic.Graphics;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Reactive;
 using System.Reactive.Linq;
+using IO;
 
 namespace Logic.ViewModels
 {
@@ -29,7 +31,10 @@ namespace Logic.ViewModels
 
         public IEnumerable<IDrawableObject> SelectedFigures { get; set; }
         private int _currentId = 0;
-        public MainVM()
+        private readonly Dictionary<int, (IFigure, IDrawable)> _shapes;
+        public ReactiveCommand<string, Unit> SaveFile { get; }
+        public ReactiveCommand<string, IEnumerable<(IFigure, IDrawable)>> OpenFile { get; }
+    public MainVM()
         {
             _figures = new Dictionary<int,IDrawableObject>();
             SelectedFigures= new List<IDrawableObject>();
@@ -40,9 +45,10 @@ namespace Logic.ViewModels
             RemoveFigure = ReactiveCommand.Create<int, Unit>((a) => OnRemove(a));
             SelectFigure = ReactiveCommand.Create<Point2d, int>((a) => OnSelectFigure(a));
             GetFigureById = ReactiveCommand.Create<int, IDrawableObject?>((a) => OnGetFigureById(a));
-
+            SaveFile = ReactiveCommand.Create<string, Unit>(OnSaveFile);
+            OpenFile = ReactiveCommand.Create < string, IEnumerable < (IFigure, IDrawable)>>(OnOpenFile);
             //Observable.Subscribe()
-        }
+    }
 
         IDrawableObject? OnGetFigureById(int id)
         {
@@ -70,6 +76,45 @@ namespace Logic.ViewModels
             KeyValuePair<int, IDrawableObject> selectedFigures = _figures.Where(pair => pair.Value.Figure.IsInside(new Vector2((float)point.X, (float)point.Y), 1e-5)).First();
             return selectedFigures.Key;
         }
+        private Unit OnSaveFile(string filePath)
+        {
+            IConverter converter = GetConverterForFilePath(filePath);
 
+            converter.WriteFile(filePath, _shapes.Values);
+
+            return Unit.Default;
+        }
+
+        private IEnumerable<(IFigure, IDrawable)> OnOpenFile(string filePath)
+        {
+            IConverter converter = GetConverterForFilePath(filePath);
+
+            IEnumerable<(IFigure, IDrawable)> shapes = converter.ReadFile(filePath);
+
+            _shapes.Clear();
+            foreach (var shape in shapes)
+            {
+                _shapes.Add(_currentId++, shape);
+            }
+
+            return shapes;
+        }
+        private IConverter GetConverterForFilePath(string filePath)
+        {
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+
+            if (FileValidator.JSON_EXTENSION.Contains(extension))
+            {
+                return new JSONConverter();
+            }
+            else if (FileValidator.SVG_EXTENSION.Contains(extension))
+            {
+                return new SVGConverter();
+            }
+            else
+            {
+                throw new NotSupportedException($"File extension {extension} is not supported.");
+            }
+        }
     }
 }
