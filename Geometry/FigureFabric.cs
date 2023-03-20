@@ -1,10 +1,5 @@
-﻿using DataStructures;
-using DataStructures.ConvertibleFigures;
-using DataStructures.Geometry;
-using Geometry.Attributes;
-using Geometry.Figures;
+﻿using Geometry.Attributes;
 using Interfaces;
-using Splat;
 using System.Reflection;
 
 namespace Geometry
@@ -55,29 +50,6 @@ namespace Geometry
 
                 }
             }
-
-            return figure;
-        }
-
-        public IFigure CreateFigureFromConvertibleFigure(ConvertibleFigure c_figure)
-        {
-            IFigure figure;
-
-
-            figure = CreateFigure(c_figure.GetType().Name);
-
-            double width = c_figure.Width;
-            double heigth = c_figure.Height;
-
-            figure.Size = new Vector2d(width, heigth);
-
-            // Перенос точки позиции из левого верхнего угла в левый нижний
-            Point2d c_position = c_figure.position;
-            c_position.Y += c_figure.Height;
-
-            figure.Position = c_position;
-            figure.Angle = c_figure.angle;
-
 
             return figure;
         }

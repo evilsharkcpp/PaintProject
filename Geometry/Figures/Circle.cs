@@ -1,6 +1,4 @@
-﻿using DataStructures.ConvertibleFigures;
-using DataStructures;
-using Geometry.Attributes;
+﻿using Geometry.Attributes;
 using Interfaces;
 using ReactiveUI;
 using System.Numerics;
@@ -28,12 +26,6 @@ namespace Geometry.Figures
         public override IFigure Clone()
         {
             return new Circle(this);
-        }
-
-        public override ConvertibleFigure ToConvertibleFigure()
-        {
-
-            return new ConvertibleCircle(Center, Radius, Angle);
         }
     }    
 }

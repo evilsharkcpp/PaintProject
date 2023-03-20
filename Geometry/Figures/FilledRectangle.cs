@@ -25,7 +25,7 @@ namespace Geometry.Figures
 
         protected override void OnDraw(IGraphics graphics)
         {
-            graphics.DrawRectangle(Postition, Width, Height, true, true);
+            graphics.DrawRectangle(Position, Width, Height, true, true);
         }
     }
 }
