@@ -21,5 +21,9 @@ namespace DataStructures
         // Ширина
         [DataMember(Name = "Width")]
         public double Width;
+
+        // Заполненность
+        [DataMember(Name = "IsFilled")]
+        public bool IsFilled = false;
     }
 }

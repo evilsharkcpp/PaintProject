@@ -9,9 +9,26 @@ using Color = DataStructures.Color;
 using System.Collections.Generic;
 using Geometry;
 using Geometry.Figures;
+using DynamicData;
 
 namespace IO
 {
+    public class IFigureConverter
+    {
+        public List<IFigure> getFigureList(List<ConvertibleFigure> ConvertibleFigures)
+        {
+            List<IFigure> ifigures = new List<IFigure>();
+
+            FigureFabric figure_fabric = new FigureFabric();
+
+            foreach (ConvertibleFigure figure in ConvertibleFigures)
+                ifigures.Add(figure_fabric.CreateFigureFromConvertibleFigure(figure));
+
+            return ifigures;
+        }
+    }
+
+
     public class JSONConverter : IConverter
     {
         public IEnumerable<IFigure> ReadFile(string filename)
@@ -32,9 +49,7 @@ namespace IO
 
             if (deserializedFigures != null)
             {
-                FigureConveter fc = new FigureConveter();
-
-                List<IFigure> ifigures = fc.convertToIFigure(deserializedFigures);
+                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
@@ -81,7 +96,7 @@ namespace IO
                         deserializedFigures.Add(line);
                         break;
 
-                    /*case SvgRectangle:
+                    case SvgRectangle:
                         SvgRectangle? svg_rect = svg_elem as SvgRectangle;
 
                         // Проверка равеcтва cторон
@@ -130,15 +145,13 @@ namespace IO
                         SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
                         ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
                         deserializedFigures.Append(ellips);
-                        break;*/
+                        break;
                 }
             }
 
             if (deserializedFigures != null)
             {
-                FigureConveter fc = new FigureConveter();
-
-                List<IFigure> ifigures = fc.convertToIFigure(deserializedFigures);
+                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
@@ -221,6 +234,5 @@ namespace IO
             }
 
         }
-
     }
 }
