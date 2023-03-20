@@ -20,12 +20,11 @@ namespace Interfaces
         int StackStateSize { get; set; }
         int StateIndex { get; }
 
-        IReadOnlyDictionary<int, IDrawableObject> Figures { get; }
         IEnumerable<int> SelectedFigures { get; }
 
         ReactiveCommand<string, IFigure?> CreateFigure { get; }
-
         ReactiveCommand<IDrawableObject, int> AddFigure { get; }
+        ReactiveCommand<int, IDrawableObject?> GetFigureByID { get; }
         ReactiveCommand<int, bool> RemoveFigure { get; }
 
         ReactiveCommand<Point2d, int> SelectFigure { get; }

@@ -105,6 +105,59 @@ namespace GUI_WPF
          }
       }
 
+        public Point PreviousPoint
+        {
+            get { return _previousPoint; }
+            set
+            {
+                _previousPoint.X = Math.Round(value.X, 2);
+                _previousPoint.Y = Math.Round(value.Y, 2);
+                OnPropertyChanged();
+            }
+        }
+        public Point MouseDownPoint
+        {
+            get { return _mouseDownPoint; }
+            set
+            {
+                _mouseDownPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        public IDrawableObject? SelectedFigure
+        {
+            get
+            {
+                if (_vm == null)
+                    return null;
+                if (_vm.SelectedFigures == null)
+                    return null;
+                var selected = _vm.SelectedFigures.Count() == 0;
+                if (selected)
+                {
+                    ParamVisibility = Visibility.Hidden;
+                    return null;
+                }
+                else
+                    ParamVisibility = Visibility.Visible;
+                IDrawableObject? b = null;
+                _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
+                return b;
+            }
+        }
+        private Visibility _paramVisibility = Visibility.Hidden;
+        public Visibility ParamVisibility
+        {
+            get
+            {
+                return _paramVisibility;
+            }
+            set
+            {
+                _paramVisibility = value;
+                OnPropertyChanged();
+            }
+        }
       bool isMove = false;
       private Point2d startFigureMovePosition;
 
