@@ -21,8 +21,8 @@
    </ItemGroup>
 
    <ItemGroup>
+     <ProjectReference Include="..\Drawing\Drawing.csproj" />
      <ProjectReference Include="..\Geometry\Geometry.csproj" />
      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-     <ProjectReference Include="..\IO\IO.csproj" />
    </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Numerics;
 
@@ -12,6 +13,7 @@ namespace Interfaces
 
         IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IParameter<object>> ExtraProperties { get; }
+        IReadOnlyList<(string, ReactiveCommand<Point2d, bool>)> Commands { get; }
 
         void Draw(IGraphics graphics);
 

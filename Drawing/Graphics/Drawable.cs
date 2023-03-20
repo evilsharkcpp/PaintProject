@@ -4,7 +4,7 @@ using DataStructures;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Logic.Graphics
+namespace Drawing.Graphics
 {
     public class Drawable : IDrawable, INotifyPropertyChanged
     {
@@ -24,14 +24,14 @@ namespace Logic.Graphics
             }
         }
         private bool _isNoOutLine = false;
-        public bool IsNoOutLine 
-        { 
+        public bool IsNoOutLine
+        {
             get => _isNoOutLine;
             set
             {
                 _isNoOutLine = value;
                 OnPropertyChanged();
-            } 
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
