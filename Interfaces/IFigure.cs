@@ -1,4 +1,4 @@
-﻿using DataStructures;
+using DataStructures;
 using DataStructures.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
