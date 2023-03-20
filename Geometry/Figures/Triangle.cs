@@ -1,6 +1,4 @@
-﻿using DataStructures.ConvertibleFigures;
-using DataStructures;
-using DataStructures.Geometry;
+﻿using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -60,11 +58,6 @@ namespace Geometry.Figures
             return h1 <= eps && h2 <= eps && h3 <= eps;
         }
 
-        protected override bool InArea(Rect rect, double eps)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IFigure Clone()
         {
             return new Triangle(this);
@@ -73,12 +66,6 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
-        }
-
-        public override ConvertibleFigure ToConvertibleFigure()
-        {
-
-            return new ConvertibleTriangle(Point1, Point3, Point2, Angle);
         }
     }
 }

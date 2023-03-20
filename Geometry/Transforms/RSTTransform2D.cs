@@ -108,8 +108,8 @@ namespace Geometry.Transforms
 
         public void ApplyInv(Point2d p, ref Point2d res)
         {
-            res.X = _cos / _scaleX * p.X + _sin / _scaleY * p.Y + (-_cos * (1 + _v.X / _scaleX) - _sin * (1 + _v.Y / _scaleY));
-            res.Y = -_sin / _scaleX * p.X + _cos / _scaleY * p.Y + (-_cos * (1 + _v.Y / _scaleY) + _sin * (1 + _v.X / _scaleX));
+            res.X = _cos / _scaleX * p.X + _sin / _scaleY * p.Y - _v.X;
+            res.Y = -_sin / _scaleX * p.X + _cos / _scaleY * p.Y - _v.Y;
         }
 
         public void ApplyInv(Vector2d v, ref Vector2d res)

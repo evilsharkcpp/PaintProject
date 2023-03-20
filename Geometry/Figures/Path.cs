@@ -1,6 +1,4 @@
-﻿using DataStructures.ConvertibleFigures;
-using DataStructures;
-using DataStructures.Geometry;
+﻿using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -21,22 +19,12 @@ namespace Geometry.Figures
             throw new NotImplementedException();
         }
 
-        protected override bool InArea(Rect rect, double eps)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void OnDraw(IGraphics graphics)
         {
             throw new NotImplementedException();
         }
 
         protected override Path ToPath()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ConvertibleFigure ToConvertibleFigure()
         {
             throw new NotImplementedException();
         }

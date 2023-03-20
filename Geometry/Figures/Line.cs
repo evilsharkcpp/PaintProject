@@ -1,6 +1,4 @@
-﻿using DataStructures.ConvertibleFigures;
-using DataStructures;
-using DataStructures.Geometry;
+﻿using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -40,17 +38,12 @@ namespace Geometry.Figures
         {
             Vector2d u = new Vector2d()
             {
-                X = Point2.X - p.X,
-                Y = Point2.Y - p.Y
+                X = 1 - p.X,
+                Y = 1 - p.Y
             };
             double l = u * V,
                    h = u * n;
-            return Math.Abs(h) <= eps && l / V.Norm >= -eps && l / V.Norm - 1 <= eps;
-        }
-
-        protected override bool InArea(Rect rect, double eps)
-        {
-            throw new NotImplementedException();
+            return Math.Abs(h) <= eps && l / V.Norm >= -eps && l - 1 <= eps;
         }
 
         public override IFigure Clone()
@@ -61,12 +54,6 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
-        }
-
-        public override ConvertibleFigure ToConvertibleFigure()
-        {
-
-            return new ConvertibleLine(Point1, Point2, Angle);
         }
     }
 }

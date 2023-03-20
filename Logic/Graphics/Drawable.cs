@@ -52,13 +52,11 @@ namespace Logic.Graphics
         {
             FillColor = fill;
             OutLineColor = stroke;
-            OutLineThickness = thickness;
         }
         public Drawable()
         {
             FillColor = new Color(0, 255, 255, 255);
             OutLineColor = new Color(255, 0, 0, 0);
-            OutLineThickness = 1;
         }
     }
 }

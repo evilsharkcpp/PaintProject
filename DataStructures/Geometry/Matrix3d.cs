@@ -8,25 +8,25 @@ namespace DataStructures.Geometry
     public struct Matrix3d
     {
         [FieldOffset(0)]
-        private double _M11 = 1;
+        private double _M11;
         [FieldOffset(8)]
-        private double _M12 = 0;
+        private double _M12;
         [FieldOffset(16)]
-        private double _M13 = 0;
+        private double _M13;
 
         [FieldOffset(24)]
-        private double _M21 = 0;
+        private double _M21;
         [FieldOffset(32)]
-        private double _M22 = 1;
+        private double _M22;
         [FieldOffset(40)]
-        private double _M23 = 0;
+        private double _M23;
 
         [FieldOffset(48)]
-        private double _M31 = 0;
+        private double _M31;
         [FieldOffset(56)]
-        private double _M32 = 0;
+        private double _M32;
         [FieldOffset(64)]
-        private double _M33 = 1;
+        private double _M33;
 
         [FieldOffset(72)]
         private double _det;
