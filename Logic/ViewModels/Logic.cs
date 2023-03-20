@@ -1,6 +1,6 @@
 ﻿using DataStructures.Geometry;
 using Interfaces;
-using Logic.Graphics;
+using Drawing.Graphics;
 using ReactiveUI;
 using System.Reactive;
 

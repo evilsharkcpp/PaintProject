@@ -46,6 +46,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructures", "DataStructures\DataStructures.csproj", "{EA1F5359-9D62-4CC1-98DC-F0BD42838566}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Drawing\Drawing.csproj", "{A5008ABB-12A6-4CD2-8852-4BD999C07C58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{EA1F5359-9D62-4CC1-98DC-F0BD42838566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA1F5359-9D62-4CC1-98DC-F0BD42838566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA1F5359-9D62-4CC1-98DC-F0BD42838566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5008ABB-12A6-4CD2-8852-4BD999C07C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5008ABB-12A6-4CD2-8852-4BD999C07C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5008ABB-12A6-4CD2-8852-4BD999C07C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5008ABB-12A6-4CD2-8852-4BD999C07C58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
