@@ -194,22 +194,130 @@ namespace Logic.ViewModels
 
         private bool SendToBack(int id)
         {
-            return false;
+            if (_figures.TryGetValue(id, out Object? @object) && @object.ZIndex > 0)
+            {
+                int currentZIndex = @object.ZIndex;
+
+                _sortedFigures[@object.ZIndex].Remove(id);
+                _sortedFigures[@object.ZIndex = 0].Add(id);
+
+                if (_sortedFigures.Last().Count == 0)
+                    _sortedFigures.RemoveAt(_sortedFigures.Count - 1);
+
+                if (_sortedFigures[currentZIndex].Count == 0)
+                {
+                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
+                    {
+                        foreach (int id_ in _sortedFigures[i])
+                        {
+                            if (_figures.TryGetValue(id_, out Object? @object_))
+                                @object_.ZIndex--;
+                        }
+
+                        _sortedFigures[i - 1] = _sortedFigures[i];
+                    }
+                }
+            }
+
+            return true;
         }
 
         private bool SendBackward(int id)
         {
-            return false;
+            if (_figures.TryGetValue(id, out Object? @object) && @object.ZIndex > 0)
+            {
+                int currentZIndex = @object.ZIndex;
+
+                _sortedFigures[@object.ZIndex].Remove(id);
+                _sortedFigures[--@object.ZIndex].Add(id);
+
+                if (_sortedFigures.Last().Count == 0)
+                    _sortedFigures.RemoveAt(_sortedFigures.Count - 1);
+
+                if (_sortedFigures[currentZIndex].Count == 0)
+                {
+                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
+                    {
+                        foreach (int id_ in _sortedFigures[i])
+                        {
+                            if (_figures.TryGetValue(id_, out Object? @object_))
+                                @object_.ZIndex--;
+                        }
+
+                        _sortedFigures[i - 1] = _sortedFigures[i];
+                    }
+                }
+            }
+
+            return true;
         }
 
         private bool BringForward(int id)
         {
-            return false;
+            if (_figures.TryGetValue(id, out Object? @object) &&
+                (_sortedFigures.Count > @object.ZIndex ||
+                 _sortedFigures.Last().Count > 1))
+            {
+                int currentZIndex = @object.ZIndex;
+
+                _sortedFigures[@object.ZIndex].Remove(id);
+
+                @object.ZIndex++;
+                if (_sortedFigures.Count <= @object.ZIndex)
+                {
+                    _sortedFigures.Add(new SortedSet<int>() { id });
+                }
+                else
+                {
+                    _sortedFigures[@object.ZIndex].Add(id);
+                }
+
+                if (_sortedFigures[currentZIndex].Count == 0)
+                {
+                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
+                    {
+                        foreach (int id_ in _sortedFigures[i])
+                        {
+                            if (_figures.TryGetValue(id_, out Object? @object_))
+                                @object_.ZIndex--;
+                        }
+
+                        _sortedFigures[i - 1] = _sortedFigures[i];
+                    }
+                }
+            }
+
+            return true;
         }
 
         private bool BringToFront(int id)
         {
-            return false;
+            if (_figures.TryGetValue(id, out Object? @object) &&
+                (_sortedFigures.Count > @object.ZIndex ||
+                 _sortedFigures.Last().Count > 1))
+            {
+                int currentZIndex = @object.ZIndex;
+
+                _sortedFigures[@object.ZIndex].Remove(id);
+                @object.ZIndex = _sortedFigures.Count;
+                _sortedFigures.Add(new SortedSet<int>() { id });
+
+                if (_sortedFigures[currentZIndex].Count == 0)
+                {
+                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
+                    {
+                        foreach (int id_ in _sortedFigures[i])
+                        {
+                            if (_figures.TryGetValue(id_, out Object? @object_))
+                                @object_.ZIndex--;
+                        }
+
+                        _sortedFigures[i - 1] = _sortedFigures[i];
+                    }
+                }
+            }
+
+            return true;
         }
 
         protected override bool OnSave(Stream a)
