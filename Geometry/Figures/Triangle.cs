@@ -82,8 +82,11 @@ namespace Geometry.Figures
 
         public override ConvertibleFigure ToConvertibleFigure()
         {
+            Point2d p1 = Position;
+            Point2d p2 = new Point2d(Position.X + Size.X / 2, Position.Y - Size.Y);
+            Point2d p3 = new Point2d(Position.X + Size.X, Position.Y);
 
-            return new ConvertibleTriangle(Point1, Point3, Point2, Angle);
+            return new ConvertibleTriangle(p1, p2, p3, Angle);
         }
     }
 }
