@@ -64,6 +64,7 @@ namespace Geometry
             IFigure figure;
 
             string name = c_figure.GetType().Name;
+            name = name.Remove(0, 11);
 
             if (c_figure.IsFilled)
                 name = "Filled" + name;

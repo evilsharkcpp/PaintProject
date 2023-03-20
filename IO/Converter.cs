@@ -10,31 +10,44 @@ using System.Collections.Generic;
 using Geometry;
 using Geometry.Figures;
 using DynamicData;
+using System.Linq;
+using IO.SVGFigures;
+using Logic.Graphics;
 
 namespace IO
 {
     public class IFigureConverter
     {
-        public List<IFigure> getFigureList(List<ConvertibleFigure> ConvertibleFigures)
+        public List<(IFigure, IDrawable)> getFigureList(List<(ConvertibleFigure, IDrawable)> ConvertibleFigures)
         {
-            List<IFigure> ifigures = new List<IFigure>();
+            List<(IFigure, IDrawable)> ifigures = new List<(IFigure, IDrawable)>();
 
             FigureFabric figure_fabric = new FigureFabric();
 
-            foreach (ConvertibleFigure figure in ConvertibleFigures)
-                ifigures.Add(figure_fabric.CreateFigureFromConvertibleFigure(figure));
+            foreach ((ConvertibleFigure figure, IDrawable drawable) in ConvertibleFigures)
+                ifigures.Add((figure_fabric.CreateFigureFromConvertibleFigure(figure), drawable));
 
             return ifigures;
+        }
+
+        public List<(ConvertibleFigure, IDrawable)> getConvertibleFigureList(IEnumerable<(IFigure, IDrawable)> Figures)
+        {
+            List<(ConvertibleFigure, IDrawable)> c_figures = new List<(ConvertibleFigure, IDrawable)>();
+
+            foreach ((IFigure figure, IDrawable drawable) in Figures)
+                c_figures.Add((figure.ToConvertibleFigure(), drawable));
+
+            return c_figures;
         }
     }
 
 
     public class JSONConverter : IConverter
     {
-        public IEnumerable<IFigure> ReadFile(string filename)
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open);
-            var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
                         new Type[] {
                                 typeof(ConvertibleLine),
                                 typeof(ConvertibleSquare),
@@ -42,26 +55,30 @@ namespace IO
                                 typeof(ConvertibleTriangle),
                                 typeof(ConvertibleRectangle),
                                 typeof(ConvertibleCircle),
+                                typeof(Drawable),
+
                             });
 
-            List<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as List<ConvertibleFigure>;
+            List<(ConvertibleFigure, IDrawable)>? deserializedFigures = ser.ReadObject(fs) as List<(ConvertibleFigure, IDrawable)>;
             fs.Close();
 
             if (deserializedFigures != null)
             {
-                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+                List<(IFigure, IDrawable)> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
             else
-                return Enumerable.Empty<IFigure>();
+                return Enumerable.Empty<(IFigure, IDrawable)>();
         }
 
-        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
         {
+            List<(ConvertibleFigure, IDrawable)>? c_figures = new IFigureConverter().getConvertibleFigureList(figures);
+
             FileStream stream = new FileStream(filename + ".json", FileMode.Create);
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
                                                 new Type[] {
                                                     typeof(ConvertibleLine),
                                                     typeof(ConvertibleSquare),
@@ -69,9 +86,10 @@ namespace IO
                                                     typeof(ConvertibleTriangle),
                                                     typeof(ConvertibleRectangle),
                                                     typeof(ConvertibleCircle),
+                                                    typeof(Drawable),
                                                 });
 
-            ser.WriteObject(stream, figures);
+            ser.WriteObject(stream, c_figures);
             stream.Close();
         }
 
@@ -79,9 +97,11 @@ namespace IO
 
     public class SVGConverter : IConverter
     {
-        public IEnumerable<IFigure> ReadFile(string filename)
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
         {
-            List<ConvertibleFigure> deserializedFigures = new List<ConvertibleFigure>();
+            List<(ConvertibleFigure, IDrawable)> deserializedFigures = new List<(ConvertibleFigure, IDrawable)>();
+
+            IDrawable drawable;
 
             var svgDocument = SvgDocument.Open(filename);
             SVG svg_convert = new SVG();
@@ -94,7 +114,9 @@ namespace IO
                         SvgLine? svg_line = svg_elem as SvgLine;
                         ConvertibleLine line = svg_convert.getLine(svg_line);
 
-                        deserializedFigures.Add(line);
+                        drawable = new DrawableConverter().getDrawable(svg_line);
+
+                        deserializedFigures.Add((line, drawable));
                         break;
 
                     case SvgRectangle:
@@ -110,7 +132,9 @@ namespace IO
                                 square.IsFilled = true;
 
 
-                            deserializedFigures.Add(square);
+                            drawable = new DrawableConverter().getDrawable(svg_rect);
+
+                            deserializedFigures.Add((square, drawable));
                         }
                         else
                         {
@@ -120,7 +144,9 @@ namespace IO
                             if (svg_rect.Fill != null)
                                 rectangle.IsFilled = true;
 
-                            deserializedFigures.Add(rectangle);
+                            drawable = new DrawableConverter().getDrawable(svg_rect);
+
+                            deserializedFigures.Add((rectangle, drawable));
                         }
                         break;
 
@@ -135,7 +161,9 @@ namespace IO
                             if (svg_polygon.Fill != null)
                                 triangle.IsFilled = true;
 
-                            deserializedFigures.Add(triangle);
+                            drawable = new DrawableConverter().getDrawable(svg_polygon);
+
+                            deserializedFigures.Add((triangle, drawable));
                         }
                         else
                         {
@@ -156,8 +184,9 @@ namespace IO
                         if (svg_circle.Fill != null)
                             circle.IsFilled = true;
 
-                        deserializedFigures.Append(circle);
-                        break;
+                        drawable = new DrawableConverter().getDrawable(svg_circle);
+
+                        deserializedFigures.Add((circle, drawable)); break;
 
                     case SvgEllipse:
                         SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
@@ -166,29 +195,32 @@ namespace IO
                         if (svg_ellipse.Fill != null)
                             ellips.IsFilled = true;
 
-                        deserializedFigures.Append(ellips);
-                        break;
+                        drawable = new DrawableConverter().getDrawable(svg_ellipse);
+
+                        deserializedFigures.Add((ellips, drawable)); break;
                 }
             }
 
             if (deserializedFigures != null)
             {
-                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+                List<(IFigure, IDrawable)> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
             else
-                return Enumerable.Empty<IFigure>();
+                return Enumerable.Empty<(IFigure, IDrawable)>();
         }
 
 
-        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
         {
             SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
             SVG svg_convert = new SVG();
 
+            List<(ConvertibleFigure, IDrawable)> c_Figures = new IFigureConverter().getConvertibleFigureList(figures);
 
-            foreach (ConvertibleFigure figure in figures)
+
+            foreach ((ConvertibleFigure figure, IDrawable drawable) in c_Figures)
             {
 
                 switch (figure)
@@ -197,6 +229,9 @@ namespace IO
                         ConvertibleLine c_line = (ConvertibleLine)figure;
 
                         var line = svg_convert.getSvgLine(c_line);
+
+                        line = (SvgLine)svg_convert.ApplayDrawable(line, drawable);
+
                         svg_doc.Children.Add(line);
 
                         break;
@@ -205,6 +240,10 @@ namespace IO
                         ConvertibleRectangle c_rectangle = (ConvertibleRectangle)figure;
 
                         var rectangle = svg_convert.getSvgRectangle(c_rectangle);
+
+                        rectangle = (SvgRectangle)svg_convert.ApplayDrawable(rectangle, drawable);
+
+
                         svg_doc.Children.Add(rectangle);
 
                         break;
@@ -213,6 +252,9 @@ namespace IO
                         ConvertibleTriangle c_triangle = (ConvertibleTriangle)figure;
 
                         var triangle = svg_convert.getSvgTriangle(c_triangle);
+
+                        triangle = (SvgPolygon)svg_convert.ApplayDrawable(triangle, drawable);
+
                         svg_doc.Children.Add(triangle);
 
                         break;
@@ -221,6 +263,10 @@ namespace IO
                         ConvertibleSquare c_square = (ConvertibleSquare)figure;
 
                         var square = svg_convert.getSvgSquare(c_square);
+
+                        square = (SvgRectangle)svg_convert.ApplayDrawable(square, drawable);
+
+
                         svg_doc.Children.Add(square);
 
                         break;
@@ -229,6 +275,10 @@ namespace IO
                         ConvertibleCircle c_circle = (ConvertibleCircle)figure;
 
                         var circle = svg_convert.getSvgCircle(c_circle);
+
+                        circle = (SvgCircle)svg_convert.ApplayDrawable(circle, drawable);
+
+
                         svg_doc.Children.Add(circle);
 
                         break;
@@ -237,6 +287,9 @@ namespace IO
                         ConvertibleEllipse c_ellipse = (ConvertibleEllipse)figure;
 
                         var ellipse = svg_convert.getSvgEllipse(c_ellipse);
+
+                        ellipse = (SvgEllipse)svg_convert.ApplayDrawable(ellipse, drawable);
+
                         svg_doc.Children.Add(ellipse);
 
                         break;
@@ -258,3 +311,4 @@ namespace IO
         }
     }
 }
+
