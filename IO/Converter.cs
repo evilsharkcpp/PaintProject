@@ -1,265 +1,260 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-
+﻿using System.Text;
 using Interfaces;
 using System.Runtime.Serialization.Json;
-using Splat.ModeDetection;
-using System.Runtime.ConstrainedExecution;
-using DynamicData;
-using System.Runtime.Serialization;
-using System.Xml;
-using Geometry.Figures;
-using ExCSS;
 using Svg;
-using System.Xml.Linq;
-using IO.SVGFigures;
-using System.Data.SqlTypes;
-using System.IO;
 using DataStructures.Geometry;
+using DataStructures;
+using DataStructures.ConvertibleFigures;
+using Color = DataStructures.Color;
+using System.Collections.Generic;
+using Geometry;
+using Geometry.Figures;
+using DynamicData;
 
 namespace IO
 {
+    public class IFigureConverter
+    {
+        public List<IFigure> getFigureList(List<ConvertibleFigure> ConvertibleFigures)
+        {
+            List<IFigure> ifigures = new List<IFigure>();
+
+            FigureFabric figure_fabric = new FigureFabric();
+
+            foreach (ConvertibleFigure figure in ConvertibleFigures)
+                ifigures.Add(figure_fabric.CreateFigureFromConvertibleFigure(figure));
+
+            return ifigures;
+        }
+    }
+
+
     public class JSONConverter : IConverter
     {
-        //public IEnumerable<IFigure> ReadFile(string filename)
-        //{
-        //    FileStream fs = new FileStream(filename, FileMode.Open);
-        //    var ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>), 
-        //                new Type[] {
-        //                        typeof(Line),
-        //                        typeof(Rectangle),
-        //                        typeof(Triangle),
-        //                        typeof(Square),
-        //                    });
-
-        //    IEnumerable<IFigure>? deserializedFigures = ser.ReadObject(fs) as IEnumerable<IFigure>;
-        //    fs.Close();
-
-        //    if (deserializedFigures != null)
-        //        return deserializedFigures;
-        //    else
-        //        return Enumerable.Empty<IFigure>();
-        //}
-
-        //public void WriteFile(string filename, IEnumerable<IFigure> figures)
-        //{
-        //    FileStream stream = new FileStream(filename + ".json", FileMode.Create);
-
-        //    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<IFigure>),
-        //                                        new Type[] { 
-        //                                            typeof(Line),
-        //                                            typeof(Rectangle),
-        //                                            typeof(Triangle),
-        //                                            typeof(Square),
-        //                                        });
-        //    ser.WriteObject(stream, figures);
-        //    stream.Close();
-        //}
-
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public IEnumerable<IFigure> ReadFile(string filename)
         {
-            throw new NotImplementedException();
+            FileStream fs = new FileStream(filename, FileMode.Open);
+            var ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
+                        new Type[] {
+                                typeof(ConvertibleLine),
+                                typeof(ConvertibleSquare),
+                                typeof(ConvertibleEllipse),
+                                typeof(ConvertibleTriangle),
+                                typeof(ConvertibleRectangle),
+                                typeof(ConvertibleCircle),
+                            });
+
+            List<ConvertibleFigure>? deserializedFigures = ser.ReadObject(fs) as List<ConvertibleFigure>;
+            fs.Close();
+
+            if (deserializedFigures != null)
+            {
+                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+
+                return ifigures;
+            }
+            else
+                return Enumerable.Empty<IFigure>();
         }
 
-        IEnumerable<(IFigure, IDrawable)> IConverter.ReadFile(string filename)
+        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
-            throw new NotImplementedException();
+            FileStream stream = new FileStream(filename + ".json", FileMode.Create);
+
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<ConvertibleFigure>),
+                                                new Type[] {
+                                                    typeof(ConvertibleLine),
+                                                    typeof(ConvertibleSquare),
+                                                    typeof(ConvertibleEllipse),
+                                                    typeof(ConvertibleTriangle),
+                                                    typeof(ConvertibleRectangle),
+                                                    typeof(ConvertibleCircle),
+                                                });
+
+            ser.WriteObject(stream, figures);
+            stream.Close();
         }
+
     }
 
     public class SVGConverter : IConverter
     {
-//        public IEnumerable<IFigure> ReadFile(string filename)
-//        {
-//            List<IFigure> deserializedFigures = new List<IFigure>();
-
-//            var svgDocument = SvgDocument.Open(filename);
-
-//            Point2d p1, p2, p3, center;
-//            double radius;
-
-//            foreach (SvgElement svg_elem in svgDocument.Children)
-//            {
-//                switch (svg_elem.GetType().Name)
-//                {
-//                    case "SvgLine":
-//                        SvgLine? svg_line = svg_elem as SvgLine;
-
-//                        p1 = new Point2d((float)svg_line.StartX, (float)svg_line.StartY);
-//                        p2 = new Point2d((float)svg_line.EndX, (float)svg_line.EndY);
-
-//                        Line line = new Line(p1, p2);
-//                        deserializedFigures.Add(line);
-
-//                        break;
-
-//                    case "SvgRectangle":
-//                        SvgRectangle? svg_rect = svg_elem as SvgRectangle;
-
-//                        p1 = new Point2d((float)svg_rect.X, (float)svg_rect.Y);
-//                        p2 = new Point2d(p1.X + (float)svg_rect.Width, p1.Y + (float)svg_rect.Height);
-
-//                        // Проверка равества сторон
-//                        if (svg_rect.Width == svg_rect.Height)
-//                        {
-//                            // Если стороны равны - получим квадрат
-//                            Square square = new Square(p1, p2);
-//                            deserializedFigures.Add(square);
-//                        }
-//                        else
-//                        {
-//                            // Если стороны разные - получим прямоугольник
-//                            Rectangle rectangle = new Rectangle(p1, p2);
-//                            deserializedFigures.Add(rectangle);
-//                        }
-//                        break;
-
-//                    case "SvgPolygon":
-//                        SvgPolygon? svg_polygon = svg_elem as SvgPolygon;
-
-//                        // Проверка числа точек
-//                        if (svg_polygon.Points.Count() == 8)
-//                        {
-//                            // Если 8 чисел (3 точки + 1 точка для замыкания) - поучим треугольник
-//                            p1 = new Point2d((float)svg_polygon.Points[0], (float)svg_polygon.Points[1]);
-//                            p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
-//                            p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
-
-//                            Triangle triangle = new Triangle(p1, p2, p3);
-//                            deserializedFigures.Add(triangle);
-//                        }
-//                        else
-//                        {
-//                            List<Point2d> points = new List<Point2d>();
-
-//                            for (int i = 0; i < svg_polygon.Points.Count(); i += 2)
-//                                points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i+1]));
-
-//                            // Пока не существует
-///*                          Poligon poligon = new Poligon();
-//                            deserializedFigures.Add(poligon);*/
-//                        }
-
-//                        break;
-
-//                    case "SvgCircle":
-//                        SvgCircle? svg_circle = svg_elem as SvgCircle;
-
-//                        center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
-//                        radius = (double)svg_circle.Radius;
-
-//                        if (svg_circle.Fill == SvgPaintServer.None)
-//                        {
-//                            // Непубличный класс
-//                            // Circle circle = new Circle(center, radius);
-//                            // deserializedFigures.Append(circle);
-//                        }
-//                        else
-//                        {
-//                            // Непубличный класс
-//                            // FilledCircle filled_circle = new FilledCircle(center, radius);
-//                            // deserializedFigures.Append(filled_circle);
-//                        }
-
-
-//                        break;
-
-//                    case "SvgEllips":
-//                        SvgEllipse? svg_ellips = svg_elem as SvgEllipse;
-
-//                        center = new Point2d((double)svg_ellips.CenterX, (double)svg_ellips.CenterY);
-//                        double radius_x = (double)svg_ellips.RadiusX;
-//                        double radius_y = (double)svg_ellips.RadiusY;
-
-
-
-//                        // Непубличный класс
-//                        // Ellipse ellipse = new SvgEllipse();
-//                        // deserializedFigures.Append(ellipse);
-//                        break;
-//                }
-//            }
-
-//            if (deserializedFigures != null)
-//                return deserializedFigures;
-//            else
-//                return Enumerable.Empty<IFigure>();
-//        }
-
-
-//        public void WriteFile(string filename, IEnumerable<IFigure> figures)
-//        {
-//            SvgDocument svg_doc = new SvgDocument{ Width = 500, Height = 500};
-
-//            foreach (IFigure figure in figures)
-//            {
-                
-//                switch (figure.GetType().Name)
-//                {
-//                    case "Line":
-//                        double x1 = figure.PointParameters.ElementAt(0).Value.X;
-//                        double y1 = figure.PointParameters.ElementAt(0).Value.Y;
-//                        double x2 = figure.PointParameters.ElementAt(1).Value.X;
-//                        double y2 = figure.PointParameters.ElementAt(1).Value.Y;
-
-
-//                        var line = new SVGLine().Line(x1, y1, x2, y2);
-//                        svg_doc.Children.Add(line);
-//                        break;
-
-//                    case "Rectangle":
-
-//                        break;
-
-//                    case "Triangle":
-
-//                        break;
-
-//                    case "Square":
-
-//                        break;
-
-//                    case "Cicle":
-
-//                        break;
-
-//                    case "Ellips":
-
-//                        break;
-
-//                    case "FilledCicrle":
-
-//                        break;
-//                }
-
-//                MemoryStream stream = new MemoryStream();
-//                svg_doc.Write(stream);
-
-//                string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
-
-//                using (StreamWriter writer = new StreamWriter(filename + ".svg"))
-//                {
-//                    writer.Write(svg_string);
-//                }
-
-//            }
-
-//        }
-
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public IEnumerable<IFigure> ReadFile(string filename)
         {
-            throw new NotImplementedException();
+            List<ConvertibleFigure> deserializedFigures = new List<ConvertibleFigure>();
+
+            var svgDocument = SvgDocument.Open(filename);
+            SVG svg_convert = new SVG();
+
+            foreach (SvgElement svg_elem in svgDocument.Children)
+            {
+                switch (svg_elem)
+                {
+                    case SvgLine:
+                        SvgLine? svg_line = svg_elem as SvgLine;
+                        ConvertibleLine line = svg_convert.getLine(svg_line);
+
+                        deserializedFigures.Add(line);
+                        break;
+
+                    case SvgRectangle:
+                        SvgRectangle? svg_rect = svg_elem as SvgRectangle;
+
+                        // Проверка равеcтва cторон
+                        if (svg_rect.Width == svg_rect.Height)
+                        {
+                            // Еcли cтороны равны - получим квадрат
+                            ConvertibleSquare square = svg_convert.getSquare(svg_rect);
+
+                            if (svg_rect.Fill != null)
+                                square.IsFilled = true;
+
+
+                            deserializedFigures.Add(square);
+                        }
+                        else
+                        {
+                            // Еcли cтороны разные - получим прямоугольник
+                            ConvertibleRectangle rectangle = svg_convert.getRectangle(svg_rect);
+
+                            if (svg_rect.Fill != null)
+                                rectangle.IsFilled = true;
+
+                            deserializedFigures.Add(rectangle);
+                        }
+                        break;
+
+                    case SvgPolygon:
+                        SvgPolygon? svg_polygon = svg_elem as SvgPolygon;
+
+                        // Проверка чиcла точек
+                        if (svg_polygon.Points.Count() == 8)
+                        {
+                            ConvertibleTriangle triangle = svg_convert.getTriangle(svg_polygon);
+
+                            if (svg_polygon.Fill != null)
+                                triangle.IsFilled = true;
+
+                            deserializedFigures.Add(triangle);
+                        }
+                        else
+                        {
+                            List<Point2d> points = new List<Point2d>();
+
+                            for (int i = 0; i < svg_polygon.Points.Count(); i += 2)
+                                points.Add(new Point2d((float)svg_polygon.Points[i], (float)svg_polygon.Points[i + 1]));
+
+                        }
+
+                        break;
+
+                    case SvgCircle:
+                        SvgCircle? svg_circle = svg_elem as SvgCircle;
+
+                        ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
+
+                        if (svg_circle.Fill != null)
+                            circle.IsFilled = true;
+
+                        deserializedFigures.Append(circle);
+                        break;
+
+                    case SvgEllipse:
+                        SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
+                        ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
+
+                        if (svg_ellipse.Fill != null)
+                            ellips.IsFilled = true;
+
+                        deserializedFigures.Append(ellips);
+                        break;
+                }
+            }
+
+            if (deserializedFigures != null)
+            {
+                List<IFigure> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+
+                return ifigures;
+            }
+            else
+                return Enumerable.Empty<IFigure>();
         }
 
-        IEnumerable<(IFigure, IDrawable)> IConverter.ReadFile(string filename)
+
+        public void WriteFile(string filename, IEnumerable<ConvertibleFigure> figures)
         {
-            throw new NotImplementedException();
+            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
+            SVG svg_convert = new SVG();
+
+
+            foreach (ConvertibleFigure figure in figures)
+            {
+
+                switch (figure)
+                {
+                    case ConvertibleLine:
+                        ConvertibleLine c_line = (ConvertibleLine)figure;
+
+                        var line = svg_convert.getSvgLine(c_line);
+                        svg_doc.Children.Add(line);
+
+                        break;
+
+                    case ConvertibleRectangle:
+                        ConvertibleRectangle c_rectangle = (ConvertibleRectangle)figure;
+
+                        var rectangle = svg_convert.getSvgRectangle(c_rectangle);
+                        svg_doc.Children.Add(rectangle);
+
+                        break;
+
+                    case ConvertibleTriangle:
+                        ConvertibleTriangle c_triangle = (ConvertibleTriangle)figure;
+
+                        var triangle = svg_convert.getSvgTriangle(c_triangle);
+                        svg_doc.Children.Add(triangle);
+
+                        break;
+
+                    case ConvertibleSquare:
+                        ConvertibleSquare c_square = (ConvertibleSquare)figure;
+
+                        var square = svg_convert.getSvgSquare(c_square);
+                        svg_doc.Children.Add(square);
+
+                        break;
+
+                    case ConvertibleCircle:
+                        ConvertibleCircle c_circle = (ConvertibleCircle)figure;
+
+                        var circle = svg_convert.getSvgCircle(c_circle);
+                        svg_doc.Children.Add(circle);
+
+                        break;
+
+                    case ConvertibleEllipse:
+                        ConvertibleEllipse c_ellipse = (ConvertibleEllipse)figure;
+
+                        var ellipse = svg_convert.getSvgEllipse(c_ellipse);
+                        svg_doc.Children.Add(ellipse);
+
+                        break;
+
+                }
+
+                MemoryStream stream = new MemoryStream();
+                svg_doc.Write(stream);
+
+                string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
+
+                using (StreamWriter writer = new StreamWriter(filename + ".svg"))
+                {
+                    writer.Write(svg_string);
+                }
+
+            }
+
         }
     }
 }

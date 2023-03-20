@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -9,14 +11,14 @@ namespace Geometry.Figures
     [Figure("Rectangle")]
     public class Rectangle : Figure
     {
-        protected static Point2d Postition;
+        protected static Point2d Start;
         protected static double Width = 2;
         protected static double Height = 2;
 
         static Rectangle()
         {
-            Postition.X = -Width / 2.0;
-            Postition.Y = -Height / 2.0;
+            Start.X = -Width / 2.0;
+            Start.Y = -Height / 2.0;
         }
 
         public Rectangle() { }
@@ -25,13 +27,20 @@ namespace Geometry.Figures
 
         protected override void OnDraw(IGraphics graphics)
         {
-            graphics.DrawRectangle(Postition, Width, Height, true, false);
+            graphics.DrawRectangle(Start, Width, Height, true, false);
         }
 
         protected override bool IsInside(Point2d p, double eps)
         {
-            return Postition.X + Math.Abs(p.X) <= eps &&
-                   Postition.Y - Math.Abs(p.Y) >= -eps;
+            return p.X - Start.X >= -eps &&
+                   Start.X + Width - p.X >= -eps &&
+                   p.Y - Start.Y >= -eps &&
+                   Start.Y + Height - p.Y >= -eps;
+        }
+
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
         }
 
         public override IFigure Clone()
@@ -42,6 +51,16 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            Point2d convertible_position = Position;
+
+            // В ConvertibleFigure позиция определяется по левой верхней точке
+            convertible_position.Y -= Height;
+
+            return new ConvertibleRectangle(convertible_position, Width, Height, Angle);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -33,6 +35,11 @@ namespace Geometry.Figures
             return eps >= 0 && Math.Abs(p.X * p.X + p.Y * p.Y - 1) > eps;
         }
 
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IFigure Clone()
         {
             return new Ellipse(this);
@@ -41,6 +48,11 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            return new ConvertibleEllipse(Center, Radius, Radius, Angle);
         }
     }
 }
