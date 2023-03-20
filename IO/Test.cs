@@ -27,21 +27,33 @@ namespace IO
             test__create_circle__SVG();
             test__create_ellipse__SVG();
             test__create_triangle__SVG();
+
+            test__create_two_line__PNG();
+            test__create_square__JPEG();
+            test__create_rectangle__TIFF();
+            test__create_circle__BMP();
+            test__create_triangle__GIF();
+
+            test__read_square__SVG();
+            test__read_rectangle__SVG();
+            test__read_triangle__SVG();
+            test__read_ellipse__SVG();
+            test__read_circle__SVG();
         }
 
         public void test__create_two_line__JSON()
         {
             Point2d p1 = new Point2d(0, 0);
-            Point2d p2 = new Point2d(1, 1);
+            Point2d p2 = new Point2d(400, 0);
 
             var line = new ConvertibleLine(p1, p2, 45);
 
             var i_line = new FigureFabric().CreateFigureFromConvertibleFigure(line);
 
-            Point2d p21 = new Point2d(5, 7);
-            Point2d p22 = new Point2d(3, 8);
+            Point2d p21 = new Point2d(250, 200);
+            Point2d p22 = new Point2d(500, 200);
 
-            var line2 = new ConvertibleLine(p21, p22, 45);
+            var line2 = new ConvertibleLine(p21, p22, 280);
 
             var i_line2 = new FigureFabric().CreateFigureFromConvertibleFigure(line2);
 
@@ -49,12 +61,12 @@ namespace IO
             IDrawable d1 = new Drawable();
             
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
 
             IDrawable d2 = new Drawable();
 
             d2.IsNoOutLine = false;
-            d2.OutLineColor = new Color(1, 26, 123, 143);
+            d2.OutLineColor = new Color(255, 26, 123, 143);
 
             IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
 
@@ -66,16 +78,16 @@ namespace IO
         public void test__create_two_line__SVG()
         {
             Point2d p1 = new Point2d(0, 0);
-            Point2d p2 = new Point2d(1, 1);
+            Point2d p2 = new Point2d(400, 0);
 
             var line = new ConvertibleLine(p1, p2, 45);
 
             var i_line = new FigureFabric().CreateFigureFromConvertibleFigure(line);
 
-            Point2d p21 = new Point2d(5, 7);
-            Point2d p22 = new Point2d(3, 8);
+            Point2d p21 = new Point2d(250, 200);
+            Point2d p22 = new Point2d(500, 200);
 
-            var line2 = new ConvertibleLine(p21, p22, 45);
+            var line2 = new ConvertibleLine(p21, p22, 280);
 
             var i_line2 = new FigureFabric().CreateFigureFromConvertibleFigure(line2);
 
@@ -83,12 +95,12 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
 
             IDrawable d2 = new Drawable();
 
             d2.IsNoOutLine = false;
-            d2.OutLineColor = new Color(1, 26, 123, 143);
+            d2.OutLineColor = new Color(255, 26, 123, 143);
 
             IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
 
@@ -110,10 +122,10 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
 
             d1.IsNoFill = false;
-            d1.FillColor = new Color(1, 115, 26, 26);
+            d1.FillColor = new Color(255, 115, 56, 26);
 
 
             IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_square, d1), (i_square0, d1) };
@@ -137,12 +149,19 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
             d1.IsNoFill = false;
-            d1.FillColor = new Color(1, 115, 26, 26);
+            d1.FillColor = new Color(255, 115, 67, 26);
+
+            IDrawable d2 = new Drawable();
+
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
 
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_rectangle, d1), (i_rectangle0, d1) };
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_rectangle, d1), (i_rectangle0, d2) };
 
             SVGConverter jc = new SVGConverter();
 
@@ -165,12 +184,18 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
             d1.IsNoFill = false;
-            d1.FillColor = new Color(1, 75, 26, 26);
+            d1.FillColor = new Color(255, 75, 26, 26);
 
+            IDrawable d2 = new Drawable();
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_triangle, d1), (i_triangle0, d1) };
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_triangle, d2), (i_triangle0, d1) };
 
             SVGConverter jc = new SVGConverter();
 
@@ -188,9 +213,9 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
             d1.IsNoFill = false;
-            d1.FillColor = new Color(1, 65, 26, 26);
+            d1.FillColor = new Color(255, 65, 26, 26);
 
             IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d1) };
 
@@ -214,15 +239,171 @@ namespace IO
             IDrawable d1 = new Drawable();
 
             d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(1, 115, 26, 26);
+            d1.OutLineColor = new Color(255, 115, 26, 26);
             d1.IsNoFill = false;
-            d1.FillColor = new Color(1, 75, 26, 26);
+            d1.FillColor = new Color(255, 75, 26, 26);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d1), (i_circle0, d1) };
+            IDrawable d2 = new Drawable();
+
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d2), (i_circle0, d1) };
 
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("ellipse", array);
+        }
+
+        public void test__create_two_line__PNG()
+        {
+            Point2d p1 = new Point2d(0, 0);
+            Point2d p2 = new Point2d(400, 0);
+
+            var line = new ConvertibleLine(p1, p2, 45);
+
+            var i_line = new FigureFabric().CreateFigureFromConvertibleFigure(line);
+
+            Point2d p21 = new Point2d(250, 200);
+            Point2d p22 = new Point2d(500, 200);
+
+            var line2 = new ConvertibleLine(p21, p22, 280);
+
+            var i_line2 = new FigureFabric().CreateFigureFromConvertibleFigure(line2);
+
+
+            IDrawable d1 = new Drawable();
+
+            d1.IsNoOutLine = false;
+            d1.OutLineColor = new Color(255, 115, 26, 26);
+
+            IDrawable d2 = new Drawable();
+
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 26, 123, 143);
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
+
+            PNGConverter jc = new PNGConverter();
+
+            jc.WriteFile("two_lines", array);
+        }
+
+        public void test__create_square__JPEG()
+        {
+            Point2d p1 = new Point2d(200, 200);
+
+            var square0 = new ConvertibleSquare(p1, width: 100, height: 100, 0);
+            var square = new ConvertibleSquare(p1, width: 100, height: 100, 35);
+
+            var i_square0 = new FigureFabric().CreateFigureFromConvertibleFigure(square0);
+            var i_square = new FigureFabric().CreateFigureFromConvertibleFigure(square);
+
+            IDrawable d1 = new Drawable();
+
+            d1.IsNoOutLine = false;
+            d1.OutLineColor = new Color(255, 115, 26, 26);
+
+            d1.IsNoFill = false;
+            d1.FillColor = new Color(255, 115, 56, 26);
+
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_square, d1), (i_square0, d1) };
+
+            JPEGConverter jc = new JPEGConverter();
+
+            jc.WriteFile("square", array);
+        }
+
+        public void test__create_rectangle__TIFF()
+        {
+            Point2d p1 = new Point2d(200, 200);
+
+            var rectangle0 = new ConvertibleRectangle(p1, width: 100, height: 300, 0);
+
+            var rectangle = new ConvertibleRectangle(p1, width: 100, height: 300, 40);
+
+            var i_rectangle0 = new FigureFabric().CreateFigureFromConvertibleFigure(rectangle0);
+            var i_rectangle = new FigureFabric().CreateFigureFromConvertibleFigure(rectangle);
+
+            IDrawable d1 = new Drawable();
+
+            d1.IsNoOutLine = false;
+            d1.OutLineColor = new Color(255, 115, 26, 26);
+            d1.IsNoFill = false;
+            d1.FillColor = new Color(255, 115, 67, 26);
+
+            IDrawable d2 = new Drawable();
+
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
+
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_rectangle, d1), (i_rectangle0, d2) };
+
+            TIFFConverter jc = new TIFFConverter();
+
+            jc.WriteFile("rectangle", array);
+        }
+
+        public void test__create_triangle__GIF()
+        {
+            Point2d p1 = new Point2d(10, 100);
+            Point2d p2 = new Point2d(60, 20);
+            Point2d p3 = new Point2d(110, 100);
+
+            var triangle0 = new ConvertibleTriangle(p1, p2, p3, 0);
+
+            var triangle = new ConvertibleTriangle(p1, p2, p3, 270);
+
+            var i_triangle0 = new FigureFabric().CreateFigureFromConvertibleFigure(triangle0);
+            var i_triangle = new FigureFabric().CreateFigureFromConvertibleFigure(triangle);
+
+            IDrawable d1 = new Drawable();
+
+            d1.IsNoOutLine = false;
+            d1.OutLineColor = new Color(255, 115, 26, 26);
+            d1.IsNoFill = false;
+            d1.FillColor = new Color(255, 75, 26, 26);
+
+            IDrawable d2 = new Drawable();
+
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_triangle, d2), (i_triangle0, d1) };
+
+            GIFConverter jc = new GIFConverter();
+
+            jc.WriteFile("triangle", array);
+        }
+
+        public void test__create_circle__BMP()
+        {
+            Point2d p1 = new Point2d(100, 100);
+
+            var circle = new ConvertibleCircle(p1, radius: 50, 0);
+
+            var i_circle = new FigureFabric().CreateFigureFromConvertibleFigure(circle);
+
+            IDrawable d1 = new Drawable();
+
+            d1.IsNoOutLine = false;
+            d1.OutLineColor = new Color(255, 115, 26, 26);
+            d1.IsNoFill = false;
+            d1.FillColor = new Color(255, 65, 26, 26);
+
+            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d1) };
+
+            BMPConverter jc = new BMPConverter();
+
+            jc.WriteFile("circle", array);
         }
 
 
@@ -245,5 +426,56 @@ namespace IO
             Console.WriteLine("конец...");
 
         }
+
+        public void test__read_square__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("square.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+
+        public void test__read_rectangle__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("rectangle.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+
+        public void test__read_triangle__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("triangle.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+
+        public void test__read_ellipse__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("ellipse.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+
+        public void test__read_circle__SVG()
+        {
+            SVGConverter jc = new SVGConverter();
+
+            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("circle.svg");
+
+            Console.WriteLine("конец...");
+
+        }
+
     }
 }

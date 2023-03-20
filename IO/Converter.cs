@@ -13,6 +13,7 @@ using DynamicData;
 using System.Linq;
 using IO.SVGFigures;
 using Drawing.Graphics;
+using System.Drawing.Imaging;
 
 namespace IO
 {
@@ -214,100 +215,100 @@ namespace IO
 
         public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
         {
-            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
             SVG svg_convert = new SVG();
 
-            List<(ConvertibleFigure, IDrawable)> c_Figures = new IFigureConverter().getConvertibleFigureList(figures);
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
 
+            MemoryStream stream = new MemoryStream();
+            svg_doc.Write(stream);
 
-            foreach ((ConvertibleFigure figure, IDrawable drawable) in c_Figures)
+            string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
+
+            using (StreamWriter writer = new StreamWriter(filename + ".svg"))
             {
-
-                switch (figure)
-                {
-                    case ConvertibleLine:
-                        ConvertibleLine c_line = (ConvertibleLine)figure;
-
-                        var line = svg_convert.getSvgLine(c_line);
-
-                        line = (SvgLine)svg_convert.ApplayDrawable(line, drawable);
-
-                        svg_doc.Children.Add(line);
-
-                        break;
-
-                    case ConvertibleRectangle:
-                        ConvertibleRectangle c_rectangle = (ConvertibleRectangle)figure;
-
-                        var rectangle = svg_convert.getSvgRectangle(c_rectangle);
-
-                        rectangle = (SvgRectangle)svg_convert.ApplayDrawable(rectangle, drawable);
-
-
-                        svg_doc.Children.Add(rectangle);
-
-                        break;
-
-                    case ConvertibleTriangle:
-                        ConvertibleTriangle c_triangle = (ConvertibleTriangle)figure;
-
-                        var triangle = svg_convert.getSvgTriangle(c_triangle);
-
-                        triangle = (SvgPolygon)svg_convert.ApplayDrawable(triangle, drawable);
-
-                        svg_doc.Children.Add(triangle);
-
-                        break;
-
-                    case ConvertibleSquare:
-                        ConvertibleSquare c_square = (ConvertibleSquare)figure;
-
-                        var square = svg_convert.getSvgSquare(c_square);
-
-                        square = (SvgRectangle)svg_convert.ApplayDrawable(square, drawable);
-
-
-                        svg_doc.Children.Add(square);
-
-                        break;
-
-                    case ConvertibleCircle:
-                        ConvertibleCircle c_circle = (ConvertibleCircle)figure;
-
-                        var circle = svg_convert.getSvgCircle(c_circle);
-
-                        circle = (SvgCircle)svg_convert.ApplayDrawable(circle, drawable);
-
-
-                        svg_doc.Children.Add(circle);
-
-                        break;
-
-                    case ConvertibleEllipse:
-                        ConvertibleEllipse c_ellipse = (ConvertibleEllipse)figure;
-
-                        var ellipse = svg_convert.getSvgEllipse(c_ellipse);
-
-                        ellipse = (SvgEllipse)svg_convert.ApplayDrawable(ellipse, drawable);
-
-                        svg_doc.Children.Add(ellipse);
-
-                        break;
-
-                }
-
-                MemoryStream stream = new MemoryStream();
-                svg_doc.Write(stream);
-
-                string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
-
-                using (StreamWriter writer = new StreamWriter(filename + ".svg"))
-                {
-                    writer.Write(svg_string);
-                }
-
+                writer.Write(svg_string);
             }
 
+        }
+    }
+
+    public class PNGConverter : IConverter
+    {
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SVG svg_convert = new SVG();
+
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            svg_doc.Draw().Save(filename + ".png", ImageFormat.Png);
+        }
+    }
+
+    public class JPEGConverter : IConverter
+    {
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SVG svg_convert = new SVG();
+
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            svg_doc.Draw().Save(filename + ".jpeg", ImageFormat.Jpeg);
+        }
+    }
+
+    public class BMPConverter : IConverter
+    {
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SVG svg_convert = new SVG();
+
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            svg_doc.Draw().Save(filename + ".bmp", ImageFormat.Bmp);
+        }
+    }
+
+    public class GIFConverter : IConverter
+    {
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SVG svg_convert = new SVG();
+
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            svg_doc.Draw().Save(filename + ".gif", ImageFormat.Gif);
+        }
+    }
+
+    public class TIFFConverter : IConverter
+    {
+        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SVG svg_convert = new SVG();
+
+            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            svg_doc.Draw().Save(filename + ".tiff", ImageFormat.Tiff);
         }
     }
 }
