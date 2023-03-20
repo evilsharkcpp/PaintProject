@@ -53,11 +53,16 @@ namespace Geometry.Figures
 
         protected override bool IsInside(Point2d p, double eps)
         {
-            double h1 = (p - Point1) ^ V12 / V12.Norm,
-                   h2 = (p - Point2) ^ V23 / V23.Norm,
-                   h3 = (p - Point3) ^ V31 / V31.Norm;
+            double Q(Point2d a, Point2d b, Point2d p)
+            {
+                return p.X * (b.Y - a.Y) + p.Y * (a.X - b.X) + a.Y * b.X - a.X * b.Y;
+            }
 
-            return h1 <= eps && h2 <= eps && h3 <= eps;
+            double q1, q2, q3;
+            q1 = Q(Point1, Point2, p);
+            q2 = Q(Point2, Point3, p);
+            q3 = Q(Point3, Point1, p);
+            return (q1 <= eps && q2 <= eps && q3 <= eps);
         }
 
         public override IFigure Clone()
