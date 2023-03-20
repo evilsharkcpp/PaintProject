@@ -164,47 +164,65 @@ namespace GUI_WPF
             }
             else if (changeFigureSize != ChangeFigureSize.None && SelectedFigure != null)
             {
-                if (
+                /*if (
                     startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 &&
                     startFigureSize.X - (mouseDownPoint.X - point.X) >= 5 &&
                     startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5 &&
                     startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5
                     )
+                {*/
+                switch (changeFigureSize)
                 {
-                    switch (changeFigureSize)
-                    {
-                        case ChangeFigureSize.UpLeftPoint:
+                    case ChangeFigureSize.UpLeftPoint:
+                        if (startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 && startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5)
+                        {
                             SelectedFigure.Figure.Position = new Point2d(startFigurePosition.X + e.GetPosition(canvas).X - mouseDownPoint.X, startFigurePosition.Y + e.GetPosition(canvas).Y - mouseDownPoint.Y);
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X + (mouseDownPoint.X - point.X), startFigureSize.Y + (mouseDownPoint.Y - point.Y));
-                            break;
-                        case ChangeFigureSize.DownLeftPoint:
+                        }
+                        break;
+                    case ChangeFigureSize.DownLeftPoint:
+                        if (startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 && startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5)
+                        {
                             SelectedFigure.Figure.Position = new Point2d(startFigurePosition.X + e.GetPosition(canvas).X - mouseDownPoint.X, startFigurePosition.Y);
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X + (mouseDownPoint.X - point.X), startFigureSize.Y - (mouseDownPoint.Y - point.Y));
-                            break;
-                        case ChangeFigureSize.UpRightPoint:
+                        }
+                        break;
+                    case ChangeFigureSize.UpRightPoint:
+                        if (startFigureSize.X - (mouseDownPoint.X - point.X) >= 5 && startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5)
+                        {
                             SelectedFigure.Figure.Position = new Point2d(startFigurePosition.X, startFigurePosition.Y + e.GetPosition(canvas).Y - mouseDownPoint.Y);
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X - (mouseDownPoint.X - point.X), startFigureSize.Y + (mouseDownPoint.Y - point.Y));
-                            break;
-                        case ChangeFigureSize.DownRightPoint:
+                        }
+                        break;
+                    case ChangeFigureSize.DownRightPoint:
+                        if (startFigureSize.X - (mouseDownPoint.X - point.X) >= 5 && startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5)
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X - (mouseDownPoint.X - point.X), startFigureSize.Y - (mouseDownPoint.Y - point.Y));
-                            break;
-                        case ChangeFigureSize.LeftSide:
+                        break;
+                    case ChangeFigureSize.LeftSide:
+                        if (startFigureSize.X + (mouseDownPoint.X - point.X) >= 5)
+                        {
                             SelectedFigure.Figure.Position = new Point2d(startFigurePosition.X + e.GetPosition(canvas).X - mouseDownPoint.X, startFigurePosition.Y);
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X + (mouseDownPoint.X - point.X), SelectedFigure.Figure.Size.Y);
-                            break;
-                        case ChangeFigureSize.RightSide:
+                        }
+                        break;
+                    case ChangeFigureSize.RightSide:
+                        if (startFigureSize.X - (mouseDownPoint.X - point.X) >= 5)
                             SelectedFigure.Figure.Size = new Vector2d(startFigureSize.X - (mouseDownPoint.X - point.X), SelectedFigure.Figure.Size.Y);
-                            break;
-                        case ChangeFigureSize.UpSide:
+                        break;
+                    case ChangeFigureSize.UpSide:
+                        if (startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5)
+                        {
                             SelectedFigure.Figure.Position = new Point2d(startFigurePosition.X, startFigurePosition.Y + e.GetPosition(canvas).Y - mouseDownPoint.Y);
                             SelectedFigure.Figure.Size = new Vector2d(SelectedFigure.Figure.Size.X, startFigureSize.Y + (mouseDownPoint.Y - point.Y));
-                            break;
-                        case ChangeFigureSize.DownSide:
+                        }
+                        break;
+                    case ChangeFigureSize.DownSide:
+                        if (startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5)
                             SelectedFigure.Figure.Size = new Vector2d(SelectedFigure.Figure.Size.X, startFigureSize.Y - (mouseDownPoint.Y - point.Y));
-                            break;
-                    }
-
+                        break;
                 }
+
+                //}
 
             }
         }
