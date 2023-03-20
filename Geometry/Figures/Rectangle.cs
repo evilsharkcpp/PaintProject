@@ -1,4 +1,5 @@
 ﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
 using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
@@ -54,7 +55,12 @@ namespace Geometry.Figures
 
         public override ConvertibleFigure ToConvertibleFigure()
         {
-            throw new NotImplementedException();
+            Point2d convertible_position = Position;
+
+            // В ConvertibleFigure позиция определяется по левой верхней точке
+            convertible_position.Y -= Height;
+
+            return new ConvertibleRectangle(convertible_position, Width, Height, Angle);
         }
     }
 }
