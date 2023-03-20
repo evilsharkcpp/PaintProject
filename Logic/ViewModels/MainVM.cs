@@ -91,7 +91,7 @@ namespace Logic.ViewModels
             bool successfully = false;
             if (_figures.Remove(id))
             {
-                _sortedFiguresID.Remove(id);
+               // _sortedFiguresID.Remove(id);
                 _isSelected.Remove(id);
                 successfully = true;
             }
