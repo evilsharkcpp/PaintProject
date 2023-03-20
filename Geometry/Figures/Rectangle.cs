@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -49,6 +51,16 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            Point2d convertible_position = Position;
+
+            // В ConvertibleFigure позиция определяется по левой верхней точке
+            convertible_position.Y -= Height;
+
+            return new ConvertibleRectangle(convertible_position, Width, Height, Angle);
         }
     }
 }
