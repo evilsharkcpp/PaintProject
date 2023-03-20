@@ -2,13 +2,8 @@
 using Geometry;
 using Interfaces;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Numerics;
 using System.Reactive.Linq;
-using IO;
 
 namespace Logic.ViewModels
 {
@@ -32,42 +27,13 @@ namespace Logic.ViewModels
         public override IEnumerable<int> SelectedFigures => _selectedFigures;
 
 
-        public IEnumerable<IDrawableObject> SelectedFigures { get; set; }
-        private int _currentId = 0;
-        private readonly Dictionary<int, (IFigure, IDrawable)> _shapes;
-        public ReactiveCommand<string, Unit> SaveFile { get; }
-        public ReactiveCommand<string, IEnumerable<(IFigure, IDrawable)>> OpenFile { get; }
-    public MainVM()
+        public MainVM()
         {
             _figures = new Dictionary<int, Object>();
             _sortedFigures = new List<SortedSet<int>>() { new SortedSet<int>() };
-            _figures = new Dictionary<int,IDrawableObject>();
-            SelectedFigures= new List<IDrawableObject>();
-            //Temp = "Hellop";
-            //Figures = new ObservableCollection<(IFigure,IDrawable)>().AsEnumerable();
-            CreateFigure = ReactiveCommand.Create<string, IFigure>((a) => OnCreate(a));
-            AddFigure = ReactiveCommand.Create<IDrawableObject, int>((a) => OnAdd(a));
-            RemoveFigure = ReactiveCommand.Create<int, Unit>((a) => OnRemove(a));
-            SelectFigure = ReactiveCommand.Create<Point2d, int>((a) => OnSelectFigure(a));
-            GetFigureById = ReactiveCommand.Create<int, IDrawableObject?>((a) => OnGetFigureById(a));
-            SaveFile = ReactiveCommand.Create<string, Unit>(OnSaveFile);
-            OpenFile = ReactiveCommand.Create < string, IEnumerable < (IFigure, IDrawable)>>(OnOpenFile);
-             _sortedFiguresID = new SortedSet<int>(Comparer<int>.Create((id1, id2) =>
-            {
-                int cmp = -1;
-                if (_figures[id1].Figure is not null &&
-                    _figures[id2].Figure is not null)
-                {
-                    cmp = _figures[id1].Figure!.ZIndex.CompareTo(_figures[id2].Figure!.ZIndex);
-                    if (cmp == 0)
-                        cmp = -1;
-                }
-                return cmp;
-            }));
 
             _selectedFigures = new List<int>();
-            //Observable.Subscribe()
-    }
+        }
 
 
         private void ResetSelect()
@@ -124,8 +90,6 @@ namespace Logic.ViewModels
             {
                 _sortedFigures[@object.ZIndex].Remove(id);
                 _figures.Remove(id);
-               // _sortedFiguresID.Remove(id);
-                _isSelected.Remove(id);
                 successfully = true;
             }
 
@@ -373,46 +337,7 @@ namespace Logic.ViewModels
 
             return false;
         }
-        private Unit OnSaveFile(string filePath)
-        {
-            IConverter converter = GetConverterForFilePath(filePath);
 
-            converter.WriteFile(filePath, _shapes.Values);
-
-            return Unit.Default;
-        }
-
-        private IEnumerable<(IFigure, IDrawable)> OnOpenFile(string filePath)
-        {
-            IConverter converter = GetConverterForFilePath(filePath);
-
-            IEnumerable<(IFigure, IDrawable)> shapes = converter.ReadFile(filePath);
-
-            _shapes.Clear();
-            foreach (var shape in shapes)
-            {
-                _shapes.Add(_currentId++, shape);
-            }
-
-            return shapes;
-        }
-        private IConverter GetConverterForFilePath(string filePath)
-        {
-            string extension = Path.GetExtension(filePath).ToLowerInvariant();
-
-            if (FileValidator.JSON_EXTENSION.Contains(extension))
-            {
-                return new JSONConverter();
-            }
-            else if (FileValidator.SVG_EXTENSION.Contains(extension))
-            {
-                return new SVGConverter();
-            }
-            else
-            {
-                throw new NotSupportedException($"File extension {extension} is not supported.");
-            }
-            
         protected override bool OnRedo()
         {
 
