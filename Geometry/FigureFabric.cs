@@ -1,4 +1,5 @@
 ﻿using DataStructures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Reflection;
