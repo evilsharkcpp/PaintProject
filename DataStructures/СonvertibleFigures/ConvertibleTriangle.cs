@@ -10,7 +10,7 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Point1")]
         public Point2d point1;
 
-        // Вторая точка
+        // Вторая точка (Вершина)
         [DataMember(Name = "Point2")]
         public Point2d point2;
 
@@ -18,16 +18,17 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Point3")]
         public Point2d point3;
 
-        // Цвет границы треугольника
-        [DataMember(Name = "Color")]
-        public Color color;
-
-        public ConvertibleTriangle(Point2d point1, Point2d point2, Point2d point3, Color color)
+        public ConvertibleTriangle(Point2d point1, Point2d point2, Point2d point3, double angle)
         {
             this.point1 = point1;
             this.point2 = point2;
             this.point3 = point3;
-            this.color = color;
+            this.angle = angle;
+
+            Width = Math.Abs(point1.X - point3.X);
+            Height = Math.Abs(point2.Y - point1.Y);
+
+            position = new Point2d(point1.X, point2.Y);
         }
 
     }

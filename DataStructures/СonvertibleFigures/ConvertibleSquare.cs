@@ -10,24 +10,15 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "Position")]
         public Point2d point1;
 
-        // Ширина квадрата
-        [DataMember(Name = "Width")]
-        public double width;
-
-        // Ширина квадрата
-        [DataMember(Name = "Height")]
-        public double height;
-
-        // Цвет границы квадрата
-        [DataMember(Name = "Color")]
-        public Color color;
-
-        public ConvertibleSquare(Point2d point1, double width, double height, Color color)
+        public ConvertibleSquare(Point2d point1, double width, double height, double angle)
         {
             this.point1 = point1;
-            this.width = width;
-            this.height = height;
-            this.color = color;
+            this.angle = angle;
+
+            Width = width;
+            Height = height;
+
+            position = point1; 
         }
     }
 }

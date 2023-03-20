@@ -18,16 +18,20 @@ namespace DataStructures.ConvertibleFigures
         [DataMember(Name = "RadiusY")]
         public double radiusY;
 
-        // Цвет границы эллипса
-        [DataMember(Name = "Color")]
-        public Color color;
-
-        public ConvertibleEllipse(Point2d center, double radiusX, double radiusY, Color color)
+        public ConvertibleEllipse(Point2d center, double radiusX, double radiusY, double angle)
         {
             this.center = center;
             this.radiusX = radiusX;
             this.radiusY = radiusY;
-            this.color = color;
+            this.angle = angle;
+
+            Height = radiusY * 2;
+            Width = radiusX * 2;
+
+            double px = center.X - radiusX;
+            double py = center.Y - radiusY;
+
+            position = new Point2d(px, py);
         }
     }
 }

@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using Color = System.Drawing.Color;
+using Svg.Transforms;
+using IO.SVGFigures;
+using Geometry.Figures;
 
 namespace IO
 {
@@ -29,7 +32,9 @@ namespace IO
             Point2d p1 = new Point2d((float)svg_line.StartX, (float)svg_line.StartY);
             Point2d p2 = new Point2d((float)svg_line.EndX, (float)svg_line.EndY);
 
-            return new ConvertibleLine(p1, p2, color);
+            double angle = new TranformsConverter().getAngle(svg_line);
+
+            return new ConvertibleLine(p1, p2, angle);
         }
 
         public ConvertibleEllipse getEllipse(SvgEllipse svg_ellipse)
@@ -38,15 +43,9 @@ namespace IO
             double radius_x = (double)svg_ellipse.RadiusX;
             double radius_y = (double)svg_ellipse.RadiusY;
 
-            return new ConvertibleEllipse(center, radius_x, radius_y, color);
-        }
+            double angle = new TranformsConverter().getAngle(svg_ellipse);
 
-        public ConvertibleFilledCircle getFilledCircle(SvgCircle svg_circle)
-        {
-            Point2d center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
-            double radius = (double)svg_circle.Radius;
-
-            return new ConvertibleFilledCircle(center, radius, color, fill_color);
+            return new ConvertibleEllipse(center, radius_x, radius_y, angle);
         }
 
         public ConvertibleCircle getCircle(SvgCircle svg_circle)
@@ -54,7 +53,9 @@ namespace IO
             Point2d center = new Point2d((double)svg_circle.CenterX, (double)svg_circle.CenterY);
             double radius = (double)svg_circle.Radius;
 
-            return new ConvertibleCircle(center, radius, color);
+            double angle = new TranformsConverter().getAngle(svg_circle);
+
+            return new ConvertibleCircle(center, radius, angle);
         }
 
         public ConvertibleRectangle getRectangle(SvgRectangle svg_rect)
@@ -63,7 +64,9 @@ namespace IO
             double width = (float)svg_rect.Width;
             double height = (float)svg_rect.Height;
 
-            return new ConvertibleRectangle(p1, width, height, color);
+            double angle = new TranformsConverter().getAngle(svg_rect);
+
+            return new ConvertibleRectangle(p1, width, height, angle);
         }
 
 
@@ -73,7 +76,9 @@ namespace IO
             double width = (float)svg_square.Width;
             double height = (float)svg_square.Height;
 
-            return new ConvertibleSquare(p1, width, height, color);
+            double angle = new TranformsConverter().getAngle(svg_square);
+
+            return new ConvertibleSquare(p1, width, height, angle);
         }
 
         public ConvertibleTriangle getTriangle(SvgPolygon svg_polygon)
@@ -82,7 +87,9 @@ namespace IO
             Point2d p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
             Point2d p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
 
-            return new ConvertibleTriangle(p1, p2, p3, color);
+            double angle = new TranformsConverter().getAngle(svg_polygon);
+
+            return new ConvertibleTriangle(p1, p2, p3, angle);
         }
 
 
@@ -91,7 +98,7 @@ namespace IO
         //
         // Получить SVG фигуры
         //
-        
+
         public SvgLine getSvgLine(ConvertibleLine c_line)
         {
             double x1 = c_line.point1.X;
@@ -107,6 +114,8 @@ namespace IO
                 EndX = (SvgUnit)x2,
                 EndY = (SvgUnit)y2,
 
+                Transforms = new TranformsConverter().getSvgTransforms(c_line),
+
                 Stroke = new SvgColourServer()
             };
         }
@@ -120,6 +129,8 @@ namespace IO
                 CenterY = (SvgUnit)c_ellipse.center.Y,
                 RadiusX = (SvgUnit)c_ellipse.radiusX,
                 RadiusY = (SvgUnit)c_ellipse.radiusY,
+
+                Transforms = new TranformsConverter().getSvgTransforms(c_ellipse),
 
                 Stroke = new SvgColourServer(),
                 Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
@@ -139,6 +150,8 @@ namespace IO
                 CenterY = (SvgUnit)cy,
                 Radius = (SvgUnit)r,
 
+                Transforms = new TranformsConverter().getSvgTransforms(c_circle),
+
                 Stroke = new SvgColourServer(),
                 Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
@@ -149,8 +162,8 @@ namespace IO
             double x1 = c_rect.point1.X;
             double y1 = c_rect.point1.Y;
 
-            double width = c_rect.width;
-            double height = c_rect.height;
+            double width = c_rect.Width;
+            double height = c_rect.Height;
 
 
             return new SvgRectangle
@@ -160,6 +173,8 @@ namespace IO
 
                 Width = new SvgUnit((float)width),
                 Height = new SvgUnit((float)height),
+
+                Transforms = new TranformsConverter().getSvgTransforms(c_rect),
 
                 Stroke = new SvgColourServer(),
                 Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
@@ -171,8 +186,8 @@ namespace IO
             double x1 = c_rect.point1.X;
             double y1 = c_rect.point1.Y;
 
-            double width = c_rect.width;
-            double height = c_rect.height;
+            double width = c_rect.Width;
+            double height = c_rect.Height;
 
 
             return new SvgRectangle
@@ -182,6 +197,8 @@ namespace IO
 
                 Width = new SvgUnit((float)width),
                 Height = new SvgUnit((float)height),
+
+                Transforms = new TranformsConverter().getSvgTransforms(c_rect),
 
                 Stroke = new SvgColourServer(),
                 Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
@@ -211,13 +228,12 @@ namespace IO
                     new SvgUnit((float)x3), new SvgUnit((float)y3)
                 },
 
+                Transforms = new TranformsConverter().getSvgTransforms(c_triangle),
 
                 Stroke = new SvgColourServer(),
                 Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
-
-
 
     }
 }

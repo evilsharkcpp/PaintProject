@@ -21,7 +21,6 @@ namespace IO
                         new Type[] {
                                 typeof(ConvertibleLine),
                                 typeof(ConvertibleSquare),
-                                typeof(ConvertibleFilledCircle),
                                 typeof(ConvertibleEllipse),
                                 typeof(ConvertibleTriangle),
                                 typeof(ConvertibleRectangle),
@@ -51,7 +50,6 @@ namespace IO
                                                 new Type[] {
                                                     typeof(ConvertibleLine),
                                                     typeof(ConvertibleSquare),
-                                                    typeof(ConvertibleFilledCircle),
                                                     typeof(ConvertibleEllipse),
                                                     typeof(ConvertibleTriangle),
                                                     typeof(ConvertibleRectangle),
@@ -83,7 +81,7 @@ namespace IO
                         deserializedFigures.Add(line);
                         break;
 
-                    case SvgRectangle:
+                    /*case SvgRectangle:
                         SvgRectangle? svg_rect = svg_elem as SvgRectangle;
 
                         // Проверка равеcтва cторон
@@ -124,23 +122,15 @@ namespace IO
                     case SvgCircle:
                         SvgCircle? svg_circle = svg_elem as SvgCircle;
 
-                        if (svg_circle.Fill == SvgPaintServer.None)
-                        {
-                            ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
-                            deserializedFigures.Append(circle);
-                        }
-                        else
-                        {
-                            ConvertibleFilledCircle fill_circle = svg_convert.getFilledCircle(svg_circle);
-                            deserializedFigures.Append(fill_circle);
-                        }
+                        ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
+                        deserializedFigures.Append(circle);
                         break;
 
                     case SvgEllipse:
                         SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
                         ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
                         deserializedFigures.Append(ellips);
-                        break;
+                        break;*/
                 }
             }
 
