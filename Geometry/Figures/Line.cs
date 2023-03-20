@@ -38,14 +38,27 @@ namespace Geometry.Figures
 
         protected override bool IsInside(Point2d p, double eps)
         {
-            Vector2d u = new Vector2d()
+            Vector2d u = new Vector2d() //вектор из левой верхней точки в определяемую точку
             {
                 X = 1 - p.X,
                 Y = 1 - p.Y
             };
-            double l = u * V,
-                   h = u * n;
-            return Math.Abs(h) <= eps && l / V.Norm >= -eps && l - 1 <= eps;
+
+            double s = V.X * u.Y - u.X * V.Y; //удвоенная площадь треугольника, составленного тремя точками, и равна нулю если три точки лежат на одной прямой.
+            double norm_line = Math.Sqrt(V.X * V.X + V.Y * V.Y); //длина отрезка
+            double h = s / norm_line; //расстояние от точки до  отрезка
+
+            bool on_line = (Math.Abs(h) <= eps); //точка лежит на прямой
+            if (on_line)
+            {
+                if (p.X <= 1 + eps && p.X >= -1 - eps && p.Y <= 1 + eps && p.Y >= -1 - eps) //точка внутри отрезка
+                {
+                    return true;
+                }
+                else return false;
+
+            }
+            else return false;
         }
 
         public override IFigure Clone()
