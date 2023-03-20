@@ -109,7 +109,7 @@
                      <ColumnDefinition/>
                      <ColumnDefinition/>
                   </Grid.ColumnDefinitions>
-                  <TabControl Name="вкладки"  Grid.ColumnSpan="2" Background="#FF505050" >
+                  <TabControl Name="вкладки"  Grid.ColumnSpan="2" Background="#FF505050" Visibility="{Binding ElementName=mainWindow, Path=ParamVisibility}">
                      <TabControl.Resources>
                         <Style TargetType="TabItem">
                            <Setter Property="Template">

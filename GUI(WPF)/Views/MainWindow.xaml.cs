@@ -1,4 +1,4 @@
-﻿using Interfaces;
+using Interfaces;
 using Logic.ViewModels;
 using System;
 using System.Windows;
@@ -9,7 +9,7 @@ using ReactiveUI;
 using System.Linq;
 using System.Windows.Threading;
 using System.Windows.Controls;
-using Logic.Graphics;
+using Drawing.Graphics;
 using System.Security.Cryptography.X509Certificates;
 using DataStructures.Geometry;
 using System.Windows.Media;
@@ -105,7 +105,9 @@ namespace GUI_WPF
                 }
                 else
                     ParamVisibility = Visibility.Visible;
-                return _vm.Figures[_vm.SelectedFigures.Last()];
+                IDrawableObject? b = null;
+                _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
+                return b;
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
@@ -163,11 +165,10 @@ namespace GUI_WPF
             else if (changeFigureSize != ChangeFigureSize.None && SelectedFigure != null)
             {
                 if (
-                    SelectedFigure.Figure.Size.X - Math.Abs(mouseDownPoint.X - point.X) >= 5 && SelectedFigure.Figure.Size.Y - Math.Abs(mouseDownPoint.Y - point.Y) >= 5
-                    /*startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 &&
+                    startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 &&
                     startFigureSize.X - (mouseDownPoint.X - point.X) >= 5 &&
                     startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5 &&
-                    startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5*/
+                    startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5
                     )
                 {
                     switch (changeFigureSize)
