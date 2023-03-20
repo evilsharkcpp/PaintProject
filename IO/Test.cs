@@ -5,7 +5,6 @@ using Drawing.Graphics;
 using Geometry;
 using Geometry.Figures;
 using Interfaces;
-using Logic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

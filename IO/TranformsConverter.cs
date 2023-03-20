@@ -1,6 +1,5 @@
 ﻿using DataStructures;
 using IO.SVGFigures;
-using Logic.Graphics;
 using Microsoft.VisualBasic;
 using Svg;
 using Svg.Transforms;
