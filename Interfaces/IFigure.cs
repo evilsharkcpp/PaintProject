@@ -1,4 +1,5 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.Geometry;
 using System.Numerics;
 
 namespace Interfaces
@@ -20,6 +21,8 @@ namespace Interfaces
         IFigure Intersect(IFigure second);
         IFigure Union(IFigure second);
         IFigure Subtruct(IFigure second);
+
+        ConvertibleFigure ToConvertibleFigure();
 
         new IFigure Clone();
     }

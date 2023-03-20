@@ -1,4 +1,5 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.Geometry;
 using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
@@ -128,5 +129,7 @@ namespace Geometry.Figures
         protected abstract bool IsInside(Point2d p, double eps);
 
         protected abstract Path ToPath();
+
+        public abstract ConvertibleFigure ToConvertibleFigure();
     }
 }
