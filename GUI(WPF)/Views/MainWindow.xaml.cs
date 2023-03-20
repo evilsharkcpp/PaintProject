@@ -9,7 +9,7 @@ using ReactiveUI;
 using System.Linq;
 using System.Windows.Threading;
 using System.Windows.Controls;
-using Logic.Graphics;
+using Drawing.Graphics;
 using System.Security.Cryptography.X509Certificates;
 using DataStructures.Geometry;
 using System.Windows.Media;
