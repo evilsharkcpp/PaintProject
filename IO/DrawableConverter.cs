@@ -1,5 +1,5 @@
-﻿using Interfaces;
-using Logic.Graphics;
+﻿using Drawing.Graphics;
+using Interfaces;
 using Svg;
 using System;
 using System.Collections.Generic;
