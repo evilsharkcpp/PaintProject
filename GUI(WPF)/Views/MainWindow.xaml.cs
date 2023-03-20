@@ -1,4 +1,4 @@
-﻿using Interfaces;
+using Interfaces;
 using Logic.ViewModels;
 using System;
 using System.Windows;
@@ -9,9 +9,10 @@ using ReactiveUI;
 using System.Linq;
 using System.Windows.Threading;
 using System.Windows.Controls;
-using Logic.Graphics;
+using Drawing.Graphics;
 using System.Security.Cryptography.X509Certificates;
 using DataStructures.Geometry;
+using System.Windows.Media;
 
 namespace GUI_WPF
 {
@@ -32,28 +33,6 @@ namespace GUI_WPF
         string _scaleString = "100%";
         bool canvasTranslateState = false;
 
-        private Point2d _selectedPosition;
-        public Point2d SelectedPosition 
-        { 
-            get
-            {
-                var s = SelectedFigure;
-                if(s != null)
-                {
-                    return s.Figure.Position;
-                }
-                return new Point2d(0, 0);
-            }
-            set
-            {
-                var s = SelectedFigure;
-                if (s != null)
-                {
-                    s.Figure.Position = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
         public string ScaleString
         {
             get { return _scaleString; }
@@ -84,6 +63,8 @@ namespace GUI_WPF
                 OnPropertyChanged();
             }
         }
+        bool isMove = false;
+        private Point2d startFigureMovePosition;
         public Point MouseDownPoint
         {
             get { return _mouseDownPoint; }
@@ -109,7 +90,9 @@ namespace GUI_WPF
                 }
                 else
                     ParamVisibility = Visibility.Visible;
-                return _vm.Figures[_vm.SelectedFigures.Last()];
+                IDrawableObject? b = null;
+                _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
+                return b;
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
@@ -158,6 +141,11 @@ namespace GUI_WPF
                 canvasTranslate.X = canvasTransStartPoint.X + sub.X;
                 canvasTranslate.Y = canvasTransStartPoint.Y + sub.Y;
             }
+            else if (isMove && SelectedFigure != null)
+            {
+                var sub = new Point2d(startFigureMovePosition.X + e.GetPosition(canvas).X - mouseDownPoint.X, startFigureMovePosition.Y + e.GetPosition(canvas).Y - mouseDownPoint.Y);
+                SelectedFigure.Figure.Position = sub;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -180,22 +168,31 @@ namespace GUI_WPF
         }
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           
+
             var point = e.GetPosition(canvas);
             MouseDownPoint = new Point(point.X, point.Y);
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
-                if(button.Name == select.Name)
+                if (button.Name == select.Name)
                 {
                     _vm.SelectFigure.Execute(new DataStructures.Geometry.Point2d(point.X, point.Y)).Subscribe();
                     _ = SelectedFigure;
+                    isMove = true;
+                    mouseDownPoint = e.GetPosition(canvas);
+                    if (SelectedFigure != null)
+                    {
+                        //OnPropertyChanged("SelectedFigure");
+                        changeFillColor();
+                        changeOutlineColor();
+                        startFigureMovePosition = SelectedFigure.Figure.Position;
+                    }
                 }
                 var param = button.CommandParameter;
-                if(param != null)
+                if (param != null)
                 {
                     _vm.CreateFigure.Execute(param.ToString()).Subscribe();
-                    
+
                 }
                 select.IsChecked = true;
             }
@@ -239,6 +236,7 @@ namespace GUI_WPF
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             canvasTranslateState = false;
+            isMove = false;
         }
 
         private void scaleDownButtonDown(object sender, RoutedEventArgs e)
@@ -264,9 +262,10 @@ namespace GUI_WPF
         private void main1_ColorChanged(object sender, RoutedEventArgs e)
         {
             var picker = sender as ColorPicker.StandardColorPicker;
-            if(SelectedFigure != null)
+            if (SelectedFigure != null)
             {
                 SelectedFigure.Drawable.FillColor = new DataStructures.Color(picker.SelectedColor.A, picker.SelectedColor.R, picker.SelectedColor.G, picker.SelectedColor.B);
+                //changeFillColor();
             }
         }
 
@@ -276,7 +275,40 @@ namespace GUI_WPF
             if (SelectedFigure != null)
             {
                 SelectedFigure.Drawable.OutLineColor = new DataStructures.Color(picker.SelectedColor.A, picker.SelectedColor.R, picker.SelectedColor.G, picker.SelectedColor.B);
+                //changeOutlineColor();
             }
+        }
+
+        private void changeFillColor()
+        {
+            OnPropertyChanged("SelectedFigure");
+            Color clr = new Color()
+            {
+                A = SelectedFigure.Drawable.FillColor.A,
+                R = SelectedFigure.Drawable.FillColor.R,
+                G = SelectedFigure.Drawable.FillColor.G,
+                B = SelectedFigure.Drawable.FillColor.B
+            };
+            main1.SelectedColor = clr;
+        }
+
+        private void changeOutlineColor()
+        {
+            OnPropertyChanged("SelectedFigure");
+            Color clr = new Color()
+            {
+                A = SelectedFigure.Drawable.OutLineColor.A,
+                R = SelectedFigure.Drawable.OutLineColor.R,
+                G = SelectedFigure.Drawable.OutLineColor.G,
+                B = SelectedFigure.Drawable.OutLineColor.B
+            };
+            main2.SelectedColor = clr;
+        }
+
+        private void mainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.X && SelectedFigure != null)
+                _vm.RemoveFigure.Execute(_vm.SelectedFigures.Last()).Subscribe();
         }
     }
 }

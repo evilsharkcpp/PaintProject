@@ -1,8 +1,8 @@
-﻿using DataStructures;
-using DataStructures.Geometry;
+﻿using DataStructures.Geometry;
 using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
+using ReactiveUI;
 using System.Numerics;
 
 namespace Geometry.Figures
@@ -12,12 +12,16 @@ namespace Geometry.Figures
         protected bool _bindSize = false;
 
         private readonly IReadOnlyList<INode> _nodes;
-        public IReadOnlyList<INode> Nodes => _nodes;
+        private readonly IReadOnlyList<(string, ReactiveCommand<Point2d, bool>)> _commands;
 
         private RSTTransform2D _transform;
         private double _angle = 0;
         private Vector2d _size = new Vector2d(2, 2);
         private Point2d _position = new Point2d(0, 0);
+
+
+        public IReadOnlyList<INode> Nodes => _nodes;
+        public IReadOnlyList<(string, ReactiveCommand<Point2d, bool>)> Commands => _commands;
 
         public double Angle
         {
@@ -64,14 +68,13 @@ namespace Geometry.Figures
             }
         }
 
-        public int ZIndex => 0;
-
 
         public Figure()
         {
             _transform = new RSTTransform2D();
 
             _nodes = new List<INode>();
+            _commands = new List<(string, ReactiveCommand<Point2d, bool>)>();
         }
 
         public Figure(Figure figure)
@@ -83,6 +86,7 @@ namespace Geometry.Figures
             Position = figure.Position;
 
             _nodes = new List<INode>();
+            _commands = new List<(string, ReactiveCommand<Point2d, bool>)>();
         }
 
 
@@ -140,7 +144,5 @@ namespace Geometry.Figures
         protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();
-
-        public abstract ConvertibleFigure ToConvertibleFigure();
     }
 }

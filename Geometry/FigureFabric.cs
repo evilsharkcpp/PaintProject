@@ -1,10 +1,5 @@
-﻿using DataStructures;
-using DataStructures.ConvertibleFigures;
-using DataStructures.Geometry;
-using Geometry.Attributes;
-using Geometry.Figures;
+﻿using Geometry.Attributes;
 using Interfaces;
-using Splat;
 using System.Reflection;
 
 namespace Geometry
