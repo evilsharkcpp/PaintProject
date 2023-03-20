@@ -93,6 +93,7 @@ namespace IO
                     case SvgLine:
                         SvgLine? svg_line = svg_elem as SvgLine;
                         ConvertibleLine line = svg_convert.getLine(svg_line);
+
                         deserializedFigures.Add(line);
                         break;
 
@@ -104,12 +105,21 @@ namespace IO
                         {
                             // Еcли cтороны равны - получим квадрат
                             ConvertibleSquare square = svg_convert.getSquare(svg_rect);
+
+                            if (svg_rect.Fill != null)
+                                square.IsFilled = true;
+
+
                             deserializedFigures.Add(square);
                         }
                         else
                         {
                             // Еcли cтороны разные - получим прямоугольник
                             ConvertibleRectangle rectangle = svg_convert.getRectangle(svg_rect);
+
+                            if (svg_rect.Fill != null)
+                                rectangle.IsFilled = true;
+
                             deserializedFigures.Add(rectangle);
                         }
                         break;
@@ -121,6 +131,10 @@ namespace IO
                         if (svg_polygon.Points.Count() == 8)
                         {
                             ConvertibleTriangle triangle = svg_convert.getTriangle(svg_polygon);
+
+                            if (svg_polygon.Fill != null)
+                                triangle.IsFilled = true;
+
                             deserializedFigures.Add(triangle);
                         }
                         else
@@ -138,12 +152,20 @@ namespace IO
                         SvgCircle? svg_circle = svg_elem as SvgCircle;
 
                         ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
+
+                        if (svg_circle.Fill != null)
+                            circle.IsFilled = true;
+
                         deserializedFigures.Append(circle);
                         break;
 
                     case SvgEllipse:
                         SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
                         ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
+
+                        if (svg_ellipse.Fill != null)
+                            ellips.IsFilled = true;
+
                         deserializedFigures.Append(ellips);
                         break;
                 }

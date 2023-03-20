@@ -63,8 +63,12 @@ namespace Geometry
         {
             IFigure figure;
 
+            string name = c_figure.GetType().Name;
 
-            figure = CreateFigure(c_figure.GetType().Name);
+            if (c_figure.IsFilled)
+                name = "Filled" + name;
+
+            figure = CreateFigure(name);
 
             double width = c_figure.Width;
             double heigth = c_figure.Height;
