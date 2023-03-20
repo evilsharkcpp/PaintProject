@@ -38,12 +38,17 @@ namespace Geometry.Figures
         {
             Vector2d u = new Vector2d()
             {
-                X = 1 - p.X,
-                Y = 1 - p.Y
+                X = Point2.X - p.X,
+                Y = Point2.Y - p.Y
             };
             double l = u * V,
                    h = u * n;
-            return Math.Abs(h) <= eps && l / V.Norm >= -eps && l - 1 <= eps;
+            return Math.Abs(h) <= eps && l / V.Norm >= -eps && l / V.Norm - 1 <= eps;
+        }
+
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
         }
 
         public override IFigure Clone()
