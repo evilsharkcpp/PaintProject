@@ -101,12 +101,15 @@ namespace GUI_WPF
                     return null;
                 if (_vm.SelectedFigures == null)
                     return null;
-                var selected = _vm.SelectedFigures.LastOrDefault();
-                if (selected == null)
+                var selected = _vm.SelectedFigures.Count() == 0;
+                if (selected)
+                {
                     ParamVisibility = Visibility.Hidden;
+                    return null;
+                }
                 else
                     ParamVisibility = Visibility.Visible;
-                return selected;
+                return _vm.Figures[_vm.SelectedFigures.Last()];
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
@@ -142,11 +145,7 @@ namespace GUI_WPF
         void Draw(object sender, EventArgs e)
         {
             canvas.Children.Clear();
-            foreach(var item in _vm.Figures)
-            {
-                _graphics.GraphicStyle = item.Value.Drawable;
-                item.Value.Figure.Draw(_graphics);
-            }
+            _vm.Draw.Execute(_graphics).Subscribe();
         }
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -184,14 +183,6 @@ namespace GUI_WPF
            
             var point = e.GetPosition(canvas);
             MouseDownPoint = new Point(point.X, point.Y);
-            if (Keyboard.IsKeyDown(Key.LeftShift))
-            {
-                mouseDownPoint = e.GetPosition(this);
-                canvasTransStartPoint.X = canvasTranslate.X;
-                canvasTransStartPoint.Y = canvasTranslate.Y;
-                canvasTranslateState = true;
-                return;
-            }
             var button = commands.Items.OfType<RadioButton>().Where(x => x.IsChecked == true).FirstOrDefault();
             if (button != null)
             {
@@ -208,7 +199,13 @@ namespace GUI_WPF
                 }
                 select.IsChecked = true;
             }
-            
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                mouseDownPoint = e.GetPosition(this);
+                canvasTransStartPoint.X = canvasTranslate.X;
+                canvasTransStartPoint.Y = canvasTranslate.Y;
+                canvasTranslateState = true;
+            }
         }
 
         private void scaleUp()
