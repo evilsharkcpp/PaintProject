@@ -63,6 +63,8 @@ namespace GUI_WPF
                 OnPropertyChanged();
             }
         }
+        bool isMove = false;
+        private Point2d startFigureMovePosition;
         public Point MouseDownPoint
         {
             get { return _mouseDownPoint; }
