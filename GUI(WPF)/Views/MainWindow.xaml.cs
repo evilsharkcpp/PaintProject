@@ -32,37 +32,116 @@ namespace GUI_WPF
         string _scaleString = "100%";
         bool canvasTranslateState = false;
 
-        private Point2d _selectedPosition;
-        public Point2d SelectedPosition 
-        { 
-            get
-            {
-                var s = SelectedFigure;
-                if(s != null)
-                {
-                    return s.Figure.Position;
-                }
-                return new Point2d(0, 0);
-            }
-            set
-            {
-                var s = SelectedFigure;
-                if (s != null)
-                {
-                    s.Figure.Position = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public string ScaleString
+      public double CanvasScale
+      {
+         get { return _canvasScale; }
+         set
+         {
+            _canvasScale = value;
+            OnPropertyChanged();
+         }
+      }
+
+        public Point PreviousPoint
         {
-            get { return _scaleString; }
+            get { return _previousPoint; }
             set
             {
-                _scaleString = value;
+                _previousPoint.X = Math.Round(value.X, 2);
+                _previousPoint.Y = Math.Round(value.Y, 2);
                 OnPropertyChanged();
             }
         }
+        bool isMove = false;
+        private Point2d startFigureMovePosition;
+        public Point MouseDownPoint
+        {
+            get { return _mouseDownPoint; }
+            set
+            {
+                _mouseDownPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        public IDrawableObject? SelectedFigure
+        {
+            get
+            {
+                if (_vm == null)
+                    return null;
+                if (_vm.SelectedFigures == null)
+                    return null;
+                var selected = _vm.SelectedFigures.Count() == 0;
+                if (selected)
+                {
+                    ParamVisibility = Visibility.Hidden;
+                    return null;
+                }
+                else
+                    ParamVisibility = Visibility.Visible;
+                IDrawableObject? b = null;
+                _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
+                return b;
+            }
+        }
+        private Visibility _paramVisibility = Visibility.Hidden;
+        public Visibility ParamVisibility
+        {
+            get
+            {
+                return _paramVisibility;
+            }
+            set
+            {
+                _paramVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+      DispatcherTimer _timer;
+      public MainWindow()
+      {
+         InitializeComponent();
+         _vm = new MainVM();
+         _vm.CreateFigure.Subscribe(AddFigure);
+         _graphics = new Graphics.Graphic(canvas);
+         DataContext = _vm;
+         canvasTransStartPoint = new Point();
+         mouseDownPoint = new Point();
+         mouseMovePoint = new Point();
+         _timer = new DispatcherTimer();
+         _timer.Tick += new EventHandler(Draw);
+         _timer.Interval = new TimeSpan(0, 0, 0, 0, 17);
+         _timer.Start();
+      }
+      void Draw(object sender, EventArgs e)
+      {
+         canvas.Children.Clear();
+         _vm.Draw.Execute(_graphics).Subscribe();
+      }
+      private void canvas_MouseMove(object sender, MouseEventArgs e)
+      {
+         var point = e.GetPosition(canvas);
+         PreviousPoint = new Point(point.X, point.Y);
+         if (Keyboard.IsKeyDown(Key.LeftShift) && canvasTranslateState)
+         {
+            mouseMovePoint = e.GetPosition(this);
+            var sub = Point.Subtract(mouseMovePoint, mouseDownPoint);
+            canvasTranslate.X = canvasTransStartPoint.X + sub.X;
+            canvasTranslate.Y = canvasTransStartPoint.Y + sub.Y;
+         }
+         else if (isMove && SelectedFigure != null)
+         {
+            var sub = new Point2d(startFigureMovePosition.X + e.GetPosition(canvas).X - mouseDownPoint.X, startFigureMovePosition.Y + e.GetPosition(canvas).Y - mouseDownPoint.Y);
+            SelectedFigure.Figure.Position = sub;
+         }
+      }
+
+      public event PropertyChangedEventHandler PropertyChanged;
+      protected void OnPropertyChanged([CallerMemberName] string name = null)
+      {
+         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+      }
 
         public double CanvasScale
         {
