@@ -55,7 +55,7 @@ namespace Geometry.Figures
 
         public override ConvertibleFigure ToConvertibleFigure()
         {
-            Point2d convertible_position = Postition;
+            Point2d convertible_position = Position;
             
             // В ConvertibleFigure позиция определяется по левой верхней точке
             convertible_position.Y -= Height;
