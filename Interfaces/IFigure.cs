@@ -1,4 +1,5 @@
 ﻿using DataStructures.Geometry;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Numerics;
 
@@ -9,10 +10,10 @@ namespace Interfaces
         Vector2d Size { get; set; }
         double Angle { get; set; }
         [Reactive] Point2d Position { get; set; }
-        int ZIndex { get; }
 
         IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IParameter<object>> ExtraProperties { get; }
+        IReadOnlyList<(string, ReactiveCommand<Point2d, bool>)> Commands { get; }
 
         void Draw(IGraphics graphics);
 

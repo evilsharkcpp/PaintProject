@@ -18,11 +18,11 @@ namespace Logic.ViewModels
         public int StackStateSize { get; set; }
         public int StateIndex { get; protected set; }
 
-        public abstract IReadOnlyDictionary<int, IDrawableObject> Figures { get; }
         public abstract IEnumerable<int> SelectedFigures { get; }
 
         public ReactiveCommand<string, IFigure?> CreateFigure { get; }
         public ReactiveCommand<IDrawableObject, int> AddFigure { get; }
+        public ReactiveCommand<int, IDrawableObject?> GetFigureByID { get; }
         public ReactiveCommand<int, bool> RemoveFigure { get; }
 
         public ReactiveCommand<Point2d, int> SelectFigure { get; }
@@ -44,6 +44,7 @@ namespace Logic.ViewModels
         {
             CreateFigure = ReactiveCommand.Create<string, IFigure?>(a => OnCreate(a));
             AddFigure = ReactiveCommand.Create<IDrawableObject, int>(a => OnAdd(a));
+            GetFigureByID = ReactiveCommand.Create<int, IDrawableObject?>(a => OnGetFigureByID(a));
             RemoveFigure = ReactiveCommand.Create<int, bool>(a => OnRemove(a));
 
             SelectFigure = ReactiveCommand.Create<Point2d, int>(a => OnSelectFigure(a));
@@ -60,7 +61,11 @@ namespace Logic.ViewModels
             Draw = ReactiveCommand.Create<IGraphics, bool>(a => OnDraw(a));
         }
 
+
+
         protected abstract IFigure? OnCreate(string name);
+
+        protected abstract IDrawableObject? OnGetFigureByID(int id);
 
         protected abstract int OnAdd(IDrawableObject figure);
 

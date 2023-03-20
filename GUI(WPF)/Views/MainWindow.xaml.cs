@@ -109,7 +109,9 @@ namespace GUI_WPF
                 }
                 else
                     ParamVisibility = Visibility.Visible;
-                return _vm.Figures[_vm.SelectedFigures.Last()];
+                IDrawableObject? b = null;
+                _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
+                return b;
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
