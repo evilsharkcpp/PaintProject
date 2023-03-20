@@ -1,4 +1,7 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
+using Drawing.Graphics;
 using Geometry;
 using Geometry.Figures;
 using Interfaces;
@@ -11,32 +14,35 @@ using System.Threading.Tasks;
 
 namespace IO
 {
-    //public class TestIO
-    //{
-    //    public void TestStarter()
-    //    {
-    //        test__create_two_line__JSON();
-    //        test__read_two_line__JSON();
-    //        test__create_two_line__SVG();
-    //        test__read_two_line__SVG();
-    //    }
+    public class TestIO
+    {
+        public void TestStarter()
+        {
+            test__create_two_line__JSON();
+            test__read_two_line__JSON();
+            test__create_two_line__SVG();
+            test__read_two_line__SVG();
 
-    //    public void test__create_two_line__JSON()
-    //    {
-    //        Point2d p1 = new Point2d(0, 0);
-    //        Point2d p2 = new Point2d(1, 1);
+            test__create_square__SVG();
+            test__create_rectangle__SVG();
+            test__create_circle__SVG();
+            test__create_ellipse__SVG();
+            test__create_triangle__SVG();
+        }
 
-    //        var line = new Geometry.Figures.Line(p1, p2);
+        public void test__create_two_line__JSON()
+        {
+            Point2d p1 = new Point2d(0, 0);
+            Point2d p2 = new Point2d(1, 1);
 
-    //        Point2d p21 = new Point2d(5, 7);
-    //        Point2d p22 = new Point2d(3, 8);
+            var line = new ConvertibleLine(p1, p2, 45);
 
             var i_line = new FigureFabric().CreateFigureFromConvertibleFigure(line);
 
             Point2d p21 = new Point2d(5, 7);
             Point2d p22 = new Point2d(3, 8);
 
-    //        IEnumerable<IFigure> array = new List<IFigure>() { line, line2 };
+            var line2 = new ConvertibleLine(p21, p22, 45);
 
             var i_line2 = new FigureFabric().CreateFigureFromConvertibleFigure(line2);
 
@@ -55,18 +61,15 @@ namespace IO
 
             JSONConverter jc = new JSONConverter();
 
-    //    public void test__create_two_line__SVG()
-    //    {
-    //        Point2d p1 = new Point2d(0, 0);
-    //        Point2d p2 = new Point2d(95, 95);
+            jc.WriteFile("two_lines", array);
+        }
 
         public void test__create_two_line__SVG()
         {
             Point2d p1 = new Point2d(0, 0);
             Point2d p2 = new Point2d(1, 1);
 
-    //        Point2d p21 = new Point2d(130, 200);
-    //        Point2d p22 = new Point2d(200, 160);
+            var line = new ConvertibleLine(p1, p2, 45);
 
             var i_line = new FigureFabric().CreateFigureFromConvertibleFigure(line);
 
@@ -90,15 +93,17 @@ namespace IO
 
             IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
 
-    //        IEnumerable<IFigure> figures = jc.ReadFile("two_lines.json");
+            SVGConverter jc = new SVGConverter();
 
-    //        Console.WriteLine("конец...");
+            jc.WriteFile("two_lines", array);
+        }
 
-    //    }
+        public void test__create_square__SVG()
+        {
+            Point2d p1 = new Point2d(200, 200);
 
-    //    public void test__read_two_line__SVG()
-    //    {
-    //        SVGConverter jc = new SVGConverter();
+            var square0 = new ConvertibleSquare(p1, width: 100, height: 100, 0);
+            var square = new ConvertibleSquare(p1, width: 100, height: 100, 35);
 
             var i_square0 = new FigureFabric().CreateFigureFromConvertibleFigure(square0);
             var i_square = new FigureFabric().CreateFigureFromConvertibleFigure(square);
@@ -240,6 +245,6 @@ namespace IO
 
             Console.WriteLine("конец...");
 
-    //    }
-    //}
+        }
+    }
 }
