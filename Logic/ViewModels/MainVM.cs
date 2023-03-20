@@ -101,6 +101,7 @@ namespace Logic.ViewModels
 
         protected override int OnSelectFigure(Point2d point)
         {
+            ResetSelect();
             bool found = _selectedFigure < 0;
             int proxySelectedFigureID = -1, selectedFigureID = -1;
             Vector2 p = new Vector2((float)point.X, (float)point.Y);
@@ -142,7 +143,7 @@ namespace Logic.ViewModels
 
         protected override bool OnSelectFigures(Rect rect)
         {
-            _selectedFigures.Clear();
+            ResetSelect();
             _selectedFigures.AddRange(_figures.Where(pair =>
             {
                 bool successfully = false;
