@@ -164,13 +164,6 @@ namespace GUI_WPF
             }
             else if (changeFigureSize != ChangeFigureSize.None && SelectedFigure != null)
             {
-                /*if (
-                    startFigureSize.X + (mouseDownPoint.X - point.X) >= 5 &&
-                    startFigureSize.X - (mouseDownPoint.X - point.X) >= 5 &&
-                    startFigureSize.Y - (mouseDownPoint.Y - point.Y) >= 5 &&
-                    startFigureSize.Y + (mouseDownPoint.Y - point.Y) >= 5
-                    )
-                {*/
                 switch (changeFigureSize)
                 {
                     case ChangeFigureSize.UpLeftPoint:
