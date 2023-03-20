@@ -11,16 +11,18 @@ namespace DataStructures.Geometry
         [FieldOffset(8)]
         private double _y;
 
-        public double X 
+        public double X
         { 
             get => _x;
             set => _x = value;
         }
+
         public double Y
         {
             get => _y;
             set => _y = value;
         }
+
         public Point2d()
         {
             _x = 0;
@@ -77,6 +79,36 @@ namespace DataStructures.Geometry
         public static bool operator !=(Point2d a, Point2d b)
         {
             return a.X != b.X || a.Y != b.Y;
+        }
+
+        public static bool operator >(Point2d a, Point2d b)
+        {
+            return a.X > b.X && a.Y > b.Y;
+        }
+
+        public static bool operator >=(Point2d a, Point2d b)
+        {
+            return a.X >= b.X && a.Y >= b.Y;
+        }
+
+        public static bool operator <(Point2d a, Point2d b)
+        {
+            return a.X < b.X && a.Y < b.Y;
+        }
+
+        public static bool operator <=(Point2d a, Point2d b)
+        {
+            return a.X <= b.X && a.Y <= b.Y;
+        }
+
+        public static implicit operator Point2d(Vector2d a)
+        {
+            return new Point2d(a.X, a.Y);
+        }
+
+        public static implicit operator Point2d(Vector2 a)
+        {
+            return new Point2d(a.X, a.Y);
         }
 
         public static implicit operator Vector2d(Point2d a)

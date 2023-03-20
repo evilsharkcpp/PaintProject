@@ -10,6 +10,8 @@ using System.Linq;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using Logic.Graphics;
+using System.Security.Cryptography.X509Certificates;
+using DataStructures.Geometry;
 
 namespace GUI_WPF
 {
@@ -30,6 +32,28 @@ namespace GUI_WPF
         string _scaleString = "100%";
         bool canvasTranslateState = false;
 
+        private Point2d _selectedPosition;
+        public Point2d SelectedPosition 
+        { 
+            get
+            {
+                var s = SelectedFigure;
+                if(s != null)
+                {
+                    return s.Figure.Position;
+                }
+                return new Point2d(0, 0);
+            }
+            set
+            {
+                var s = SelectedFigure;
+                if (s != null)
+                {
+                    s.Figure.Position = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string ScaleString
         {
             get { return _scaleString; }
@@ -69,18 +93,23 @@ namespace GUI_WPF
                 OnPropertyChanged();
             }
         }
-        public (IFigure?, IDrawable?) SelectedFigure
+        public IDrawableObject? SelectedFigure
         {
             get
             {
                 if (_vm == null)
-                    return (null, null);
-                var selected = _vm.SelectedFigures.LastOrDefault();
-                if (selected.Item1 == null)
+                    return null;
+                if (_vm.SelectedFigures == null)
+                    return null;
+                var selected = _vm.SelectedFigures.Count() == 0;
+                if (selected)
+                {
                     ParamVisibility = Visibility.Hidden;
+                    return null;
+                }
                 else
                     ParamVisibility = Visibility.Visible;
-                return selected;
+                return _vm.Figures[_vm.SelectedFigures.Last()];
             }
         }
         private Visibility _paramVisibility = Visibility.Hidden;
@@ -116,11 +145,7 @@ namespace GUI_WPF
         void Draw(object sender, EventArgs e)
         {
             canvas.Children.Clear();
-            foreach(var item in _vm.Figures)
-            {
-                _graphics.GraphicStyle = item.Item2;
-                item.Item1.Draw(_graphics);
-            }
+            _vm.Draw.Execute(_graphics).Subscribe();
         }
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -148,9 +173,9 @@ namespace GUI_WPF
                 //figure.Angle = Math.PI / 4.0;
                 figure.Size = new DataStructures.Geometry.Vector2d(250, 125);
                 figure.Position = new DataStructures.Geometry.Point2d(MouseDownPoint.X, MouseDownPoint.Y);
-                _vm.AddFigure.Execute((figure, new Drawable(new DataStructures.Color(main1.SelectedColor.A, main1.SelectedColor.R, main1.SelectedColor.G, main1.SelectedColor.B),
+                _vm.AddFigure.Execute(new DrawableObject(figure, new Drawable(new DataStructures.Color(main1.SelectedColor.A, main1.SelectedColor.R, main1.SelectedColor.G, main1.SelectedColor.B),
                     new DataStructures.Color(main2.SelectedColor.A, main2.SelectedColor.R, main2.SelectedColor.G, main2.SelectedColor.B)))).Subscribe();
-                _ = SelectedFigure;
+                OnPropertyChanged("SelectedFigure");
             }
         }
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -233,6 +258,24 @@ namespace GUI_WPF
                 canvasST.CenterX = canvas.ActualWidth / 2.0;
                 canvasST.CenterY = canvas.ActualHeight / 2.0;
                 scaleUp();
+            }
+        }
+
+        private void main1_ColorChanged(object sender, RoutedEventArgs e)
+        {
+            var picker = sender as ColorPicker.StandardColorPicker;
+            if(SelectedFigure != null)
+            {
+                SelectedFigure.Drawable.FillColor = new DataStructures.Color(picker.SelectedColor.A, picker.SelectedColor.R, picker.SelectedColor.G, picker.SelectedColor.B);
+            }
+        }
+
+        private void main2_ColorChanged(object sender, RoutedEventArgs e)
+        {
+            var picker = sender as ColorPicker.StandardColorPicker;
+            if (SelectedFigure != null)
+            {
+                SelectedFigure.Drawable.OutLineColor = new DataStructures.Color(picker.SelectedColor.A, picker.SelectedColor.R, picker.SelectedColor.G, picker.SelectedColor.B);
             }
         }
     }

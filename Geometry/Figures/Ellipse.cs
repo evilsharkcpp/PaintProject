@@ -33,6 +33,11 @@ namespace Geometry.Figures
             return eps >= 0 && Math.Abs(p.X * p.X + p.Y * p.Y - 1) > eps;
         }
 
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IFigure Clone()
         {
             return new Ellipse(this);
