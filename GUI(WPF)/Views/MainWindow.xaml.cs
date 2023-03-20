@@ -1,4 +1,4 @@
-﻿using Interfaces;
+using Interfaces;
 using Logic.ViewModels;
 using System;
 using System.Windows;
