@@ -14,6 +14,13 @@ namespace Geometry.Figures
         protected static Point2d Center = new Point2d(0, 0);
         protected static double Radius = 1;
 
+        static Ellipse()
+        {
+
+            Center.X = -Radius;
+            Center.Y = -Radius;
+        }
+
         public Ellipse() { }
 
         public Ellipse(Ellipse ellipse) : base(ellipse) { }
@@ -26,6 +33,11 @@ namespace Geometry.Figures
         protected override bool IsInside(Point2d p, double eps)
         {
             return eps >= 0 && Math.Abs(p.X * p.X + p.Y * p.Y - 1) > eps;
+        }
+
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
         }
 
         public override IFigure Clone()

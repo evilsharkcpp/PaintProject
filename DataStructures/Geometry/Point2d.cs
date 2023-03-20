@@ -7,20 +7,32 @@ namespace DataStructures.Geometry
     public struct Point2d : IEquatable<Point2d>
     {
         [FieldOffset(0)]
-        public double X;
+        private double _x;
         [FieldOffset(8)]
-        public double Y;
+        private double _y;
+
+        public double X
+        { 
+            get => _x;
+            set => _x = value;
+        }
+
+        public double Y
+        {
+            get => _y;
+            set => _y = value;
+        }
 
         public Point2d()
         {
-            X = 0;
-            Y = 0;
+            _x = 0;
+            _y = 0;
         }
 
         public Point2d(double x = 0, double y = 0)
         {
-            X = x;
-            Y = y;
+            _x = x;
+            _y = y;
         }
 
 
@@ -67,6 +79,36 @@ namespace DataStructures.Geometry
         public static bool operator !=(Point2d a, Point2d b)
         {
             return a.X != b.X || a.Y != b.Y;
+        }
+
+        public static bool operator >(Point2d a, Point2d b)
+        {
+            return a.X > b.X && a.Y > b.Y;
+        }
+
+        public static bool operator >=(Point2d a, Point2d b)
+        {
+            return a.X >= b.X && a.Y >= b.Y;
+        }
+
+        public static bool operator <(Point2d a, Point2d b)
+        {
+            return a.X < b.X && a.Y < b.Y;
+        }
+
+        public static bool operator <=(Point2d a, Point2d b)
+        {
+            return a.X <= b.X && a.Y <= b.Y;
+        }
+
+        public static implicit operator Point2d(Vector2d a)
+        {
+            return new Point2d(a.X, a.Y);
+        }
+
+        public static implicit operator Point2d(Vector2 a)
+        {
+            return new Point2d(a.X, a.Y);
         }
 
         public static implicit operator Vector2d(Point2d a)

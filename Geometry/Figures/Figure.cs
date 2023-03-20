@@ -64,6 +64,8 @@ namespace Geometry.Figures
             }
         }
 
+        public int ZIndex => 0;
+
 
         public Figure()
         {
@@ -90,11 +92,19 @@ namespace Geometry.Figures
             OnDraw(graphics);
         }
 
-        public bool IsInside(Vector2 p, double eps)
+        public bool IsInside(Vector2 p, float eps)
         {
-            Vector2d v = new Vector2d();
-            _transform.ApplyInv(p, ref v);
-            return IsInside(v, eps);
+            Point2d v = new Point2d();
+            _transform.ApplyInv((Point2d)p, ref v);
+            return IsInside(v, eps / Math.Max(Size.X, Size.Y));
+        }
+
+        public bool InArea(Rect rect, float eps)
+        {
+            Point2d p1 = new Point2d(), p2 = new Point2d();
+            _transform.ApplyInv(rect.Start, ref p1);
+            _transform.ApplyInv(rect.End, ref p2);
+            return InArea(new Rect(p1, p2), eps / Math.Max(Size.X, Size.Y));
         }
 
         public bool HasIntersection(IFigure figure)
@@ -127,6 +137,7 @@ namespace Geometry.Figures
 
         protected abstract void OnDraw(IGraphics graphics);
         protected abstract bool IsInside(Point2d p, double eps);
+        protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();
 

@@ -60,6 +60,11 @@ namespace Geometry.Figures
             return h1 <= eps && h2 <= eps && h3 <= eps;
         }
 
+        protected override bool InArea(Rect rect, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IFigure Clone()
         {
             return new Triangle(this);
