@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Graphics
+namespace Drawing.Graphics
 {
     public class DrawableObject : IDrawableObject
     {
