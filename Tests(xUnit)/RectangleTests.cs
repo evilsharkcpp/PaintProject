@@ -112,9 +112,5 @@ namespace Tests_xUnit_
             Assert.Equal(expecteda, rectangle.a, 5);
             Assert.Equal(expectedb, rectangle.b, 5);
         }
-
-
-
-
     }
 }
