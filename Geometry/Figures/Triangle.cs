@@ -11,9 +11,9 @@ namespace Geometry.Figures
     [Figure("Triangle")]
     public class Triangle : Figure
     {
-        protected static Point2d Point1 = new Point2d(-1, -1);
-        protected static Point2d Point2 = new Point2d(1, -1);
-        protected static Point2d Point3 = new Point2d(0, 1);
+        protected static Point2d Point1 = new Point2d(1, 1);
+        protected static Point2d Point2 = new Point2d(-1, 1);
+        protected static Point2d Point3 = new Point2d(0, -1);
 
         protected static Vector2d V12;
         protected static Vector2d V23;
