@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Drawing.Graphics
 {
-    public class DrawableObject:IDrawableObject
+    public class DrawableObject : IDrawableObject
     {
         public IFigure? Figure { get; set; }
         public IDrawable? Drawable { get; set; }
+
+        public int ZIndex => 0;
+
         public DrawableObject() { }
         public DrawableObject(IFigure figure, IDrawable drawable)
         {

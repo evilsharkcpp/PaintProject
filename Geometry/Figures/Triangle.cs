@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures.ConvertibleFigures;
+using DataStructures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -9,9 +11,9 @@ namespace Geometry.Figures
     [Figure("Triangle")]
     public class Triangle : Figure
     {
-        protected static Point2d Point1 = new Point2d(-1, -1);
-        protected static Point2d Point2 = new Point2d(1, -1);
-        protected static Point2d Point3 = new Point2d(0, 1);
+        protected static Point2d Point1 = new Point2d(1, 1);
+        protected static Point2d Point2 = new Point2d(-1, 1);
+        protected static Point2d Point3 = new Point2d(0, -1);
 
         protected static Vector2d V12;
         protected static Vector2d V23;
@@ -51,11 +53,16 @@ namespace Geometry.Figures
 
         protected override bool IsInside(Point2d p, double eps)
         {
-            double h1 = (p - Point1) ^ V12 / V12.Norm,
-                   h2 = (p - Point2) ^ V23 / V23.Norm,
-                   h3 = (p - Point3) ^ V31 / V31.Norm;
+            double Q(Point2d a, Point2d b, Point2d p)
+            {
+                return p.X * (b.Y - a.Y) + p.Y * (a.X - b.X) + a.Y * b.X - a.X * b.Y;
+            }
 
-            return h1 <= eps && h2 <= eps && h3 <= eps;
+            double q1, q2, q3;
+            q1 = Q(Point1, Point2, p);
+            q2 = Q(Point2, Point3, p);
+            q3 = Q(Point3, Point1, p);
+            return (q1 <= eps && q2 <= eps && q3 <= eps);
         }
 
         protected override bool InArea(Rect rect, double eps)
@@ -71,6 +78,15 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            Point2d p1 = Position;
+            Point2d p2 = new Point2d(Position.X + Size.X / 2, Position.Y - Size.Y);
+            Point2d p3 = new Point2d(Position.X + Size.X, Position.Y);
+
+            return new ConvertibleTriangle(p1, p2, p3, Angle);
         }
     }
 }
