@@ -14,13 +14,100 @@ using Color = System.Drawing.Color;
 using Svg.Transforms;
 using IO.SVGFigures;
 using Geometry.Figures;
+using Interfaces;
 
 namespace IO
 {
     public class SVG
     {
-        DataStructures.Color color = new DataStructures.Color(1, 0, 0, 0);
-        DataStructures.Color fill_color = new DataStructures.Color(1, 0, 0, 0);
+        public SvgDocument getSvgDocument(IEnumerable<(IFigure, IDrawable)> figures)
+        {
+            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
+
+            List<(ConvertibleFigure, IDrawable)> c_Figures = new IFigureConverter().getConvertibleFigureList(figures);
+
+
+            foreach ((ConvertibleFigure figure, IDrawable drawable) in c_Figures)
+            {
+
+                switch (figure)
+                {
+                    case ConvertibleLine:
+                        ConvertibleLine c_line = (ConvertibleLine)figure;
+
+                        var line = getSvgLine(c_line);
+
+                        line = (SvgLine)ApplayDrawable(line, drawable);
+
+                        svg_doc.Children.Add(line);
+
+                        break;
+
+                    case ConvertibleRectangle:
+                        ConvertibleRectangle c_rectangle = (ConvertibleRectangle)figure;
+
+                        var rectangle = getSvgRectangle(c_rectangle);
+
+                        rectangle = (SvgRectangle)ApplayDrawable(rectangle, drawable);
+
+
+                        svg_doc.Children.Add(rectangle);
+
+                        break;
+
+                    case ConvertibleTriangle:
+                        ConvertibleTriangle c_triangle = (ConvertibleTriangle)figure;
+
+                        var triangle = getSvgTriangle(c_triangle);
+
+                        triangle = (SvgPolygon)ApplayDrawable(triangle, drawable);
+
+                        svg_doc.Children.Add(triangle);
+
+                        break;
+
+                    case ConvertibleSquare:
+                        ConvertibleSquare c_square = (ConvertibleSquare)figure;
+
+                        var square = getSvgSquare(c_square);
+
+                        square = (SvgRectangle)ApplayDrawable(square, drawable);
+
+
+                        svg_doc.Children.Add(square);
+
+                        break;
+
+                    case ConvertibleCircle:
+                        ConvertibleCircle c_circle = (ConvertibleCircle)figure;
+
+                        var circle = getSvgCircle(c_circle);
+
+                        circle = (SvgCircle)ApplayDrawable(circle, drawable);
+
+
+                        svg_doc.Children.Add(circle);
+
+                        break;
+
+                    case ConvertibleEllipse:
+                        ConvertibleEllipse c_ellipse = (ConvertibleEllipse)figure;
+
+                        var ellipse = getSvgEllipse(c_ellipse);
+
+                        ellipse = (SvgEllipse)ApplayDrawable(ellipse, drawable);
+
+                        svg_doc.Children.Add(ellipse);
+
+                        break;
+
+                }
+
+            }
+
+            return svg_doc;
+        }
+
 
 
         //
@@ -115,8 +202,6 @@ namespace IO
                 EndY = (SvgUnit)y2,
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_line),
-
-                Stroke = new SvgColourServer()
             };
         }
 
@@ -131,9 +216,6 @@ namespace IO
                 RadiusY = (SvgUnit)c_ellipse.radiusY,
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_ellipse),
-
-                Stroke = new SvgColourServer(),
-                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -151,9 +233,6 @@ namespace IO
                 Radius = (SvgUnit)r,
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_circle),
-
-                Stroke = new SvgColourServer(),
-                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -175,9 +254,6 @@ namespace IO
                 Height = new SvgUnit((float)height),
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_rect),
-
-                Stroke = new SvgColourServer(),
-                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -199,9 +275,6 @@ namespace IO
                 Height = new SvgUnit((float)height),
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_rect),
-
-                Stroke = new SvgColourServer(),
-                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
         }
 
@@ -229,10 +302,27 @@ namespace IO
                 },
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_triangle),
-
-                Stroke = new SvgColourServer(),
-                Fill = new SvgColourServer(Color.FromArgb((int)(0), Color.Black)),
             };
+        }
+
+
+        public SvgElement? ApplayDrawable(SvgElement? svg_elem, IDrawable drawable)
+        {
+            ColorConverter cc = new ColorConverter();
+
+            if (!drawable.IsNoFill)
+            {
+                svg_elem.Fill = cc.getSvgColor(drawable.FillColor);
+            }
+
+            if (!drawable.IsNoOutLine)
+            {
+                svg_elem.Stroke = cc.getSvgColor(drawable.OutLineColor);
+                svg_elem.Stroke.StrokeWidth = (SvgUnit)drawable.OutLineThickness;
+            }
+
+
+            return svg_elem;
         }
 
     }

@@ -1,10 +1,14 @@
 ﻿using DataStructures;
 using IO.SVGFigures;
-using Drawing.Graphics;
 using Microsoft.VisualBasic;
 using Svg;
 using Svg.Transforms;
-
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace IO
 {

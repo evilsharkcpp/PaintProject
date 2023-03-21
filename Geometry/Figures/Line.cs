@@ -65,8 +65,8 @@ namespace Geometry.Figures
 
         public override ConvertibleFigure ToConvertibleFigure()
         {
-
-            return new ConvertibleLine(Point1, Point2, Angle);
+            Point2d p2 = Position + Size;
+            return new ConvertibleLine(Position, p2, Angle);
         }
     }
 }
