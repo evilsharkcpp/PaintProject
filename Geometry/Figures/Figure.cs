@@ -1,4 +1,5 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures;
+using DataStructures.Geometry;
 using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
@@ -144,5 +145,7 @@ namespace Geometry.Figures
         protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();
+
+        public abstract ConvertibleFigure ToConvertibleFigure();
     }
 }

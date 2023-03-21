@@ -1,4 +1,5 @@
-﻿using DataStructures.Geometry;
+using DataStructures;
+using DataStructures.Geometry;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Numerics;
@@ -24,6 +25,8 @@ namespace Interfaces
         IFigure Intersect(IFigure second);
         IFigure Union(IFigure second);
         IFigure Subtruct(IFigure second);
+
+        ConvertibleFigure ToConvertibleFigure();
 
         new IFigure Clone();
     }

@@ -1,4 +1,6 @@
-﻿using DataStructures.Geometry;
+﻿using DataStructures.ConvertibleFigures;
+using DataStructures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
 using System.Runtime.Serialization;
@@ -59,6 +61,12 @@ namespace Geometry.Figures
         protected override Path ToPath()
         {
             throw new NotImplementedException();
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            Point2d p2 = Position + Size;
+            return new ConvertibleLine(Position, p2, Angle);
         }
     }
 }

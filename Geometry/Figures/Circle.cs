@@ -1,11 +1,13 @@
-﻿using Geometry.Attributes;
+﻿using DataStructures.ConvertibleFigures;
+using DataStructures;
+using Geometry.Attributes;
 using Interfaces;
 using ReactiveUI;
 using System.Numerics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
-
+using DataStructures.Geometry;
 
 namespace Geometry.Figures
 {
@@ -26,6 +28,13 @@ namespace Geometry.Figures
         public override IFigure Clone()
         {
             return new Circle(this);
+        }
+
+        public override ConvertibleFigure ToConvertibleFigure()
+        {
+            Point2d center = new Point2d(Position.X + Size.X / 2, Position.Y - Size.Y / 2);
+
+            return new ConvertibleCircle(center, Size.X / 2, Angle);
         }
     }    
 }

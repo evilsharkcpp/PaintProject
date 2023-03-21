@@ -11,14 +11,26 @@ namespace IO
     {
         public DataStructures.Color getColor(SvgColourServer svg_color)
         {
+            byte a = svg_color.Colour.A;
+            byte r = svg_color.Colour.R;
+            byte g = svg_color.Colour.G;
+            byte b = svg_color.Colour.B;
 
-            return null;
+            DataStructures.Color ds_color = new DataStructures.Color(a, r, g, b);
+
+            return ds_color;
         }
 
-        public SvgColourServer getSvgColor( DataStructures.Color ds__color)
+        public SvgColourServer getSvgColor( DataStructures.Color ds_color)
         {
+            int a = ds_color.A;
+            int r = ds_color.R;
+            int g = ds_color.G;
+            int b = ds_color.B;
 
-            return null;
+            SvgColourServer svg_color = new SvgColourServer(System.Drawing.Color.FromArgb(a,r,g,b));
+
+            return svg_color;
         }
     }
 }
