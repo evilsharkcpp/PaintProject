@@ -25,6 +25,8 @@ namespace Tests_xUnit_
             Assert.Equal(-1, line.V1.Y, 5);
             Assert.Equal(1, line.V2.X, 5);
             Assert.Equal(1, line.V2.Y, 5);
+            Assert.False(line.IsOutline);
+            Assert.True(line.IsFill);
         }
 
         [Theory]
