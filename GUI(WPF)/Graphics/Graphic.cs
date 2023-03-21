@@ -42,8 +42,8 @@ namespace GUI_WPF.Graphics
                 RadiusX = a, 
                 RadiusY = b,
                 Transform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           ModelMatrix.M12, ModelMatrix.M22,
-                                                           ModelMatrix.M13, ModelMatrix.M23)
+                                                ModelMatrix.M12, ModelMatrix.M22,
+                                                ModelMatrix.M13, ModelMatrix.M23)
 
             });
 
@@ -74,8 +74,8 @@ namespace GUI_WPF.Graphics
                 StartPoint = new Point(v1.X, v1.Y),
                 EndPoint = new Point(v2.X, v2.Y),
                 Transform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           ModelMatrix.M12, ModelMatrix.M22,
-                                                           ModelMatrix.M13, ModelMatrix.M23)
+                                                ModelMatrix.M12, ModelMatrix.M22,
+                                                ModelMatrix.M13, ModelMatrix.M23)
 
             });
 
@@ -104,7 +104,7 @@ namespace GUI_WPF.Graphics
             _gGroup = new GeometryGroup();
             StreamGeometry streamGeometry = new StreamGeometry();
             streamGeometry.Transform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           -ModelMatrix.M12, -ModelMatrix.M22,
+                                                           ModelMatrix.M12, ModelMatrix.M22,
                                                            ModelMatrix.M13, ModelMatrix.M23);
             using (StreamGeometryContext geometryContext = streamGeometry.Open())
             {
@@ -157,8 +157,8 @@ namespace GUI_WPF.Graphics
                     Height = b,
                 },
                 Transform = new MatrixTransform(ModelMatrix.M11, ModelMatrix.M21,
-                                                           ModelMatrix.M12, ModelMatrix.M22,
-                                                           ModelMatrix.M13, ModelMatrix.M23)
+                                                ModelMatrix.M12, ModelMatrix.M22,
+                                                ModelMatrix.M13, ModelMatrix.M23)
 
             });
 
