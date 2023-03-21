@@ -19,24 +19,32 @@ namespace IO
 {
     public class IFigureConverter
     {
-        public List<(IFigure, IDrawable)> getFigureList(List<(ConvertibleFigure, IDrawable)> ConvertibleFigures)
+        public List<IDrawableObject> getFigureList(List<(ConvertibleFigure, IDrawable)> ConvertibleFigures)
         {
-            List<(IFigure, IDrawable)> ifigures = new List<(IFigure, IDrawable)>();
+            List<IDrawableObject> ifigures = new List<IDrawableObject>();
 
             FigureFabric figure_fabric = new FigureFabric();
 
             foreach ((ConvertibleFigure figure, IDrawable drawable) in ConvertibleFigures)
-                ifigures.Add((figure_fabric.CreateFigureFromConvertibleFigure(figure), drawable));
+            {
+                IFigure f = figure_fabric.CreateFigureFromConvertibleFigure(figure);
+                IDrawable d = drawable;
 
+                DrawableObject d_obj = new DrawableObject();
+                d_obj.Drawable = d;
+                d_obj.Figure = f;
+
+                ifigures.Add(d_obj);
+            }
             return ifigures;
         }
 
-        public List<(ConvertibleFigure, IDrawable)> getConvertibleFigureList(IEnumerable<(IFigure, IDrawable)> Figures)
+        public List<(ConvertibleFigure, IDrawable)> getConvertibleFigureList(IEnumerable<IDrawableObject> Figures)
         {
             List<(ConvertibleFigure, IDrawable)> c_figures = new List<(ConvertibleFigure, IDrawable)>();
 
-            foreach ((IFigure figure, IDrawable drawable) in Figures)
-                c_figures.Add((figure.ToConvertibleFigure(), drawable));
+            foreach (IDrawableObject figure in Figures)
+                c_figures.Add((figure.Figure.ToConvertibleFigure(), figure.Drawable));
 
             return c_figures;
         }
@@ -45,7 +53,7 @@ namespace IO
 
     public class JSONConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open);
             var ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
@@ -65,15 +73,15 @@ namespace IO
 
             if (deserializedFigures != null)
             {
-                List<(IFigure, IDrawable)> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+                List<IDrawableObject> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
             else
-                return Enumerable.Empty<(IFigure, IDrawable)>();
+                return Enumerable.Empty<IDrawableObject>();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             List<(ConvertibleFigure, IDrawable)>? c_figures = new IFigureConverter().getConvertibleFigureList(figures);
 
@@ -98,7 +106,7 @@ namespace IO
 
     public class SVGConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             List<(ConvertibleFigure, IDrawable)> deserializedFigures = new List<(ConvertibleFigure, IDrawable)>();
 
@@ -204,16 +212,16 @@ namespace IO
 
             if (deserializedFigures != null)
             {
-                List<(IFigure, IDrawable)> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
+                List<IDrawableObject> ifigures = new IFigureConverter().getFigureList(deserializedFigures);
 
                 return ifigures;
             }
             else
-                return Enumerable.Empty<(IFigure, IDrawable)>();
+                return Enumerable.Empty<IDrawableObject>();
         }
 
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
@@ -234,12 +242,12 @@ namespace IO
 
     public class PNGConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
@@ -250,12 +258,12 @@ namespace IO
 
     public class JPEGConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
@@ -266,12 +274,12 @@ namespace IO
 
     public class BMPConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
@@ -282,12 +290,12 @@ namespace IO
 
     public class GIFConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
@@ -298,12 +306,12 @@ namespace IO
 
     public class TIFFConverter : IConverter
     {
-        public IEnumerable<(IFigure, IDrawable)> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(string filename)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<(IFigure, IDrawable)> figures)
+        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 

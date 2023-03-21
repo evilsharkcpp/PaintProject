@@ -68,8 +68,15 @@ namespace IO
             d2.IsNoOutLine = false;
             d2.OutLineColor = new Color(255, 26, 123, 143);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_line;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_line2;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             JSONConverter jc = new JSONConverter();
 
             jc.WriteFile("two_lines", array);
@@ -102,8 +109,15 @@ namespace IO
             d2.IsNoOutLine = false;
             d2.OutLineColor = new Color(255, 26, 123, 143);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_line2;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_line;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("two_lines", array);
@@ -127,9 +141,23 @@ namespace IO
             d1.IsNoFill = false;
             d1.FillColor = new Color(255, 115, 56, 26);
 
+            IDrawable d2 = new Drawable();
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_square, d1), (i_square0, d1) };
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
 
+
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_square0;
+
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_square;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("square", array);
@@ -161,8 +189,15 @@ namespace IO
             d2.FillColor = new Color(255, 121, 33, 56);
 
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_rectangle, d1), (i_rectangle0, d2) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_rectangle0;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_rectangle;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("rectangle", array);
@@ -195,8 +230,15 @@ namespace IO
             d2.IsNoFill = false;
             d2.FillColor = new Color(255, 121, 33, 56);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_triangle, d2), (i_triangle0, d1) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_triangle0;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_triangle;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("triangle", array);
@@ -217,8 +259,11 @@ namespace IO
             d1.IsNoFill = false;
             d1.FillColor = new Color(255, 65, 26, 26);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d1) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_circle;
 
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("circle", array);
@@ -250,8 +295,15 @@ namespace IO
             d2.IsNoFill = false;
             d2.FillColor = new Color(255, 121, 33, 56);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d2), (i_circle0, d1) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_circle0;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_circle;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
             jc.WriteFile("ellipse", array);
@@ -284,8 +336,15 @@ namespace IO
             d2.IsNoOutLine = false;
             d2.OutLineColor = new Color(255, 26, 123, 143);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_line, d1), (i_line2, d2) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_line;
 
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_line2;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             PNGConverter jc = new PNGConverter();
 
             jc.WriteFile("two_lines", array);
@@ -309,9 +368,23 @@ namespace IO
             d1.IsNoFill = false;
             d1.FillColor = new Color(255, 115, 56, 26);
 
+            IDrawable d2 = new Drawable();
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_square, d1), (i_square0, d1) };
+            d2.IsNoOutLine = false;
+            d2.OutLineColor = new Color(255, 115, 26, 26);
+            d2.IsNoFill = false;
+            d2.FillColor = new Color(255, 121, 33, 56);
 
+
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_square0;
+
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_square;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             JPEGConverter jc = new JPEGConverter();
 
             jc.WriteFile("square", array);
@@ -343,7 +416,15 @@ namespace IO
             d2.FillColor = new Color(255, 121, 33, 56);
 
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_rectangle, d1), (i_rectangle0, d2) };
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_rectangle0;
+
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_rectangle;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
 
             TIFFConverter jc = new TIFFConverter();
 
@@ -377,7 +458,16 @@ namespace IO
             d2.IsNoFill = false;
             d2.FillColor = new Color(255, 121, 33, 56);
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_triangle, d2), (i_triangle0, d1) };
+
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_triangle0;
+
+            DrawableObject d_obj2 = new DrawableObject();
+            d_obj2.Drawable = d2;
+            d_obj2.Figure = i_triangle;
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
 
             GIFConverter jc = new GIFConverter();
 
@@ -394,12 +484,12 @@ namespace IO
 
             IDrawable d1 = new Drawable();
 
-            d1.IsNoOutLine = false;
-            d1.OutLineColor = new Color(255, 115, 26, 26);
-            d1.IsNoFill = false;
-            d1.FillColor = new Color(255, 65, 26, 26);
+            DrawableObject d_obj = new DrawableObject();
+            d_obj.Drawable = d1;
+            d_obj.Figure = i_circle;
 
-            IEnumerable<(IFigure, IDrawable)> array = new List<(IFigure, IDrawable)>() { (i_circle, d1) };
+
+            IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj };
 
             BMPConverter jc = new BMPConverter();
 
@@ -411,7 +501,7 @@ namespace IO
         {
             JSONConverter jc = new JSONConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("two_lines.json");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("two_lines.json");
 
             Console.WriteLine("конец...");
 
@@ -421,7 +511,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("two_lines.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("two_lines.svg");
 
             Console.WriteLine("конец...");
 
@@ -431,7 +521,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("square.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("square.svg");
 
             Console.WriteLine("конец...");
 
@@ -441,7 +531,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("rectangle.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("rectangle.svg");
 
             Console.WriteLine("конец...");
 
@@ -451,7 +541,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("triangle.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("triangle.svg");
 
             Console.WriteLine("конец...");
 
@@ -461,7 +551,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("ellipse.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("ellipse.svg");
 
             Console.WriteLine("конец...");
 
@@ -471,7 +561,7 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<(IFigure, IDrawable)> figures = jc.ReadFile("circle.svg");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile("circle.svg");
 
             Console.WriteLine("конец...");
 
