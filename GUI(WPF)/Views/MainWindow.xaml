@@ -78,17 +78,17 @@
                      <RadioButton ToolTip="Добавить прямоугольник" CommandParameter="Rectangle" Content="../Views/Assets/add_rectangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                      <RadioButton ToolTip="Добавить эллипс" CommandParameter="Ellipse" Content="../Views/Assets/add_circle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
                      <RadioButton ToolTip="Добавить треугольник" CommandParameter="Triangle" Content="../Views/Assets/add_triangle.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Добавить многоугольник" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Добавить текст" Content="../Views/Assets/A.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Сгруппировать" Content="../Views/Assets/group.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Разгруппировать" Content="../Views/Assets/ungroup.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Сумма" Content="../Views/Assets/sum.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Разность" Content="../Views/Assets/diff.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Пересечение" Content="../Views/Assets/intersect.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
-                     <RadioButton ToolTip="Исключающее ИЛИ" Content="../Views/Assets/xor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,0"/>
+                     <RadioButton ToolTip="Добавить многоугольник" Visibility="Collapsed" Content="../Views/Assets/add_polygon.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Добавить текст" Visibility="Collapsed" Content="../Views/Assets/A.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Сгруппировать" Visibility="Collapsed" Content="../Views/Assets/group.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Разгруппировать" Visibility="Collapsed" Content="../Views/Assets/ungroup.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Сумма" Visibility="Collapsed" Content="../Views/Assets/sum.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Разность" Visibility="Collapsed" Content="../Views/Assets/diff.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Пересечение" Visibility="Collapsed" Content="../Views/Assets/intersect.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,2"/>
+                     <RadioButton ToolTip="Исключающее ИЛИ" Visibility="Collapsed" Content="../Views/Assets/xor.png" Style="{StaticResource myRadioButtonStyle}" Width="50" Height="50" Margin="0,2,0,0"/>
                   </ItemsControl>
                </StackPanel>
-               <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка" Margin="0,2,0,2">
+               <Button Style="{StaticResource MyButtonStyle}" Grid.Row="1"  Visibility="Collapsed" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Пипетка" Margin="0,2,0,2">
                   <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="8" Source="/Views/Assets/pipette.png"  />
                </Button>
             </Grid>
@@ -148,9 +148,9 @@
                                  </RadioButton>
                                  <RadioButton ToolTip="Сплошная заливка"  Content="../Views/Assets/full.png"  Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                  </RadioButton>
-                                 <RadioButton ToolTip="Линейный градиент" Content="../Views/Assets/linear_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                 <RadioButton ToolTip="Линейный градиент" Visibility="Collapsed" Content="../Views/Assets/linear_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="3"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                  </RadioButton>
-                                 <RadioButton ToolTip="Радиальный градиент" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
+                                 <RadioButton ToolTip="Радиальный градиент" Visibility="Collapsed" Content="../Views/Assets/radial_gradient.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="4"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                  </RadioButton>
                               </StackPanel>
                                         <colorpicker:StandardColorPicker x:Name="main1" Grid.Row="2" ColorChanged="main1_ColorChanged"/>
@@ -171,7 +171,15 @@
                                  <RadioButton ToolTip="Сплошная заливка" Content="../Views/Assets/full.png" Style="{StaticResource myRadioButtonStyle}" Grid.Column="2"  HorizontalAlignment="Stretch" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Width="50" Height="50" Margin="2,0,2,0">
                                  </RadioButton>
                               </StackPanel>
-                                        <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2" ColorChanged="main2_ColorChanged"/>
+                              <colorpicker:StandardColorPicker x:Name="main2" Grid.Row="2" ColorChanged="main2_ColorChanged"/>
+                              <Grid Margin="0,2,0,2">
+                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                 </Grid.ColumnDefinitions>
+                                 <Label ToolTip="Толщина" Content="Thickness" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Padding="0,0,0,0" Height="16" Width="50"/>
+                                 <TextBox TextWrapping="Wrap" Text="{Binding ElementName=mainWindow, Path=SelectedFigure.Drawable.OutLineThickness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF3E3D3D" SelectionBrush="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Grid.Column="1"/>
+                              </Grid>
                            </StackPanel>
                         </TabItem.Content>
                      </TabItem>
@@ -250,7 +258,7 @@
             <ColumnDefinition Width="1399*"/>
             <ColumnDefinition Width="267*"/>
          </Grid.ColumnDefinitions>
-         <Grid Grid.Column="1">
+         <Grid Grid.Column="1" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                <ColumnDefinition/>
                <ColumnDefinition/>

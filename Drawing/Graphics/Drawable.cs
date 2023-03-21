@@ -19,7 +19,16 @@ namespace Drawing.Graphics
         public Color OutLineColor { get; set; }
 
         [DataMember(Name = "OutLineThickness")]
-        public double OutLineThickness { get; set; }
+        public double OutLineThickness 
+        { 
+            get => _thickness; 
+            set
+            {
+                _thickness = value;
+                OnPropertyChanged();
+            } 
+        }
+        private double _thickness;
 
         private bool _isNoFill = true;
 
