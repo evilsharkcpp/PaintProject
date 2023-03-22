@@ -8,7 +8,7 @@ namespace Interfaces
 {
     public interface IConverter
     {
-        IEnumerable<IDrawableObject> ReadFile(string filename);
-        void WriteFile(string filename, IEnumerable<IDrawableObject> figures);
+        IEnumerable<IDrawableObject> ReadFile(Stream stream);
+        void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures);
     }
 }

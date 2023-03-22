@@ -53,9 +53,8 @@ namespace IO
 
     public class JSONConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
-            FileStream fs = new FileStream(filename, FileMode.Open);
             var ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
                         new Type[] {
                                 typeof(ConvertibleLine),
@@ -68,8 +67,7 @@ namespace IO
 
                             });
 
-            List<(ConvertibleFigure, IDrawable)>? deserializedFigures = ser.ReadObject(fs) as List<(ConvertibleFigure, IDrawable)>;
-            fs.Close();
+            List<(ConvertibleFigure, IDrawable)>? deserializedFigures = ser.ReadObject(stream) as List<(ConvertibleFigure, IDrawable)>;
 
             if (deserializedFigures != null)
             {
@@ -81,11 +79,9 @@ namespace IO
                 return Enumerable.Empty<IDrawableObject>();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             List<(ConvertibleFigure, IDrawable)>? c_figures = new IFigureConverter().getConvertibleFigureList(figures);
-
-            FileStream stream = new FileStream(filename + ".json", FileMode.Create);
 
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
                                                 new Type[] {
@@ -98,21 +94,21 @@ namespace IO
                                                     typeof(Drawable),
                                                 });
 
+
             ser.WriteObject(stream, c_figures);
-            stream.Close();
         }
 
     }
 
     public class SVGConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             List<(ConvertibleFigure, IDrawable)> deserializedFigures = new List<(ConvertibleFigure, IDrawable)>();
 
             IDrawable drawable;
 
-            var svgDocument = SvgDocument.Open(filename);
+            var svgDocument = SvgDocument.Open<SvgDocument>(stream);
             SVG svg_convert = new SVG();
 
             foreach (SvgElement svg_elem in svgDocument.Children)
@@ -221,102 +217,96 @@ namespace IO
         }
 
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
 
-            MemoryStream stream = new MemoryStream();
-            svg_doc.Write(stream);
+            MemoryStream ms = new MemoryStream();
+            svg_doc.Write(ms);
 
-            string svg_string = Encoding.UTF8.GetString(stream.GetBuffer());
-
-            using (StreamWriter writer = new StreamWriter(filename + ".svg"))
-            {
-                writer.Write(svg_string);
-            }
-
+            stream.Write(ms.GetBuffer());
         }
     }
 
     public class PNGConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
-            svg_doc.Draw().Save(filename + ".png", ImageFormat.Png);
+            svg_doc.Draw().Save(stream, ImageFormat.Png);
         }
     }
 
     public class JPEGConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
-            svg_doc.Draw().Save(filename + ".jpeg", ImageFormat.Jpeg);
+            svg_doc.Draw().Save(stream, ImageFormat.Jpeg);
         }
     }
 
     public class BMPConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
-            svg_doc.Draw().Save(filename + ".bmp", ImageFormat.Bmp);
+            svg_doc.Draw().Save(stream, ImageFormat.Bmp);
         }
     }
 
     public class GIFConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
-            svg_doc.Draw().Save(filename + ".gif", ImageFormat.Gif);
+            svg_doc.Draw().Save(stream, ImageFormat.Gif);
         }
     }
 
     public class TIFFConverter : IConverter
     {
-        public IEnumerable<IDrawableObject> ReadFile(string filename)
+        public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteFile(string filename, IEnumerable<IDrawableObject> figures)
+        public void WriteFile(Stream stream, IEnumerable<IDrawableObject> figures)
         {
             SVG svg_convert = new SVG();
 
             SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
-            svg_doc.Draw().Save(filename + ".tiff", ImageFormat.Tiff);
+            svg_doc.Draw().Save(stream, ImageFormat.Tiff);
         }
     }
 }

@@ -5,6 +5,8 @@ using Drawing.Graphics;
 using Geometry;
 using Geometry.Figures;
 using Interfaces;
+using Newtonsoft.Json.Linq;
+using Splat.ModeDetection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +81,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             JSONConverter jc = new JSONConverter();
 
-            jc.WriteFile("two_lines", array);
+            FileStream stream = new FileStream("two_line.json", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_two_line__SVG()
@@ -120,7 +126,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("two_lines", array);
+            FileStream stream = new FileStream("two_line.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_square__SVG()
@@ -160,7 +170,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("square", array);
+            FileStream stream = new FileStream("square.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_rectangle__SVG()
@@ -200,7 +214,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("rectangle", array);
+            FileStream stream = new FileStream("rectangle.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_triangle__SVG()
@@ -241,7 +259,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("triangle", array);
+            FileStream stream = new FileStream("triangle.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_circle__SVG()
@@ -266,7 +288,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("circle", array);
+            FileStream stream = new FileStream("circle.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
 
@@ -306,7 +332,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             SVGConverter jc = new SVGConverter();
 
-            jc.WriteFile("ellipse", array);
+            FileStream stream = new FileStream("ellipse.svg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_two_line__PNG()
@@ -347,7 +377,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             PNGConverter jc = new PNGConverter();
 
-            jc.WriteFile("two_lines", array);
+            FileStream stream = new FileStream("two_lines.png", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_square__JPEG()
@@ -387,7 +421,11 @@ namespace IO
             IEnumerable<IDrawableObject> array = new List<IDrawableObject>() { d_obj, d_obj2 };
             JPEGConverter jc = new JPEGConverter();
 
-            jc.WriteFile("square", array);
+            FileStream stream = new FileStream("square.jpeg", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_rectangle__TIFF()
@@ -428,7 +466,11 @@ namespace IO
 
             TIFFConverter jc = new TIFFConverter();
 
-            jc.WriteFile("rectangle", array);
+            FileStream stream = new FileStream("rectangle.tiff", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_triangle__GIF()
@@ -471,7 +513,11 @@ namespace IO
 
             GIFConverter jc = new GIFConverter();
 
-            jc.WriteFile("triangle", array);
+            FileStream stream = new FileStream("triangle.gif", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
         public void test__create_circle__BMP()
@@ -493,7 +539,11 @@ namespace IO
 
             BMPConverter jc = new BMPConverter();
 
-            jc.WriteFile("circle", array);
+            FileStream stream = new FileStream("circle.bmp", FileMode.Create);
+
+            jc.WriteFile(stream, array);
+
+            stream.Close();
         }
 
 
@@ -501,19 +551,23 @@ namespace IO
         {
             JSONConverter jc = new JSONConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("two_lines.json");
+            FileStream stream = new FileStream("two_lines.json", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
 
+            stream.Close();
         }
 
         public void test__read_two_line__SVG()
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("two_lines.svg");
 
-            Console.WriteLine("конец...");
+            FileStream stream = new FileStream("two_line.svg", FileMode.Open);
+
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
@@ -521,9 +575,11 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("square.svg");
+            FileStream stream = new FileStream("square.svg", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
@@ -531,9 +587,11 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("rectangle.svg");
+            FileStream stream = new FileStream("rectangle.svg", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
@@ -541,9 +599,11 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("triangle.svg");
+            FileStream stream = new FileStream("triangle.svg", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
@@ -551,9 +611,11 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("ellipse.svg");
+            FileStream stream = new FileStream("ellipse.svg", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
@@ -561,9 +623,11 @@ namespace IO
         {
             SVGConverter jc = new SVGConverter();
 
-            IEnumerable<IDrawableObject> figures = jc.ReadFile("circle.svg");
+            FileStream stream = new FileStream("circle.svg", FileMode.Open);
 
-            Console.WriteLine("конец...");
+            IEnumerable<IDrawableObject> figures = jc.ReadFile(stream);
+
+            stream.Close();
 
         }
 
