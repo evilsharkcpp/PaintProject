@@ -56,9 +56,9 @@ namespace Geometry
             return figure;
         }
 
-        public IFigure CreateFigureFromConvertibleFigure(ConvertibleFigure c_figure)
+        public IFigure? CreateFigureFromConvertibleFigure(ConvertibleFigure c_figure)
         {
-            IFigure figure;
+            IFigure? figure;
 
             string name = c_figure.GetType().Name;
             name = name.Remove(0, 11);
@@ -68,17 +68,20 @@ namespace Geometry
 
             figure = CreateFigure(name);
 
-            double width = c_figure.Width;
-            double heigth = c_figure.Height;
+            if (figure is not null)
+            {
+                double width = c_figure.Width;
+                double heigth = c_figure.Height;
 
-            figure.Size = new Vector2d(width, heigth);
+                figure.Size = new Vector2d(width, heigth);
 
-            // Перенос точки позиции из левого верхнего угла в левый нижний
-            Point2d c_position = c_figure.position;
-            c_position.Y += c_figure.Height;
+                // Перенос точки позиции из левого верхнего угла в левый нижний
+                Point2d c_position = c_figure.position;
+                c_position.Y += c_figure.Height;
 
-            figure.Position = c_position;
-            figure.Angle = c_figure.angle;
+                figure.Position = c_position;
+                figure.Angle = c_figure.angle;
+            }
 
 
             return figure;
