@@ -112,7 +112,7 @@ namespace Logic.ViewModels
                 {
                     if (pair.Value.DrawableObject is not null && 
                         pair.Value.DrawableObject.Figure is not null &&
-                        pair.Value.DrawableObject.Figure.IsInside(p, 3))
+                        pair.Value.DrawableObject.Figure.IsInside(p, 10))
                     {
                         newSelectedFigure = pair.Key;
                         break;
@@ -124,7 +124,7 @@ namespace Logic.ViewModels
                     {
                         if (pair.Value.DrawableObject is not null &&
                             pair.Value.DrawableObject.Figure is not null &&
-                            pair.Value.DrawableObject.Figure.IsInside(p, 3))
+                            pair.Value.DrawableObject.Figure.IsInside(p, 10))
                         {
                             proxySelectedFigure = pair.Key;
                         }
@@ -155,7 +155,7 @@ namespace Logic.ViewModels
                 if (pair.Value.DrawableObject is not null &&
                     pair.Value.DrawableObject.Figure is not null)
                 {
-                    successfully = pair.Value.DrawableObject.Figure.InArea(rect, 3);
+                    successfully = pair.Value.DrawableObject.Figure.InArea(rect, 10);
                     pair.Value.IsSelected = successfully;
                 }
 
