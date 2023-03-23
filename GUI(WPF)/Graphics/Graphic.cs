@@ -51,6 +51,7 @@ namespace GUI_WPF.Graphics
             {
                 Data = _gGroup,
                 Stroke = (GraphicStyle.IsNoOutLine) ? null : new SolidColorBrush(c),
+                StrokeThickness = GraphicStyle.OutLineThickness,
                 Fill = (GraphicStyle.IsNoFill) ? null : new SolidColorBrush(c2),
             });
         }
@@ -83,6 +84,7 @@ namespace GUI_WPF.Graphics
             {
                 Data = _gGroup,
                 Stroke = (GraphicStyle.IsNoOutLine) ? null : new SolidColorBrush(c),
+                StrokeThickness = GraphicStyle.OutLineThickness,
                 Fill = (GraphicStyle.IsNoFill) ? null : new SolidColorBrush(c2),
             });
         }
@@ -124,6 +126,7 @@ namespace GUI_WPF.Graphics
             {
                 Data = _gGroup,
                 Stroke = (GraphicStyle.IsNoOutLine) ? null : new SolidColorBrush(c),
+                StrokeThickness = GraphicStyle.OutLineThickness,
                 Fill = (GraphicStyle.IsNoFill) ? null : new SolidColorBrush(c2),
             });
         }
@@ -166,6 +169,7 @@ namespace GUI_WPF.Graphics
             {
                 Data = _gGroup,
                 Stroke = (GraphicStyle.IsNoOutLine) ? null : new SolidColorBrush(c),
+                StrokeThickness = GraphicStyle.OutLineThickness,
                 Fill = (GraphicStyle.IsNoFill) ? null : new SolidColorBrush(c2),
             });
         }

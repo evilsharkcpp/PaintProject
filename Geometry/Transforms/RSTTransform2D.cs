@@ -26,9 +26,9 @@ namespace Geometry.Transforms
                     _sin = Math.Sin(_angle);
 
                     _matrix.M11 = _scaleX * _cos;
-                    _matrix.M12 = -_scaleX * _sin;
+                    _matrix.M12 = -_scaleY * _sin;
 
-                    _matrix.M21 = _scaleY * _sin;
+                    _matrix.M21 = _scaleX * _sin;
                     _matrix.M22 = _scaleY * _cos;
                 }
             }
@@ -44,7 +44,7 @@ namespace Geometry.Transforms
                     _scaleX = value;
 
                     _matrix.M11 = _scaleX * _cos;
-                    _matrix.M12 = -_scaleX * _sin;
+                    _matrix.M21 = _scaleX * _sin;
 
                     _matrix.M13 = _v.X + _scaleX;
                 }
@@ -60,7 +60,7 @@ namespace Geometry.Transforms
                 {
                     _scaleY = value;
 
-                    _matrix.M21 = _scaleY * _sin;
+                    _matrix.M12 = -_scaleY * _sin;
                     _matrix.M22 = _scaleY * _cos;
 
                     _matrix.M23 = _v.Y + _scaleY;
@@ -108,20 +108,20 @@ namespace Geometry.Transforms
 
         public void ApplyInv(Point2d p, ref Point2d res)
         {
-            res.X = _cos / _scaleX * p.X + _sin / _scaleY * p.Y + (-_cos * (1 + _v.X / _scaleX) - _sin * (1 + _v.Y / _scaleY));
-            res.Y = -_sin / _scaleX * p.X + _cos / _scaleY * p.Y + (-_cos * (1 + _v.Y / _scaleY) + _sin * (1 + _v.X / _scaleX));
+            res.X = _cos / _scaleX * p.X + _sin / _scaleX * p.Y + (-_cos * (_v.X + _scaleX) - _sin * (_v.Y + _scaleY)) / _scaleX;
+            res.Y = -_sin / _scaleY * p.X + _cos / _scaleY * p.Y + (_sin * (_v.X + _scaleX) - _cos * (_v.Y + _scaleY)) / _scaleY;
         }
 
         public void ApplyInv(Vector2d v, ref Vector2d res)
         {
-            res.X = _cos / _scaleX * v.X + _sin / _scaleY * v.Y;
-            res.Y = -_sin / _scaleX * v.X + _cos / _scaleY * v.Y;
+            res.X = _cos / _scaleX * v.X + _sin / _scaleX * v.Y;
+            res.Y = -_sin / _scaleY * v.X + _cos / _scaleY * v.Y;
         }
 
         public void ApplyInv(Vector2 v, ref Vector2d res)
         {
-            res.X = _cos / _scaleX * v.X + _sin / _scaleY * v.Y;
-            res.Y = -_sin / _scaleX * v.X + _cos / _scaleY * v.Y;
+            res.X = _cos / _scaleX * v.X + _sin / _scaleX * v.Y;
+            res.Y = -_sin / _scaleY * v.X + _cos / _scaleY * v.Y;
         }
     }
 }
