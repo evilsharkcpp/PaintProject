@@ -20,7 +20,7 @@ namespace IO
 {
     public class SVG
     {
-        public SvgDocument getSvgDocument(IEnumerable<(IFigure, IDrawable)> figures)
+        public SvgDocument getSvgDocument(IEnumerable<IDrawableObject> figures)
         {
             SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
 
