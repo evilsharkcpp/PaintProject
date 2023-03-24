@@ -55,7 +55,7 @@ namespace IO
     {
         public IEnumerable<IDrawableObject> ReadFile(Stream stream)
         {
-            var ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
+            var ser = new DataContractJsonSerializer(typeof(List<(ConvertibleFigure, IDrawable)>),
                         new Type[] {
                                 typeof(ConvertibleLine),
                                 typeof(ConvertibleSquare),
@@ -83,7 +83,7 @@ namespace IO
         {
             List<(ConvertibleFigure, IDrawable)>? c_figures = new IFigureConverter().getConvertibleFigureList(figures);
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(IEnumerable<(ConvertibleFigure, IDrawable)>),
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<(ConvertibleFigure, IDrawable)>),
                                                 new Type[] {
                                                     typeof(ConvertibleLine),
                                                     typeof(ConvertibleSquare),
