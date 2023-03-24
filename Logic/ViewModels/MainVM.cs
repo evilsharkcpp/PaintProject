@@ -1,6 +1,7 @@
 ﻿using DataStructures.Geometry;
 using Geometry;
 using Interfaces;
+using IO;
 using Logic.Utils;
 using ReactiveUI;
 using System.Numerics;
@@ -328,14 +329,27 @@ namespace Logic.ViewModels
 
         protected override bool OnSave(Stream a)
         {
-
-            return false;
+            JSONConverter converter = new JSONConverter();
+            List<IDrawableObject> objects = new List<IDrawableObject>();
+            foreach (var item in _figures)
+                objects.Add(item.Value.DrawableObject);
+            converter.WriteFile(a, objects);
+            return true;
         }
 
         protected override bool OnLoad(Stream a)
         {
-
-            return false;
+            JSONConverter converter = new JSONConverter();
+            var objects = converter.ReadFile(a);
+            _figures.Clear();
+            int i = 0;
+            foreach(var item in objects)
+            {
+                var obj = new Object();
+                obj.DrawableObject = item;
+                _figures.Add(i++, obj);
+            }
+            return true;
         }
 
         protected override bool OnUndo()
