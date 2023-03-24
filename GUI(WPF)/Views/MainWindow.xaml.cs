@@ -12,6 +12,8 @@ using Drawing.Graphics;
 using DataStructures.Geometry;
 using System.Windows.Media;
 using Microsoft.Win32;
+using System.Collections.Generic;
+using ReactiveUI;
 
 namespace GUI_WPF
 {
@@ -154,10 +156,13 @@ namespace GUI_WPF
             if (selected)
             {
                ParamVisibility = Visibility.Hidden;
+               canvas.ContextMenu = null;
                return null;
             }
             else
+            {
                ParamVisibility = Visibility.Visible;
+            }
             IDrawableObject? b = null;
             _vm.GetFigureByID.Execute(_vm.SelectedFigures.Last()).Subscribe(a => b = a);
             return b;
@@ -330,7 +335,7 @@ namespace GUI_WPF
                   _ = SelectedFigure;
                   if (SelectedFigure != null)
                   {
-                     state = MoveState.FIGURE_MOVE;
+                     state = MoveState.FIGURE_MOVE;                     
                      updateSelectedFigurePosition();
                      SelectedFigureAngle = SelectedFigure.Figure.Angle * 180.0 / Math.PI;
                   }
@@ -478,6 +483,44 @@ namespace GUI_WPF
       {
          if (e.Key == Key.X && SelectedFigure != null)
             _vm.RemoveFigure.Execute(_vm.SelectedFigures.Last()).Subscribe();
+      }
+
+      private void canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+      {
+         if (SelectedFigure != null)
+         {
+            ContextMenu context = new ContextMenu();
+            canvas.ContextMenu = context;
+            IEnumerable<(string, ReactiveCommand<Point2d, bool>)> parameters = null;
+            _vm.GetContextCommands.Execute().Subscribe(a => parameters = a);
+            context.Items.Clear();
+            foreach (var p in parameters)
+            {
+               MenuItem mi = new MenuItem();
+               mi.Header = p.Item1;
+               mi.Click += MenuItem_Click;
+               context.Items.Add(mi);
+            }
+         }
+      }
+
+      private void MenuItem_Click(object sender, RoutedEventArgs e)
+      {
+         if (SelectedFigure != null)
+         {
+            var mi = sender as MenuItem;
+            IEnumerable<(string, ReactiveCommand<Point2d, bool>)> parameters = null;
+            _vm.GetContextCommands.Execute().Subscribe(a => parameters = a);
+            foreach (var p in parameters)
+            {
+               if (mi.Header.ToString() == p.Item1)
+               {
+                  p.Item2.Execute().Subscribe();
+                  break;
+               }
+            }
+            canvas.ContextMenu = null;
+         }
       }
 
       private void canvas_MouseLeave(object sender, MouseEventArgs e)
