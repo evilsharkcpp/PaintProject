@@ -63,11 +63,6 @@ namespace Geometry.Figures
 
         protected override bool OnBound(Point2d p, double eps) => IsInside(p, eps);
 
-        protected override bool InArea(Rect rect, double eps)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IFigure Clone()
         {
             return new Line(this);

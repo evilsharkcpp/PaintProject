@@ -123,7 +123,8 @@ namespace Geometry.Figures
             Point2d p1 = new Point2d(), p2 = new Point2d();
             _transform.ApplyInv(rect.Start, ref p1);
             _transform.ApplyInv(rect.End, ref p2);
-            return InArea(new Rect(p1, p2), eps / Math.Max(Size.X, Size.Y));
+            return p1.X <= -1 - eps && p1.Y <= -1 - eps &&
+                   p2.X >= 1 + eps && p2.Y >= 1 + eps;
         }
 
         public bool HasIntersection(IFigure figure)
@@ -157,7 +158,6 @@ namespace Geometry.Figures
         protected abstract void OnDraw(IGraphics graphics);
         protected abstract bool IsInside(Point2d p, double eps);
         protected abstract bool OnBound(Point2d p, double eps);
-        protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();
 
