@@ -7,6 +7,7 @@ namespace Tests_xUnit_.Figures
         public Point2d Start;
         public double a;
         public double b;
+        public double angle;
 
         public override bool Equals(object? obj)
         {

@@ -6,6 +6,19 @@ namespace Tests_xUnit_
     public class TriangleTests
     {
 
+        private void CheckTriangle(GraphicTester tester, Point2d p1, Point2d p2, Point2d p3)
+        {
+            Assert.Single(tester.Figures);
+            Assert.True(tester.Figures[0] is Figures.Triangle);
+            Figures.Triangle? triangle = tester.Figures[0] as Figures.Triangle;
+            Assert.Equal(p1.X, triangle.V1.X, 5);
+            Assert.Equal(p1.Y, triangle.V1.Y, 5);
+            Assert.Equal(p2.X, triangle.V2.X, 5);
+            Assert.Equal(p2.Y, triangle.V2.Y, 5);
+            Assert.Equal(p3.X, triangle.V3.X, 5);
+            Assert.Equal(p3.Y, triangle.V3.Y, 5);
+        }
+
         [Fact]
         public void TestInitTriangle()
         {
@@ -17,80 +30,99 @@ namespace Tests_xUnit_
             triangle1.Draw(tester);
 
             // Assert
-            Assert.Single(tester.Figures);
-            Assert.True(tester.Figures[0] is Tests_xUnit_.Figures.Triangle);
-            Tests_xUnit_.Figures.Triangle? trangle = tester.Figures[0] as Tests_xUnit_.Figures.Triangle;
-            Assert.Equal(-1, trangle.V1.X, 5);
-            Assert.Equal(-1, trangle.V1.Y, 5);
-            Assert.Equal(1, trangle.V2.X, 5);
-            Assert.Equal(-1, trangle.V2.Y, 5);
-            Assert.Equal(0, trangle.V3.X, 5);
-            Assert.Equal(1, trangle.V3.Y, 5);
+            CheckTriangle(tester, new Point2d(1, 1), new Point2d(-1, 1), new Point2d(0, -1));
         }
 
         [Theory]
         [InlineData(-1, -1)]
         [InlineData(0, 0)]
         [InlineData(0, 10)]
+        [InlineData(0, -10)]
         [InlineData(10, 0)]
-        [InlineData(10, 10)]
-        [InlineData(-10, 10)]
-        [InlineData(10, -10)]
+        [InlineData(-10, 0)]
+        [InlineData(10, 15)]
+        [InlineData(-10, 15)]
+        [InlineData(10, -15)]
+        [InlineData(-10, -15)]
+        [InlineData(0, 0.31)]
+        [InlineData(0, -0.31)]
+        [InlineData(0.15, 0)]
+        [InlineData(-0.15, 0)]
+        [InlineData(0.15, 0.31)]
+        [InlineData(-0.15, 0.31)]
+        [InlineData(0.15, -0.31)]
+        [InlineData(-0.15, -0.31)]
+
         public void TestСhangePosition(double x_pos, double y_pos)
         {
             // Arrange
+            GraphicTester tester = new GraphicTester();
             Triangle triangle1 = new Triangle();
-            double expectedX1 = x_pos;
-            double expectedY1 = y_pos;
-            double expectedX2 = 2.0 + x_pos;
-            double expectedY2 = y_pos;
-            double expectedX3 = 1 + x_pos;
-            double expectedY3 = 1 + y_pos;
+            Point2d p1 = new Point2d(x_pos + 2, y_pos + 2),
+                    p2 = new Point2d(x_pos, y_pos + 2),
+                    p3 = new Point2d(x_pos + 1, y_pos);
 
             // Act
-            GraphicTester tester = new GraphicTester();
             triangle1.Position = new Point2d(x_pos, y_pos);
             triangle1.Draw(tester);
 
             // Assert
-            Assert.Single(tester.Figures);
-            Assert.True(tester.Figures[0] is Tests_xUnit_.Figures.Triangle);
-            Tests_xUnit_.Figures.Triangle? trangle = tester.Figures[0] as Tests_xUnit_.Figures.Triangle;
-            Assert.Equal(expectedX1, trangle.V1.X, 5);
-            Assert.Equal(expectedY1, trangle.V1.Y, 5);
-            Assert.Equal(expectedX2, trangle.V2.X, 5);
-            Assert.Equal(expectedY2, trangle.V2.Y, 5);
-            Assert.Equal(expectedX3, trangle.V3.X, 5);
-            Assert.Equal(expectedY3, trangle.V3.Y, 5);
+            CheckTriangle(tester, p1, p2, p3);
         }
 
         [Theory]
-        [InlineData(2 * Math.PI, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0)]
-        [InlineData(Math.PI, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
-        [InlineData(Math.PI/4, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
-        [InlineData(3* Math.PI, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
-        [InlineData(2*Math.PI / 3, 0.0, 0.0, -0.5, 0.86602540378, -0.5, -0.86602540378)] 
-        public void TestСhangAngle(double angle, double eX1, double eY1, double eX2, double eY2, double eX3, double eY3)
+        [InlineData(3, 3)]
+        [InlineData(1, 3)]
+        [InlineData(0, 0)]
+        [InlineData(0, 10)]
+        [InlineData(10, 0)]
+        [InlineData(10, 10)]
+        [InlineData(15, 10)]
+        [InlineData(10, 15)]
+        [InlineData(0, 1)]
+        [InlineData(1, 0)]
+        [InlineData(1, 1)]
+        public void TestСhangeSize(double width, double height)
         {
             // Arrange
+            GraphicTester tester = new GraphicTester();
             Triangle triangle1 = new Triangle();
-
+            Point2d p1 = new Point2d(-1 + width, -1 + height),
+                    p2 = new Point2d(-1, -1 + height),
+                    p3 = new Point2d(-1 + width / 2, -1);
 
             // Act
+            triangle1.Size = new Vector2d(width, height);
+            triangle1.Draw(tester);
+
+            // Assert
+            CheckTriangle(tester, p1, p2, p3);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(Math.PI)]
+        [InlineData(-2 * Math.PI)]
+        [InlineData(-100 * Math.PI)]
+        [InlineData(100 * Math.PI)]
+        public void TestСhangeAngle(double angle)
+        {
+            // Arrange
             GraphicTester tester = new GraphicTester();
+            Triangle triangle1 = new Triangle();
+            Point2d p1 = new Point2d(Math.Cos(angle) - Math.Sin(angle),
+                                     Math.Sin(angle) + Math.Cos(angle)),
+                    p2 = new Point2d(-Math.Cos(angle) - Math.Sin(angle),
+                                     -Math.Sin(angle) + Math.Cos(angle)),
+                    p3 = new Point2d(-Math.Sin(angle),
+                                     -Math.Cos(angle));
+
+            // Act
             triangle1.Angle = angle;
             triangle1.Draw(tester);
 
             // Assert
-            Assert.Single(tester.Figures);
-            Assert.True(tester.Figures[0] is Tests_xUnit_.Figures.Triangle);
-            Tests_xUnit_.Figures.Triangle? trangle = tester.Figures[0] as Tests_xUnit_.Figures.Triangle;
-            Assert.Equal(eX1, trangle.V1.X, 3);
-            Assert.Equal(eY1, trangle.V1.Y, 3);
-            Assert.Equal(eX2, trangle.V2.X, 3);
-            Assert.Equal(eY2, trangle.V2.Y, 3);
-            Assert.Equal(eX3, trangle.V3.X, 3);
-            Assert.Equal(eY3, trangle.V3.Y, 3);
+            CheckTriangle(tester, p1, p2, p3);
         }
     }
 }
