@@ -4,6 +4,7 @@ using Interfaces;
 using IO;
 using Logic.Utils;
 using ReactiveUI;
+using System;
 using System.Numerics;
 using System.Reactive.Linq;
 
@@ -208,28 +209,13 @@ namespace Logic.ViewModels
             if (_figures.TryGetValue(id, out Object? @object))
             {
                 _sortedFigures.Remove(id);
-                _sortedFigures.Insert(0, id);
+                _sortedFigures.Insert(_sortedFigures.Count, id);
             }
 
             return true;
         }
 
         private bool SendBackward(int id)
-        {
-            if (_figures.TryGetValue(id, out Object? @object))
-            {
-                int index = _sortedFigures.IndexOf(id);
-                if (index > 0)
-                {
-                    _sortedFigures.Remove(id);
-                    _sortedFigures.Insert(index - 1, id);
-                }
-            }
-
-            return true;
-        }
-
-        private bool BringForward(int id)
         {
             if (_figures.TryGetValue(id, out Object? @object))
             {
@@ -244,12 +230,27 @@ namespace Logic.ViewModels
             return true;
         }
 
+        private bool BringForward(int id)
+        {
+            if (_figures.TryGetValue(id, out Object? @object))
+            {
+                int index = _sortedFigures.IndexOf(id);
+                if (index > 0)
+                {
+                    _sortedFigures.Remove(id);
+                    _sortedFigures.Insert(index - 1, id);
+                }
+            }
+
+            return true;
+        }
+
         private bool BringToFront(int id)
         {
             if (_figures.TryGetValue(id, out Object? @object))
             {
                 _sortedFigures.Remove(id);
-                _sortedFigures.Prepend(id);
+                _sortedFigures.Insert(0, id);
             }
 
             return true;
