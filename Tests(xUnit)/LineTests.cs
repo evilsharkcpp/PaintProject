@@ -142,6 +142,7 @@ namespace Tests_xUnit_
             // Arrange
             GraphicTester tester = new GraphicTester();
             Line line1 = new Line();
+
             Point2d p1 = new Point2d(-1, -1),
                     p2 = new Point2d(+1, +1);
 

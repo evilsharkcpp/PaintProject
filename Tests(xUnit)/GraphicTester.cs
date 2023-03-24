@@ -23,8 +23,14 @@ namespace Tests_xUnit_
         public void DrawEllipse(Point2d start, double a, double b, bool isFill, bool isOutLine)
         {
             Point2d newStart = new Point2d();
+            Vector2d v1 = new Vector2d(a, 0),
+                     v2 = new Vector2d(0, b),
+                     v3 = new Vector2d(1, 0);
             ModelMatrix.Product(start, ref newStart);
-            Figures.Add(new Ellipse() { Start = newStart, a = a, b = b, IsFill = isFill, IsOutline = isOutLine });
+            ModelMatrix.Product(v1, ref v1);
+            ModelMatrix.Product(v2, ref v2);
+            ModelMatrix.Product(v3, ref v3);
+            Figures.Add(new Ellipse() { Start = newStart, a = v1.Norm, b = v2.Norm, angle = Math.Asin(new Vector2d(1, 0) ^ v3 / v3.Norm), IsFill = isFill, IsOutline = isOutLine });
         }
 
         public void DrawLine(Point2d v1, Point2d v2, bool isFill, bool isOutLine)
@@ -51,8 +57,14 @@ namespace Tests_xUnit_
         public void DrawRectangle(Point2d start, double a, double b, bool isFill, bool isOutLine)
         {
             Point2d newStart = new Point2d();
+            Vector2d v1 = new Vector2d(a, 0),
+                     v2 = new Vector2d(0, b),
+                     v3 = new Vector2d(1, 0);
             ModelMatrix.Product(start, ref newStart);
-            Figures.Add(new Rectangle() { Start = newStart, a = a, b = b, IsFill = isFill, IsOutline = isOutLine });
+            ModelMatrix.Product(v1, ref v1);
+            ModelMatrix.Product(v2, ref v2);
+            ModelMatrix.Product(v3, ref v3);
+            Figures.Add(new Rectangle() { Start = newStart, a = v1.Norm, b = v2.Norm, angle = Math.Asin(new Vector2d(1, 0) ^ v3 / v3.Norm), IsFill = isFill, IsOutline = isOutLine });
         }
 
         public void DrawTriangle(Point2d v1, Point2d v2, Point2d v3, bool isFill, bool isOutLine)
