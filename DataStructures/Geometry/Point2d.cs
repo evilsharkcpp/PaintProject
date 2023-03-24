@@ -36,6 +36,11 @@ namespace DataStructures.Geometry
         }
 
 
+        public static Point2d operator +(Point2d a, Point2d b)
+        {
+            return new Point2d(a.X + b.X, a.Y + b.Y);
+        }
+
         public static Point2d operator +(Point2d a, Vector2d b)
         {
             return new Point2d(a.X + b.X, a.Y + b.Y);

@@ -19,6 +19,7 @@ namespace Logic.ViewModels
         public int StateIndex { get; protected set; }
 
         public abstract IEnumerable<int> SelectedFigures { get; }
+        public abstract IFigureBound FigureBound { get; }
 
         public ReactiveCommand<string, IFigure?> CreateFigure { get; }
         public ReactiveCommand<IDrawableObject, int> AddFigure { get; }
@@ -37,8 +38,6 @@ namespace Logic.ViewModels
         public ReactiveCommand<Unit, bool> Redo { get; }
 
         public ReactiveCommand<IGraphics, bool> Draw { get; }
-
-
 
         public Logic()
         {

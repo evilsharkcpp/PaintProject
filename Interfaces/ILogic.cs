@@ -11,6 +11,7 @@ namespace Interfaces
         int StateIndex { get; }
 
         IEnumerable<int> SelectedFigures { get; }
+        IFigureBound FigureBound { get; }
 
         ReactiveCommand<string, IFigure?> CreateFigure { get; }
         ReactiveCommand<IDrawableObject, int> AddFigure { get; }
