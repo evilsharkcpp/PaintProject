@@ -38,10 +38,10 @@
                 <Button Style="{StaticResource MyButtonStyle}" Click="Open_Button" Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
                 <Button Style="{StaticResource MyButtonStyle}" Click="Save_Button" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="60"/>
             </Grid>
-            <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отменить">
+            <Button Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Отменить" Visibility="Hidden">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/cancel.png" />
             </Button>
-            <Button Grid.Column="1" Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Вернуть">
+            <Button Grid.Column="1" Style="{StaticResource MyButtonStyle}" Background="#FF505050" BorderBrush="{x:Null}" ToolTip="Вернуть" Visibility="Hidden">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Margin="2,2,2,2" Source="/Views/Assets/return.png" />
             </Button>
         </Grid>
