@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests_xUnit_.Figures;
 
 namespace Tests_xUnit_
 {
@@ -15,7 +16,7 @@ namespace Tests_xUnit_
         {
             // Arrange
             GraphicTester tester = new GraphicTester();
-            Rectangle rectangle1 = new Rectangle();
+            Geometry.Figures.Rectangle rectangle1 = new Geometry.Figures.Rectangle();
 
             // Act
             rectangle1.Draw(tester);
@@ -28,20 +29,34 @@ namespace Tests_xUnit_
             Assert.Equal(-1, rectangle.Start.Y, 5);
             Assert.Equal(2, rectangle.a, 5);
             Assert.Equal(2, rectangle.b, 5);
+            Assert.False(rectangle.IsOutline);
+            Assert.True(rectangle.IsFill);
         }
 
         [Theory]
+        [InlineData(-1, -1)]
         [InlineData(0, 0)]
         [InlineData(0, 10)]
+        [InlineData(0, -10)]
         [InlineData(10, 0)]
-        [InlineData(10, 10)]
-        [InlineData(-10, 10)]
-        [InlineData(10, -10)]
+        [InlineData(-10, 0)]
+        [InlineData(10, 15)]
+        [InlineData(-10, 15)]
+        [InlineData(10, -15)]
+        [InlineData(-10, -15)]
+        [InlineData(0, 0.31)]
+        [InlineData(0, -0.31)]
+        [InlineData(0.15, 0)]
+        [InlineData(-0.15, 0)]
+        [InlineData(0.15, 0.31)]
+        [InlineData(-0.15, 0.31)]
+        [InlineData(0.15, -0.31)]
+        [InlineData(-0.15, -0.31)]
         public void TestСhangePosition(double x_pos, double y_pos)
         {
             // Arrange
             GraphicTester tester = new GraphicTester();
-            Rectangle rectangle1 = new Rectangle();
+            Geometry.Figures.Rectangle rectangle1 = new Geometry.Figures.Rectangle();
             double expectedX1 = x_pos;
             double expectedY1 = y_pos;
             double expecteda = 2.0;
@@ -66,14 +81,19 @@ namespace Tests_xUnit_
         [InlineData(0, 10)]
         [InlineData(10, 0)]
         [InlineData(10, 10)]
+        [InlineData(15, 10)]
+        [InlineData(10, 15)]
         [InlineData(0, 1)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
+        [InlineData(0, 0.12)]
+        [InlineData(0.12, 0)]
+        [InlineData(0.12, 0.12)]
         public void TestСhangeSize(double width, double height)
         {
             // Arrange
             GraphicTester tester = new GraphicTester();
-            Rectangle rectangle1 = new Rectangle();
+            Geometry.Figures.Rectangle rectangle1 = new Geometry.Figures.Rectangle();
             double expectedX1 = -1;
             double expectedY1 = -1;
             double expecteda = width;
