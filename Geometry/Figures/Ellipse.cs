@@ -28,6 +28,11 @@ namespace Geometry.Figures
             return Radius * Radius - (p.X * p.X + p.Y * p.Y) >= -eps * eps;
         }
 
+        protected override bool OnBound(Point2d p, double eps)
+        {
+            return Math.Abs(Radius * Radius - (p.X * p.X + p.Y * p.Y)) >= -eps * eps;
+        }
+
         protected override bool InArea(Rect rect, double eps)
         {
             throw new NotImplementedException();

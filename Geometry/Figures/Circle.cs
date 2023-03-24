@@ -1,13 +1,9 @@
-﻿using DataStructures.ConvertibleFigures;
-using DataStructures;
+﻿using DataStructures;
+using DataStructures.ConvertibleFigures;
+using DataStructures.Geometry;
 using Geometry.Attributes;
 using Interfaces;
-using ReactiveUI;
-using System.Numerics;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Runtime.Serialization;
-using DataStructures.Geometry;
 
 namespace Geometry.Figures
 {
