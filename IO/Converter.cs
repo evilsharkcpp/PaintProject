@@ -272,7 +272,8 @@ namespace IO
         {
             SVG svg_convert = new SVG();
 
-            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            SvgDocument svg_doc = svg_convert.getSvgDocumentWithback(figures);
+
             svg_doc.Draw().Save(stream, ImageFormat.Jpeg);
         }
     }
@@ -288,7 +289,7 @@ namespace IO
         {
             SVG svg_convert = new SVG();
 
-            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            SvgDocument svg_doc = svg_convert.getSvgDocumentWithback(figures);
             svg_doc.Draw().Save(stream, ImageFormat.Bmp);
         }
     }
@@ -304,7 +305,7 @@ namespace IO
         {
             SVG svg_convert = new SVG();
 
-            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            SvgDocument svg_doc = svg_convert.getSvgDocumentWithback(figures);
             svg_doc.Draw().Save(stream, ImageFormat.Gif);
         }
     }
@@ -320,7 +321,7 @@ namespace IO
         {
             SVG svg_convert = new SVG();
 
-            SvgDocument svg_doc = svg_convert.getSvgDocument(figures);
+            SvgDocument svg_doc = svg_convert.getSvgDocumentWithback(figures);
             svg_doc.Draw().Save(stream, ImageFormat.Tiff);
         }
     }
