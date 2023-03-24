@@ -225,8 +225,6 @@ namespace GUI_WPF
             }
             else if (state == MoveState.FIGURE_MOVE && _vm.SelectedFigures.Count() > 0)
             {
-                var shiftX = mouseDownPoint.X - point.X;
-                var shiftY = mouseDownPoint.Y - point.Y;
                 foreach (var selectedFigureId in _vm.SelectedFigures)
                 {
                     IDrawableObject? selectedFigure = null;
@@ -442,7 +440,6 @@ namespace GUI_WPF
                     _vm.GetFigureByID.Execute(selectedFigureId).Subscribe(a => selectedFigure = a);
                     selectedFiguresStartMovePosition.Add(selectedFigureId, new Point2d(selectedFigure.Figure.Position.X, selectedFigure.Figure.Position.Y));
                 }
-                state = MoveState.FIGURE_MOVE;
             }
             else
             {
