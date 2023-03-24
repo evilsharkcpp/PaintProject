@@ -64,7 +64,8 @@ namespace Logic.ViewModels
                 figure.Size = DefaultSize;
             }
 
-            return fabric.CreateFigure(name);
+            _figureBound.Figures = new IFigure?[] { figure };
+            return figure;
         }
 
         protected override int OnAdd(IDrawableObject figure)
