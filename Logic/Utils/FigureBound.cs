@@ -280,24 +280,24 @@ namespace Logic.Utils
 
             if ((direction & FigureChangeDirection.Top) > 0)
             {
-                dSize.Y += delta.Y;
-            }
-
-            if ((direction & FigureChangeDirection.Right) > 0)
-            {
-                dPosition.X = delta.X;
-                dSize.X -= delta.X;
-            }
-
-            if ((direction & FigureChangeDirection.Bottom) > 0)
-            {
                 dPosition.Y = delta.Y;
                 dSize.Y -= delta.Y;
             }
 
-            if ((direction & FigureChangeDirection.Left) > 0)
+            if ((direction & FigureChangeDirection.Right) > 0)
             {
                 dSize.X += delta.X;
+            }
+
+            if ((direction & FigureChangeDirection.Bottom) > 0)
+            {
+                dSize.Y += delta.Y;
+            }
+
+            if ((direction & FigureChangeDirection.Left) > 0)
+            {
+                dPosition.X = delta.X;
+                dSize.X -= delta.X;
             }
         }
 
