@@ -14,7 +14,7 @@ namespace DataStructures.ConvertibleFigures
     public class ConvertibleRectangle : ConvertibleFigure
     {
         // Левая верхняя прямоугольника
-        [DataMember(Name = "Position")]
+        [DataMember(Name = "Point1")]
         public Point2d point1;
 
         public ConvertibleRectangle(Point2d point1, double width, double height, double angle)
