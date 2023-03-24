@@ -63,5 +63,34 @@ namespace Tests_xUnit_
             Assert.Equal(expectedX3, trangle.V3.X, 5);
             Assert.Equal(expectedY3, trangle.V3.Y, 5);
         }
+
+        [Theory]
+        [InlineData(2 * Math.PI, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0)]
+        [InlineData(Math.PI, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
+        [InlineData(Math.PI/4, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
+        [InlineData(3* Math.PI, 0.0, 0.0, -1.0, 0.0, -1.0, 1.0)]
+        [InlineData(2*Math.PI / 3, 0.0, 0.0, -0.5, 0.86602540378, -0.5, -0.86602540378)] 
+        public void TestСhangAngle(double angle, double eX1, double eY1, double eX2, double eY2, double eX3, double eY3)
+        {
+            // Arrange
+            Triangle triangle1 = new Triangle();
+
+
+            // Act
+            GraphicTester tester = new GraphicTester();
+            triangle1.Angle = angle;
+            triangle1.Draw(tester);
+
+            // Assert
+            Assert.Single(tester.Figures);
+            Assert.True(tester.Figures[0] is Tests_xUnit_.Figures.Triangle);
+            Tests_xUnit_.Figures.Triangle? trangle = tester.Figures[0] as Tests_xUnit_.Figures.Triangle;
+            Assert.Equal(eX1, trangle.V1.X, 3);
+            Assert.Equal(eY1, trangle.V1.Y, 3);
+            Assert.Equal(eX2, trangle.V2.X, 3);
+            Assert.Equal(eY2, trangle.V2.Y, 3);
+            Assert.Equal(eX3, trangle.V3.X, 3);
+            Assert.Equal(eY3, trangle.V3.Y, 3);
+        }
     }
 }

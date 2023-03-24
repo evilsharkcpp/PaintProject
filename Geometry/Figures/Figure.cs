@@ -64,8 +64,8 @@ namespace Geometry.Figures
             get => _position;
             set
             {
-                _position.X = value.X + 1;
-                _position.Y = value.Y + 1;
+                _position.X = value.X;
+                _position.Y = value.Y;
                 _transform.V = _position;
             }
         }
@@ -79,6 +79,9 @@ namespace Geometry.Figures
 
             _nodes = new List<INode>();
             _commands = new List<(string, ReactiveCommand<Point2d, bool>)>();
+
+            Position = new Point2d(-1, -1);
+            Size = new Vector2d(2, 2);
         }
 
         public Figure(Figure figure)
