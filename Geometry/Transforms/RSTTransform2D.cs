@@ -39,7 +39,7 @@ namespace Geometry.Transforms
             get => _scaleX;
             set
             {
-                if (value != _scaleX && value > 0)
+                if (value != _scaleX)
                 {
                     _scaleX = value;
 
@@ -56,7 +56,7 @@ namespace Geometry.Transforms
             get => _scaleY;
             set
             {
-                if (value != _scaleY && value > 0)
+                if (value != _scaleY)
                 {
                     _scaleY = value;
 

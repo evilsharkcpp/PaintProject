@@ -335,6 +335,7 @@ namespace GUI_WPF
                             bound.setProperties(SelectedFigure.Figure.Position, SelectedFigure.Figure.Size);
                             state = MoveState.FIGURE_MOVE;
                             updateSelectedFigurePosition();
+                            updateSelectedFigureSize();
                             SelectedFigureAngle = SelectedFigure.Figure.Angle * 180.0 / Math.PI;
                         }
                         OnPropertyChanged("SelectedFigure");
@@ -492,7 +493,8 @@ namespace GUI_WPF
 
         private void Create_Button(object sender, RoutedEventArgs e)
         {
-
+            _vm.Clear.Execute().Subscribe();
+            OnPropertyChanged("SelectedFigure");
         }
         private void Open_Button(object sender, RoutedEventArgs e)
         {

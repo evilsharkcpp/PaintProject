@@ -34,7 +34,7 @@
                     <ColumnDefinition Width="65*"/>
                     <ColumnDefinition Width="164*"/>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource MyButtonStyle}" Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
+                <Button Style="{StaticResource MyButtonStyle}" Click="Create_Button" Content="Создать" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
                 <Button Style="{StaticResource MyButtonStyle}" Click="Open_Button" Grid.Column="1" Content="Открыть" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="48"/>
                 <Button Style="{StaticResource MyButtonStyle}" Click="Save_Button" Grid.Column="2" Content="Сохранить" Background="#FF505050" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Center" Width="60"/>
             </Grid>

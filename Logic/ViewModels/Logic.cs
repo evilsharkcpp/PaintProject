@@ -19,6 +19,7 @@ namespace Logic.ViewModels
         public int StateIndex { get; protected set; }
 
         public abstract IEnumerable<int> SelectedFigures { get; }
+        public abstract IFigureBound FigureBound { get; }
 
         public ReactiveCommand<string, IFigure?> CreateFigure { get; }
         public ReactiveCommand<IDrawableObject, int> AddFigure { get; }
@@ -32,13 +33,11 @@ namespace Logic.ViewModels
 
         public ReactiveCommand<Stream, bool> Save { get; }
         public ReactiveCommand<Stream, bool> Load { get; }
-
+        public ReactiveCommand<Unit, bool> Clear { get; }
         public ReactiveCommand<Unit, bool> Undo { get; }
         public ReactiveCommand<Unit, bool> Redo { get; }
 
         public ReactiveCommand<IGraphics, bool> Draw { get; }
-
-
 
         public Logic()
         {
@@ -59,6 +58,8 @@ namespace Logic.ViewModels
             Redo = ReactiveCommand.Create<Unit, bool>(a => OnRedo());
 
             Draw = ReactiveCommand.Create<IGraphics, bool>(a => OnDraw(a));
+
+            Clear = ReactiveCommand.Create<Unit, bool>(a => OnClear());
         }
 
 
@@ -80,6 +81,8 @@ namespace Logic.ViewModels
         protected abstract bool OnSave(Stream a);
 
         protected abstract bool OnLoad(Stream a);
+
+        protected abstract bool OnClear();
 
         protected abstract bool OnUndo();
 
