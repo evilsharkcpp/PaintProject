@@ -16,6 +16,7 @@ namespace Interfaces
     {
         Point2d Position { get; }
         Vector2d Size { get; }
+         public bool IsManySelect { get; }
         double Angle { get; }
         double Padding { get; set; }
 
