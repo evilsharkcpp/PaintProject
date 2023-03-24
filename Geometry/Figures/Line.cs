@@ -61,6 +61,8 @@ namespace Geometry.Figures
             else return false;
         }
 
+        protected override bool OnBound(Point2d p, double eps) => IsInside(p, eps);
+
         protected override bool InArea(Rect rect, double eps)
         {
             throw new NotImplementedException();

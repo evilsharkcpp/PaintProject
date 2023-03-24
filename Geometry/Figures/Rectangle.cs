@@ -38,6 +38,14 @@ namespace Geometry.Figures
                    Start.Y + Height - p.Y >= -eps;
         }
 
+        protected override bool OnBound(Point2d p, double eps)
+        {
+            return Math.Abs(Start.X - p.X) <= eps ||
+                   Math.Abs(Start.X + Width - p.X) <= eps ||
+                   Math.Abs(Start.Y - p.Y) <= eps ||
+                   Math.Abs(Start.Y + Height - p.Y) <= eps;
+        }
+
         protected override bool InArea(Rect rect, double eps)
         {
             throw new NotImplementedException();
