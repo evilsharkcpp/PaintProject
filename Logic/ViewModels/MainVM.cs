@@ -359,16 +359,20 @@ namespace Logic.ViewModels
                     break;
             }
             var objects = converter.ReadFile(a);
-            _figures.Clear();
-            _currentId = 0;
-            _selectedFigures.Clear();
+            OnClear();
             foreach(var item in objects)
             {
                 OnAdd(item);
             }
             return true;
         }
-
+        protected override bool OnClear()
+        {
+            _figures.Clear();
+            _currentId = 0;
+            _selectedFigures.Clear();
+            return true;
+        }
         protected override bool OnUndo()
         {
 
