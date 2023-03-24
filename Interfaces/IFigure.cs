@@ -8,9 +8,14 @@ namespace Interfaces
 {
     public interface IFigure : ICloneable
     {
-        Vector2d Size { get; set; }
+        [Reactive]
         double Angle { get; set; }
-        [Reactive] Point2d Position { get; set; }
+
+        [Reactive]
+        Vector2d Size { get; set; }
+
+        [Reactive]
+        Point2d Position { get; set; }
 
         IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IParameter<object>> ExtraProperties { get; }

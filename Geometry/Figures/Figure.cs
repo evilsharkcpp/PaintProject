@@ -4,6 +4,7 @@ using Geometry.Parameterization;
 using Geometry.Transforms;
 using Interfaces;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Numerics;
 
 namespace Geometry.Figures

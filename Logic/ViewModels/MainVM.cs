@@ -1,6 +1,7 @@
 ﻿using DataStructures.Geometry;
 using Geometry;
 using Interfaces;
+using Logic.Utils;
 using ReactiveUI;
 using System.Numerics;
 using System.Reactive.Linq;
@@ -23,9 +24,10 @@ namespace Logic.ViewModels
 
         private int _selectedFigure;
         private List<int> _selectedFigures;
+        private FigureBound _figureBound;
 
         public override IEnumerable<int> SelectedFigures => _selectedFigures;
-
+        public override IFigureBound FigureBound => _figureBound;
 
         public MainVM()
         {
@@ -33,6 +35,7 @@ namespace Logic.ViewModels
             _sortedFigures = new List<SortedSet<int>>() { new SortedSet<int>() };
 
             _selectedFigures = new List<int>();
+            _figureBound = new FigureBound();
         }
 
 
@@ -43,6 +46,7 @@ namespace Logic.ViewModels
                 pair.Value.IsSelected = false;
             }
 
+            _figureBound.Figures = Array.Empty<IFigure>();
             _selectedFigure = -1;
             _selectedFigures.Clear();
         }
@@ -110,7 +114,7 @@ namespace Logic.ViewModels
             {
                 if (found)
                 {
-                    if (pair.Value.DrawableObject is not null && 
+                    if (pair.Value.DrawableObject is not null &&
                         pair.Value.DrawableObject.Figure is not null &&
                         pair.Value.DrawableObject.Figure.IsInside(p, 10))
                     {
@@ -141,6 +145,7 @@ namespace Logic.ViewModels
                 _figures[_selectedFigure].IsSelected = true;
             }
 
+            _figureBound.Figures = _selectedFigures.Select(id => _figures[id].DrawableObject?.Figure);
             return _selectedFigure;
         }
 
@@ -162,6 +167,7 @@ namespace Logic.ViewModels
                 return successfully;
             }).Select(pair => pair.Key));
 
+            _figureBound.Figures = _selectedFigures.Select(id => _figures[id].DrawableObject?.Figure);
             return false;
         }
 
@@ -346,9 +352,6 @@ namespace Logic.ViewModels
 
         protected override bool OnDraw(IGraphics graphics)
         {
-            Point2d start = new Point2d(double.MaxValue, double.MaxValue),
-                    end = new Point2d(double.MinValue, double.MinValue);
-
             foreach (SortedSet<int> set in _sortedFigures)
             {
                 foreach (int id in set)
@@ -362,35 +365,14 @@ namespace Logic.ViewModels
 
                         IFigure figure = @object.DrawableObject.Figure;
                         figure.Draw(graphics);
-
-                        if (@object.IsSelected)
-                        {
-                            if (figure.Position.X < start.X)
-                                start.X = figure.Position.X;
-
-                            if (figure.Position.Y < start.Y)
-                                start.Y = figure.Position.Y;
-
-                            if (figure.Position.X + figure.Size.X > end.X)
-                                end.X = figure.Position.X + figure.Size.X;
-
-                            if (figure.Position.Y + figure.Size.Y > end.Y)
-                                end.Y = figure.Position.Y + figure.Size.Y;
-                        }
                     }
                 }
             }
 
             if (_selectedFigures.Count > 0)
             {
-                start.X -= 5;
-                start.Y -= 5;
-                end.X += 5;
-                end.Y += 5;
-
                 graphics.GraphicStyle = SelectionStyle;
-                graphics.ModelMatrix = new Matrix3d();
-                graphics.DrawRectangle(start, end.X - start.X, end.Y - start.Y, false, true);
+                _figureBound.Draw(graphics);
             }
 
             return true;

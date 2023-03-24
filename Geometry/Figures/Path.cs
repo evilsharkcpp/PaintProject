@@ -21,6 +21,11 @@ namespace Geometry.Figures
             throw new NotImplementedException();
         }
 
+        protected override bool OnBound(Point2d p, double eps)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override bool InArea(Rect rect, double eps)
         {
             throw new NotImplementedException();
@@ -37,11 +42,6 @@ namespace Geometry.Figures
         }
 
         public override ConvertibleFigure ToConvertibleFigure()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool OnBound(Point2d p, double eps)
         {
             throw new NotImplementedException();
         }
