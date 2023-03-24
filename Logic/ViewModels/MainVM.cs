@@ -345,9 +345,7 @@ namespace Logic.ViewModels
             int i = 0;
             foreach(var item in objects)
             {
-                var obj = new Object();
-                obj.DrawableObject = item;
-                _figures.Add(i++, obj);
+                OnAdd(item);
             }
             return true;
         }
