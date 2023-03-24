@@ -329,7 +329,16 @@ namespace Logic.ViewModels
 
         protected override bool OnSave(Stream a)
         {
-            JSONConverter converter = new JSONConverter();
+            IConverter converter = null;
+            switch (Path.GetExtension((a as FileStream).Name))
+            {
+                case ".svg":
+                    converter = new SVGConverter();
+                    break;
+                case ".json":
+                    converter = new JSONConverter();
+                    break;
+            }
             List<IDrawableObject> objects = new List<IDrawableObject>();
             foreach (var item in _figures)
                 objects.Add(item.Value.DrawableObject);
@@ -339,15 +348,23 @@ namespace Logic.ViewModels
 
         protected override bool OnLoad(Stream a)
         {
-            JSONConverter converter = new JSONConverter();
+            IConverter converter = null;
+            switch(Path.GetExtension((a as FileStream).Name))
+            {
+                case ".svg":
+                    converter = new SVGConverter();
+                    break;
+                case ".json":
+                    converter = new JSONConverter();
+                    break;
+            }
             var objects = converter.ReadFile(a);
             _figures.Clear();
-            int i = 0;
+            _currentId = 0;
+            _selectedFigures.Clear();
             foreach(var item in objects)
             {
-                var obj = new Object();
-                obj.DrawableObject = item;
-                _figures.Add(i++, obj);
+                OnAdd(item);
             }
             return true;
         }

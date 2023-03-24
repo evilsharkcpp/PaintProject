@@ -335,6 +335,7 @@ namespace GUI_WPF
                             bound.setProperties(SelectedFigure.Figure.Position, SelectedFigure.Figure.Size);
                             state = MoveState.FIGURE_MOVE;
                             updateSelectedFigurePosition();
+                            updateSelectedFigureSize();
                             SelectedFigureAngle = SelectedFigure.Figure.Angle * 180.0 / Math.PI;
                         }
                         OnPropertyChanged("SelectedFigure");
