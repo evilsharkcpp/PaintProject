@@ -431,7 +431,7 @@ namespace GUI_WPF
             if (state == MoveState.MULTIPLE_SELECT)
             {
                 var point = e.GetPosition(canvas);
-                _vm.SelectFigures.Execute(new DataStructures.Geometry.Rect(new Point2d(mouseDownPoint.X, mouseDownPoint.Y), new Point2d(point.X, point.Y)));
+                _vm.SelectFigures.Execute(new DataStructures.Geometry.Rect(new Point2d(mouseDownPoint.X, mouseDownPoint.Y), new Point2d(point.X, point.Y))).Subscribe();
                 _ = SelectedFigure;
                 OnPropertyChanged("SelectedFigure");
                 selectedFiguresStartMovePosition.Clear();
