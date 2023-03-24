@@ -12,13 +12,13 @@ namespace DataStructures.ConvertibleFigures
 
         public ConvertibleSquare(Point2d point1, double width, double height, double angle)
         {
-            this.point1 = point1;
+            this.point1 = new Point2d(point1.X, point1.Y + Height); ;
             this.angle = angle;
 
             Width = width;
             Height = height;
 
-            position = point1; 
+            position = new Point2d(point1.X, point1.Y + Height);
         }
     }
 }

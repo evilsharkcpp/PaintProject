@@ -64,9 +64,6 @@ namespace Geometry.Figures
         public override ConvertibleFigure ToConvertibleFigure()
         {
             Point2d convertible_position = Position;
-            
-            // В ConvertibleFigure позиция определяется по левой верхней точке
-            convertible_position.Y -= Size.Y;
 
             return new ConvertibleRectangle(convertible_position, Size.X, Size.Y, Angle);
         }
