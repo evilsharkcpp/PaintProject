@@ -70,11 +70,6 @@ namespace Geometry.Figures
             return false;
         }
 
-        protected override bool InArea(Rect rect, double eps)
-        {
-            throw new NotImplementedException();
-        }
-
         public override IFigure Clone()
         {
             return new Triangle(this);

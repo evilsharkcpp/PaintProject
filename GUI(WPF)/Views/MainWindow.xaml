@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="1553*"/>
                 <ColumnDefinition Width="267*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Canvas Name="canvas" MouseLeave="canvas_MouseLeave" ClipToBounds="True" MouseMove="canvas_MouseMove" MouseLeftButtonDown="canvas_MouseDown" MouseLeftButtonUp="Canvas_MouseLeftButtonUp" MouseWheel="Canvas_MouseWheel" Background="White" Grid.ColumnSpan="3" Margin="53,0,0,0">
+            <Canvas Name="canvas" MouseRightButtonDown="canvas_MouseRightButtonDown" MouseLeave="canvas_MouseLeave" ClipToBounds="True" MouseMove="canvas_MouseMove" MouseLeftButtonDown="canvas_MouseDown" MouseLeftButtonUp="Canvas_MouseLeftButtonUp" MouseWheel="Canvas_MouseWheel" Background="White" Grid.ColumnSpan="3" Margin="53,0,0,0">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="canvasST" ScaleX="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding Path=CanvasScale, ElementName=mainWindow, UpdateSourceTrigger=PropertyChanged}"/>

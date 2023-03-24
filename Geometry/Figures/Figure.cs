@@ -5,6 +5,7 @@ using Geometry.Transforms;
 using Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace Geometry.Figures
@@ -32,8 +33,8 @@ namespace Geometry.Figures
             {
                 if (_angle != value)
                 {
-                    _angle = value;
-                    _transform.Angle = _angle;
+                    _transform.Angle = value;
+                    this.RaiseAndSetIfChanged(ref _angle, value);
                 }
             }
         }
@@ -43,16 +44,17 @@ namespace Geometry.Figures
             get => _size;
             set
             {
-                _size = value;
-
-                if (_bindSize)
+                if (_size != value)
                 {
-                    double max = Math.Max(_size.X, _size.Y) / 2;
-                    _transform.ScaleX = max;
-                    _transform.ScaleY = max;
-                }
-                else
-                {
+                    if (_bindSize)
+                    {
+                        double max = Math.Max(value.X, value.Y);
+                        this.RaiseAndSetIfChanged(ref _size, new Point2d(max, max));
+                    }
+                    else
+                    {
+                        this.RaiseAndSetIfChanged(ref _size, new Point2d(value.X, value.Y));
+                    }
                     _transform.ScaleX = _size.X / 2.0;
                     _transform.ScaleY = _size.Y / 2.0;
                 }
@@ -64,9 +66,11 @@ namespace Geometry.Figures
             get => _position;
             set
             {
-                _position.X = value.X;
-                _position.Y = value.Y;
-                _transform.V = _position;
+                if (_position != value)
+                {
+                    _transform.V = value;
+                    this.RaiseAndSetIfChanged(ref _position, value);
+                }
             }
         }
 
@@ -122,7 +126,9 @@ namespace Geometry.Figures
             Point2d p1 = new Point2d(), p2 = new Point2d();
             _transform.ApplyInv(rect.Start, ref p1);
             _transform.ApplyInv(rect.End, ref p2);
-            return InArea(new Rect(p1, p2), eps / Math.Max(Size.X, Size.Y));
+            double eps_ = eps / Math.Max(Size.X, Size.Y);
+            return p1.X <= -1 - eps_ && p1.Y <= -1 - eps_ &&
+                   p2.X >= 1 + eps_ && p2.Y >= 1 + eps_;
         }
 
         public bool HasIntersection(IFigure figure)
@@ -156,7 +162,6 @@ namespace Geometry.Figures
         protected abstract void OnDraw(IGraphics graphics);
         protected abstract bool IsInside(Point2d p, double eps);
         protected abstract bool OnBound(Point2d p, double eps);
-        protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();
 

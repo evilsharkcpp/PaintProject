@@ -14,14 +14,13 @@ namespace Logic.ViewModels
         private class Object
         {
             public IDrawableObject? DrawableObject;
-            public int ZIndex;
             public bool IsSelected;
         }
 
         private int _currentId = 0;
 
         private Dictionary<int, Object> _figures;
-        private List<SortedSet<int>> _sortedFigures;
+        private List<int> _sortedFigures;
 
         private int _selectedFigure;
         private List<int> _selectedFigures;
@@ -33,7 +32,7 @@ namespace Logic.ViewModels
         public MainVM()
         {
             _figures = new Dictionary<int, Object>();
-            _sortedFigures = new List<SortedSet<int>>() { new SortedSet<int>() };
+            _sortedFigures = new List<int>();
 
             _selectedFigures = new List<int>();
             _figureBound = new FigureBound();
@@ -64,15 +63,16 @@ namespace Logic.ViewModels
                 figure.Size = DefaultSize;
             }
 
-            return fabric.CreateFigure(name);
+            _figureBound.Figures = new IFigure?[] { figure };
+            return figure;
         }
 
         protected override int OnAdd(IDrawableObject figure)
         {
             ResetSelect();
 
-            _figures.Add(_currentId, new Object() { DrawableObject = figure, IsSelected = true, ZIndex = _sortedFigures.Count - 1 });
-            _sortedFigures.Last().Add(_currentId++);
+            _figures.Add(_currentId, new Object() { DrawableObject = figure, IsSelected = true });
+            _sortedFigures.Insert(0, _currentId++);
 
             _selectedFigure = _currentId - 1;
             _selectedFigures.Clear();
@@ -93,7 +93,7 @@ namespace Logic.ViewModels
             bool successfully = false;
             if (_figures.TryGetValue(id, out Object? @object))
             {
-                _sortedFigures[@object.ZIndex].Remove(id);
+                _sortedFigures.Remove(id);
                 _figures.Remove(id);
                 successfully = true;
             }
@@ -103,7 +103,6 @@ namespace Logic.ViewModels
 
         protected override int OnSelectFigure(Point2d point)
         {
-            ResetSelect();
             bool found = _selectedFigure < 0;
             int selectedFigure = _selectedFigure,
                 proxySelectedFigure = -1,
@@ -111,30 +110,34 @@ namespace Logic.ViewModels
 
             ResetSelect();
             Vector2 p = new Vector2((float)point.X, (float)point.Y);
-            foreach (KeyValuePair<int, Object> pair in _figures)
+            for (int i = 0; i < _sortedFigures.Count; i++)
             {
-                if (found)
+                int id = _sortedFigures[i];
+                if (_figures.TryGetValue(id, out Object? @object))
                 {
-                    if (pair.Value.DrawableObject is not null &&
-                        pair.Value.DrawableObject.Figure is not null &&
-                        pair.Value.DrawableObject.Figure.IsInside(p, 10))
+                    if (found)
                     {
-                        newSelectedFigure = pair.Key;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (proxySelectedFigure == -1)
-                    {
-                        if (pair.Value.DrawableObject is not null &&
-                            pair.Value.DrawableObject.Figure is not null &&
-                            pair.Value.DrawableObject.Figure.IsInside(p, 10))
+                        if (@object.DrawableObject is not null &&
+                            @object.DrawableObject.Figure is not null &&
+                            @object.DrawableObject.Figure.IsInside(p, 10))
                         {
-                            proxySelectedFigure = pair.Key;
+                            newSelectedFigure = id;
+                            break;
                         }
                     }
-                    found = pair.Key == selectedFigure;
+                    else
+                    {
+                        if (proxySelectedFigure == -1)
+                        {
+                            if (@object.DrawableObject is not null &&
+                                @object.DrawableObject.Figure is not null &&
+                                @object.DrawableObject.Figure.IsInside(p, 10))
+                            {
+                                proxySelectedFigure = id;
+                            }
+                        }
+                        found = id == selectedFigure;
+                    }
                 }
             }
 
@@ -154,19 +157,20 @@ namespace Logic.ViewModels
         {
             ResetSelect();
 
-            _selectedFigures.AddRange(_figures.Where(pair =>
+            _selectedFigures.AddRange(_sortedFigures.Where(id =>
             {
                 bool successfully = false;
 
-                if (pair.Value.DrawableObject is not null &&
-                    pair.Value.DrawableObject.Figure is not null)
+                if (_figures.TryGetValue(id, out Object? @object) &&
+                    @object.DrawableObject is not null &&
+                    @object.DrawableObject.Figure is not null)
                 {
-                    successfully = pair.Value.DrawableObject.Figure.InArea(rect, 10);
-                    pair.Value.IsSelected = successfully;
+                    successfully = @object.DrawableObject.Figure.InArea(rect, -10);
+                    @object.IsSelected = successfully;
                 }
 
                 return successfully;
-            }).Select(pair => pair.Key));
+            }));
 
             _figureBound.Figures = _selectedFigures.Select(id => _figures[id].DrawableObject?.Figure);
             return false;
@@ -201,29 +205,10 @@ namespace Logic.ViewModels
 
         private bool SendToBack(int id)
         {
-            if (_figures.TryGetValue(id, out Object? @object) && @object.ZIndex > 0)
+            if (_figures.TryGetValue(id, out Object? @object))
             {
-                int currentZIndex = @object.ZIndex;
-
-                _sortedFigures[@object.ZIndex].Remove(id);
-                _sortedFigures[@object.ZIndex = 0].Add(id);
-
-                if (_sortedFigures.Last().Count == 0)
-                    _sortedFigures.RemoveAt(_sortedFigures.Count - 1);
-
-                if (_sortedFigures[currentZIndex].Count == 0)
-                {
-                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
-                    {
-                        foreach (int id_ in _sortedFigures[i])
-                        {
-                            if (_figures.TryGetValue(id_, out Object? @object_))
-                                @object_.ZIndex--;
-                        }
-
-                        _sortedFigures[i - 1] = _sortedFigures[i];
-                    }
-                }
+                _sortedFigures.Remove(id);
+                _sortedFigures.Insert(0, id);
             }
 
             return true;
@@ -231,28 +216,13 @@ namespace Logic.ViewModels
 
         private bool SendBackward(int id)
         {
-            if (_figures.TryGetValue(id, out Object? @object) && @object.ZIndex > 0)
+            if (_figures.TryGetValue(id, out Object? @object))
             {
-                int currentZIndex = @object.ZIndex;
-
-                _sortedFigures[@object.ZIndex].Remove(id);
-                _sortedFigures[--@object.ZIndex].Add(id);
-
-                if (_sortedFigures.Last().Count == 0)
-                    _sortedFigures.RemoveAt(_sortedFigures.Count - 1);
-
-                if (_sortedFigures[currentZIndex].Count == 0)
+                int index = _sortedFigures.IndexOf(id);
+                if (index > 0)
                 {
-                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
-                    {
-                        foreach (int id_ in _sortedFigures[i])
-                        {
-                            if (_figures.TryGetValue(id_, out Object? @object_))
-                                @object_.ZIndex--;
-                        }
-
-                        _sortedFigures[i - 1] = _sortedFigures[i];
-                    }
+                    _sortedFigures.Remove(id);
+                    _sortedFigures.Insert(index - 1, id);
                 }
             }
 
@@ -261,36 +231,13 @@ namespace Logic.ViewModels
 
         private bool BringForward(int id)
         {
-            if (_figures.TryGetValue(id, out Object? @object) &&
-                (_sortedFigures.Count > @object.ZIndex ||
-                 _sortedFigures.Last().Count > 1))
+            if (_figures.TryGetValue(id, out Object? @object))
             {
-                int currentZIndex = @object.ZIndex;
-
-                _sortedFigures[@object.ZIndex].Remove(id);
-
-                @object.ZIndex++;
-                if (_sortedFigures.Count <= @object.ZIndex)
+                int index = _sortedFigures.IndexOf(id);
+                if (index < _sortedFigures.Count - 1)
                 {
-                    _sortedFigures.Add(new SortedSet<int>() { id });
-                }
-                else
-                {
-                    _sortedFigures[@object.ZIndex].Add(id);
-                }
-
-                if (_sortedFigures[currentZIndex].Count == 0)
-                {
-                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
-                    {
-                        foreach (int id_ in _sortedFigures[i])
-                        {
-                            if (_figures.TryGetValue(id_, out Object? @object_))
-                                @object_.ZIndex--;
-                        }
-
-                        _sortedFigures[i - 1] = _sortedFigures[i];
-                    }
+                    _sortedFigures.Remove(id);
+                    _sortedFigures.Insert(index + 1, id);
                 }
             }
 
@@ -299,29 +246,10 @@ namespace Logic.ViewModels
 
         private bool BringToFront(int id)
         {
-            if (_figures.TryGetValue(id, out Object? @object) &&
-                (_sortedFigures.Count > @object.ZIndex ||
-                 _sortedFigures.Last().Count > 1))
+            if (_figures.TryGetValue(id, out Object? @object))
             {
-                int currentZIndex = @object.ZIndex;
-
-                _sortedFigures[@object.ZIndex].Remove(id);
-                @object.ZIndex = _sortedFigures.Count;
-                _sortedFigures.Add(new SortedSet<int>() { id });
-
-                if (_sortedFigures[currentZIndex].Count == 0)
-                {
-                    for (int i = currentZIndex; i < _sortedFigures.Count; i++)
-                    {
-                        foreach (int id_ in _sortedFigures[i])
-                        {
-                            if (_figures.TryGetValue(id_, out Object? @object_))
-                                @object_.ZIndex--;
-                        }
-
-                        _sortedFigures[i - 1] = _sortedFigures[i];
-                    }
-                }
+                _sortedFigures.Remove(id);
+                _sortedFigures.Prepend(id);
             }
 
             return true;
@@ -409,20 +337,18 @@ namespace Logic.ViewModels
 
         protected override bool OnDraw(IGraphics graphics)
         {
-            foreach (SortedSet<int> set in _sortedFigures)
+            for (int i = _sortedFigures.Count - 1; i >= 0; i--)
             {
-                foreach (int id in set)
+                int id = _sortedFigures[i];
+                if (_figures.TryGetValue(id, out Object? @object) &&
+                    @object.DrawableObject is not null &&
+                    @object.DrawableObject.Figure is not null &&
+                    @object.DrawableObject.Drawable is not null)
                 {
-                    if (_figures.TryGetValue(id, out Object? @object) &&
-                        @object.DrawableObject is not null &&
-                        @object.DrawableObject.Figure is not null &&
-                        @object.DrawableObject.Drawable is not null)
-                    {
-                        graphics.GraphicStyle = @object.DrawableObject.Drawable;
+                    graphics.GraphicStyle = @object.DrawableObject.Drawable;
 
-                        IFigure figure = @object.DrawableObject.Figure;
-                        figure.Draw(graphics);
-                    }
+                    IFigure figure = @object.DrawableObject.Figure;
+                    figure.Draw(graphics);
                 }
             }
 
