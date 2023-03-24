@@ -103,7 +103,6 @@ namespace Logic.ViewModels
 
         protected override int OnSelectFigure(Point2d point)
         {
-            ResetSelect();
             bool found = _selectedFigure < 0;
             int selectedFigure = _selectedFigure,
                 proxySelectedFigure = -1,
@@ -111,31 +110,34 @@ namespace Logic.ViewModels
 
             ResetSelect();
             Vector2 p = new Vector2((float)point.X, (float)point.Y);
-            foreach (int id in _sortedFigures)
+            for (int i = 0; i < _sortedFigures.Count; i++)
             {
-                Object @object = _figures[id];
-                if (found)
+                int id = _sortedFigures[i];
+                if (_figures.TryGetValue(id, out Object? @object))
                 {
-                    if (@object.DrawableObject is not null &&
-                        @object.DrawableObject.Figure is not null &&
-                        @object.DrawableObject.Figure.IsInside(p, 10))
-                    {
-                        newSelectedFigure = id;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (proxySelectedFigure == -1)
+                    if (found)
                     {
                         if (@object.DrawableObject is not null &&
                             @object.DrawableObject.Figure is not null &&
                             @object.DrawableObject.Figure.IsInside(p, 10))
                         {
-                            proxySelectedFigure = id;
+                            newSelectedFigure = id;
+                            break;
                         }
                     }
-                    found = id == selectedFigure;
+                    else
+                    {
+                        if (proxySelectedFigure == -1)
+                        {
+                            if (@object.DrawableObject is not null &&
+                                @object.DrawableObject.Figure is not null &&
+                                @object.DrawableObject.Figure.IsInside(p, 10))
+                            {
+                                proxySelectedFigure = id;
+                            }
+                        }
+                        found = id == selectedFigure;
+                    }
                 }
             }
 
@@ -157,10 +159,10 @@ namespace Logic.ViewModels
 
             _selectedFigures.AddRange(_sortedFigures.Where(id =>
             {
-                Object @object = _figures[id];
                 bool successfully = false;
 
-                if (@object.DrawableObject is not null &&
+                if (_figures.TryGetValue(id, out Object? @object) &&
+                    @object.DrawableObject is not null &&
                     @object.DrawableObject.Figure is not null)
                 {
                     successfully = @object.DrawableObject.Figure.InArea(rect, -10);
@@ -292,8 +294,9 @@ namespace Logic.ViewModels
 
         protected override bool OnDraw(IGraphics graphics)
         {
-            foreach (int id in _sortedFigures)
+            for (int i = _sortedFigures.Count - 1; i >= 0; i--)
             {
+                int id = _sortedFigures[i];
                 if (_figures.TryGetValue(id, out Object? @object) &&
                     @object.DrawableObject is not null &&
                     @object.DrawableObject.Figure is not null &&
