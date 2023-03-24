@@ -591,9 +591,10 @@ namespace GUI_WPF
         private void Open_Button(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "��������(*.json; *.svg)|*.json;*.svg";
+            openFileDialog.Filter = "(*.json; *.svg)|*.json;*.svg";
             if (openFileDialog.ShowDialog() == true)
                 _vm.Load.Execute(openFileDialog.OpenFile()).Subscribe();
+            OnPropertyChanged("SelectedFigure");
         }
         private void Save_Button(object sender, RoutedEventArgs e)
         {
