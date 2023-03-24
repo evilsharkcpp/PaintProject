@@ -36,6 +36,11 @@ namespace DataStructures.Geometry
         }
 
 
+        public static Point2d operator +(Point2d a, Point2d b)
+        {
+            return new Point2d(a.X + b.X, a.Y + b.Y);
+        }
+
         public static Point2d operator +(Point2d a, Vector2d b)
         {
             return new Point2d(a.X + b.X, a.Y + b.Y);
@@ -59,6 +64,21 @@ namespace DataStructures.Geometry
         public static Vector2d operator-(Vector2 a, Point2d b)
         {
             return new Vector2d(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static Point2d operator *(double a, Point2d b)
+        {
+            return new Vector2d(a * b._x, a * b._y);
+        }
+
+        public static Point2d operator *(Point2d a, double b)
+        {
+            return new Vector2d(b * a._x, b * a._y);
+        }
+
+        public static Point2d operator /(Point2d a, double b)
+        {
+            return new Vector2d(a._x / b, a._y / b);
         }
 
         public static Point2d operator +(Point2d a)
