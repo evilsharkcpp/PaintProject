@@ -104,6 +104,13 @@ namespace Geometry.Figures
             return IsInside(v, eps / Math.Max(Size.X, Size.Y));
         }
 
+        public bool OnBound(Vector2 p, float eps)
+        {
+            Point2d v = new Point2d();
+            _transform.ApplyInv((Point2d)p, ref v);
+            return OnBound(v, eps / Math.Max(Size.X, Size.Y));
+        }
+
         public bool InArea(Rect rect, float eps)
         {
             Point2d p1 = new Point2d(), p2 = new Point2d();
@@ -142,6 +149,7 @@ namespace Geometry.Figures
 
         protected abstract void OnDraw(IGraphics graphics);
         protected abstract bool IsInside(Point2d p, double eps);
+        protected abstract bool OnBound(Point2d p, double eps);
         protected abstract bool InArea(Rect rect, double eps);
 
         protected abstract Path ToPath();

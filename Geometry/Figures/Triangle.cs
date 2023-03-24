@@ -65,6 +65,11 @@ namespace Geometry.Figures
             return (q1 <= eps && q2 <= eps && q3 <= eps);
         }
 
+        protected override bool OnBound(Point2d p, double eps)
+        {
+            return false;
+        }
+
         protected override bool InArea(Rect rect, double eps)
         {
             throw new NotImplementedException();
