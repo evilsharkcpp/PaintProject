@@ -28,7 +28,7 @@ namespace DataStructures.ConvertibleFigures
             Width = Math.Abs(point1.X - point3.X);
             Height = Math.Abs(point2.Y - point1.Y);
 
-            position = new Point2d(point1.X, point2.Y);
+            position = new Point2d(point1.X, point1.Y);
         }
 
     }

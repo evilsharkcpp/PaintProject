@@ -22,7 +22,7 @@ namespace IO
     {
         public SvgDocument getSvgDocument(IEnumerable<IDrawableObject> figures)
         {
-            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
+            SvgDocument svg_doc = new SvgDocument { Width = 1500, Height = 1500 };
 
             List<(ConvertibleFigure, IDrawable)> c_Figures = new IFigureConverter().getConvertibleFigureList(figures);
 
@@ -313,6 +313,10 @@ namespace IO
             if (!drawable.IsNoFill)
             {
                 svg_elem.Fill = cc.getSvgColor(drawable.FillColor);
+            }
+            else
+            {
+                svg_elem.Fill = new SvgColourServer(Color.FromArgb(0,0,0,0));
             }
 
             if (!drawable.IsNoOutLine)
