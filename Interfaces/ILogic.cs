@@ -23,6 +23,7 @@ namespace Interfaces
 
         ReactiveCommand<Unit, IEnumerable<(string CommandName, ReactiveCommand<Point2d, bool> Command)>> GetContextCommands { get; }
 
+        public ReactiveCommand<Unit, bool> Clear { get; }
         ReactiveCommand<Stream, bool> Save { get; }
         ReactiveCommand<Stream, bool> Load { get; }
 

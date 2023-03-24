@@ -17,21 +17,24 @@ namespace IO
 
             if (svg_elem.Fill != null)
             {
-                drawable.IsNoFill = true;
-                drawable.FillColor = new ColorConverter().getColor((SvgColourServer)svg_elem.Fill.Color);
+                if (svg_elem.Fill != new SvgColourServer(System.Drawing.Color.FromArgb(0, 0, 0, 0)))
+                {
+                    drawable.IsNoFill = true;
+                    drawable.FillColor = new ColorConverter().getColor((SvgColourServer)svg_elem.Fill.Color);
+                }
             }
             else
-                drawable.IsNoFill = false;
+                drawable.IsNoFill = true;
 
             if (svg_elem.Stroke != null)
             {
-                drawable.IsNoOutLine = true;
+                drawable.IsNoOutLine = false;
                 drawable.OutLineColor = new ColorConverter().getColor((SvgColourServer)svg_elem.Stroke.Color);
                 drawable.OutLineThickness = svg_elem.Stroke.StrokeWidth;
 
             }
             else
-                drawable.IsNoOutLine = false;
+                drawable.IsNoOutLine = true;
 
             return drawable;
         }

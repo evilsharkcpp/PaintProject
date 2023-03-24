@@ -33,7 +33,7 @@ namespace Logic.ViewModels
 
         public ReactiveCommand<Stream, bool> Save { get; }
         public ReactiveCommand<Stream, bool> Load { get; }
-
+        public ReactiveCommand<Unit, bool> Clear { get; }
         public ReactiveCommand<Unit, bool> Undo { get; }
         public ReactiveCommand<Unit, bool> Redo { get; }
 
@@ -58,6 +58,8 @@ namespace Logic.ViewModels
             Redo = ReactiveCommand.Create<Unit, bool>(a => OnRedo());
 
             Draw = ReactiveCommand.Create<IGraphics, bool>(a => OnDraw(a));
+
+            Clear = ReactiveCommand.Create<Unit, bool>(a => OnClear());
         }
 
 
@@ -79,6 +81,8 @@ namespace Logic.ViewModels
         protected abstract bool OnSave(Stream a);
 
         protected abstract bool OnLoad(Stream a);
+
+        protected abstract bool OnClear();
 
         protected abstract bool OnUndo();
 

@@ -338,6 +338,24 @@ namespace Logic.ViewModels
                 case ".json":
                     converter = new JSONConverter();
                     break;
+                case ".png":
+                    converter = new PNGConverter();
+                    break;
+                case ".jpeg":
+                case ".jpg":
+                    converter = new JPEGConverter();
+                    break;
+                case ".bmp":
+                    converter = new BMPConverter();
+                    break;
+                case ".gif":
+                    converter = new GIFConverter();
+                    break;
+                case ".tiff":
+                    converter = new TIFFConverter();
+                    break;
+                default:
+                    return false;
             }
             List<IDrawableObject> objects = new List<IDrawableObject>();
             foreach (var item in _figures)
@@ -357,18 +375,26 @@ namespace Logic.ViewModels
                 case ".json":
                     converter = new JSONConverter();
                     break;
+                default:
+                    return false;
             }
             var objects = converter.ReadFile(a);
-            _figures.Clear();
-            _currentId = 0;
-            _selectedFigures.Clear();
+    
+            OnClear();
             foreach(var item in objects)
             {
                 OnAdd(item);
             }
             return true;
         }
-
+        
+        protected override bool OnClear()
+        {
+            _figures.Clear();
+            _currentId = 0;
+            _selectedFigures.Clear();
+            return true;
+        }
         protected override bool OnUndo()
         {
 

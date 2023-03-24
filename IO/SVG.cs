@@ -22,7 +22,7 @@ namespace IO
     {
         public SvgDocument getSvgDocument(IEnumerable<IDrawableObject> figures)
         {
-            SvgDocument svg_doc = new SvgDocument { Width = 500, Height = 500 };
+            SvgDocument svg_doc = new SvgDocument { Width = 1500, Height = 1500 };
 
             List<(ConvertibleFigure, IDrawable)> c_Figures = new IFigureConverter().getConvertibleFigureList(figures);
 
@@ -171,8 +171,8 @@ namespace IO
         public ConvertibleTriangle getTriangle(SvgPolygon svg_polygon)
         {
             Point2d p1 = new Point2d((float)svg_polygon.Points[0], (float)svg_polygon.Points[1]);
-            Point2d p2 = new Point2d((float)svg_polygon.Points[3], (float)svg_polygon.Points[4]);
-            Point2d p3 = new Point2d((float)svg_polygon.Points[5], (float)svg_polygon.Points[6]);
+            Point2d p2 = new Point2d((float)svg_polygon.Points[2], (float)svg_polygon.Points[3]);
+            Point2d p3 = new Point2d((float)svg_polygon.Points[4], (float)svg_polygon.Points[5]);
 
             double angle = new TranformsConverter().getAngle(svg_polygon);
 
@@ -298,7 +298,8 @@ namespace IO
                 {
                     new SvgUnit((float)x1), new SvgUnit((float)y1),
                     new SvgUnit((float)x2), new SvgUnit((float)y2),
-                    new SvgUnit((float)x3), new SvgUnit((float)y3)
+                    new SvgUnit((float)x3), new SvgUnit((float)y3),
+                    new SvgUnit((float)x1), new SvgUnit((float)y1)
                 },
 
                 Transforms = new TranformsConverter().getSvgTransforms(c_triangle),
@@ -313,6 +314,10 @@ namespace IO
             if (!drawable.IsNoFill)
             {
                 svg_elem.Fill = cc.getSvgColor(drawable.FillColor);
+            }
+            else
+            {
+                svg_elem.Fill = new SvgColourServer(Color.FromArgb(0,0,0,0));
             }
 
             if (!drawable.IsNoOutLine)
