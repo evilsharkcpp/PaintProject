@@ -123,8 +123,9 @@ namespace Geometry.Figures
             Point2d p1 = new Point2d(), p2 = new Point2d();
             _transform.ApplyInv(rect.Start, ref p1);
             _transform.ApplyInv(rect.End, ref p2);
-            return p1.X <= -1 - eps && p1.Y <= -1 - eps &&
-                   p2.X >= 1 + eps && p2.Y >= 1 + eps;
+            double eps_ = eps / Math.Max(Size.X, Size.Y);
+            return p1.X <= -1 - eps_ && p1.Y <= -1 - eps_ &&
+                   p2.X >= 1 + eps_ && p2.Y >= 1 + eps_;
         }
 
         public bool HasIntersection(IFigure figure)

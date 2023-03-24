@@ -142,16 +142,20 @@ namespace Logic.Utils
                              .Subscribe(size => UpdateBound(f)),
                             f.WhenAnyValue(f => f.Angle)
                              .Subscribe(angle => UpdateBound(f))
-                    };
-               }
-               else
-               {
-                  return Array.Empty<IDisposable>();
-               }
-            });
-            _subscriptions.GetEnumerator().MoveNext();
-         }
-      }
+                        };
+                    }
+                    else
+                    {
+                        return Array.Empty<IDisposable>();
+                    }
+                });
+
+                foreach (var i in _subscriptions)
+                {
+
+                }
+            }
+        }
 
 
       public FigureBound()
@@ -337,13 +341,19 @@ namespace Logic.Utils
                size.Y = -size_.Y;
             }
 
-            Position = position - new Point2d(Padding, Padding);
-            Size = size + new Vector2d(2 * Padding, 2 * Padding);
-         }
-         else
-         {
-            Point2d position = new Point2d();
-            Vector2d size = new Vector2d();
+                size.X = Max(Size.X, position.X - Position.X + size.X + 2 * Padding);
+                size.Y = Max(Size.Y, position.Y - Position.Y + size.Y + 2 * Padding);
+
+                position.X = Min(Position.X, position.X - Padding);
+                position.Y = Min(Position.Y, position.Y - Padding);
+
+                Position = position;
+                Size = size;
+            }
+            else
+            {
+                Point2d position = new Point2d();
+                Vector2d size = new Vector2d();
 
             if (figure.Size.X > 0)
             {
