@@ -28,7 +28,7 @@ namespace Geometry.Figures
 
         public override ConvertibleFigure ToConvertibleFigure()
         {
-            Point2d center = new Point2d(Position.X + Size.X / 2, Position.Y + Size.Y / 2);
+            Point2d center = new Point2d(Position.X + Size.X / 2, Position.Y - Size.Y / 2);
 
             return new ConvertibleCircle(center, Size.X / 2, Angle);
         }

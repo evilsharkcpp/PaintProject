@@ -25,7 +25,7 @@ namespace DataStructures.ConvertibleFigures
             Width = width;
             Height = height;
 
-            position = point1;
+            position = new Point2d(point1.X, point1.Y - Height);
         }
     }
 }

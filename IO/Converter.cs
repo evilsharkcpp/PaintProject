@@ -133,8 +133,11 @@ namespace IO
                             // Еcли cтороны равны - получим квадрат
                             ConvertibleSquare square = svg_convert.getSquare(svg_rect);
 
-                            if (svg_rect.Fill != null)
+                            if (svg_rect.Fill != null && svg_elem.FillOpacity != 0)
+                            {
                                 square.IsFilled = true;
+                            }
+                                
 
 
                             drawable = new DrawableConverter().getDrawable(svg_rect);
@@ -146,7 +149,10 @@ namespace IO
                             // Еcли cтороны разные - получим прямоугольник
                             ConvertibleRectangle rectangle = svg_convert.getRectangle(svg_rect);
 
-                            if (svg_rect.Fill != null)
+                            var wer = svg_elem.Fill;
+                            var black_fill = new SvgColourServer().Colour;
+
+                            if (svg_rect.Fill != null && svg_elem.FillOpacity != 0)
                                 rectangle.IsFilled = true;
 
                             drawable = new DrawableConverter().getDrawable(svg_rect);
@@ -161,9 +167,15 @@ namespace IO
                         // Проверка чиcла точек
                         if (svg_polygon.Points.Count() == 8)
                         {
+                            var p_height = Math.Abs(svg_polygon.Points[3] - svg_polygon.Points[1]);
+                            svg_polygon.Points[1] -= p_height;
+                            svg_polygon.Points[3] -= p_height;
+                            svg_polygon.Points[5] -= p_height;
+
                             ConvertibleTriangle triangle = svg_convert.getTriangle(svg_polygon);
 
-                            if (svg_polygon.Fill != null)
+
+                            if (svg_polygon.Fill != null && svg_elem.FillOpacity != 0)
                                 triangle.IsFilled = true;
 
                             drawable = new DrawableConverter().getDrawable(svg_polygon);
@@ -184,9 +196,10 @@ namespace IO
                     case SvgCircle:
                         SvgCircle? svg_circle = svg_elem as SvgCircle;
 
+                        svg_circle.CenterY = svg_circle.CenterY - svg_circle.Radius * 2;
                         ConvertibleCircle circle = svg_convert.getCircle(svg_circle);
 
-                        if (svg_circle.Fill != null)
+                        if (svg_circle.Fill != null && svg_elem.FillOpacity != 0)
                             circle.IsFilled = true;
 
                         drawable = new DrawableConverter().getDrawable(svg_circle);
@@ -195,9 +208,11 @@ namespace IO
 
                     case SvgEllipse:
                         SvgEllipse? svg_ellipse = svg_elem as SvgEllipse;
+                        svg_ellipse.CenterY = svg_ellipse.CenterY - svg_ellipse.RadiusY * 2;
+
                         ConvertibleEllipse ellips = svg_convert.getEllipse(svg_ellipse);
 
-                        if (svg_ellipse.Fill != null)
+                        if (svg_ellipse.Fill != null && svg_elem.FillOpacity != 0)
                             ellips.IsFilled = true;
 
                         drawable = new DrawableConverter().getDrawable(svg_ellipse);

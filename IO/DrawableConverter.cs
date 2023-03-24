@@ -24,17 +24,17 @@ namespace IO
                 }
             }
             else
-                drawable.IsNoFill = false;
+                drawable.IsNoFill = true;
 
             if (svg_elem.Stroke != null)
             {
-                drawable.IsNoOutLine = true;
+                drawable.IsNoOutLine = false;
                 drawable.OutLineColor = new ColorConverter().getColor((SvgColourServer)svg_elem.Stroke.Color);
                 drawable.OutLineThickness = svg_elem.Stroke.StrokeWidth;
 
             }
             else
-                drawable.IsNoOutLine = false;
+                drawable.IsNoOutLine = true;
 
             return drawable;
         }
