@@ -336,7 +336,7 @@ namespace GUI_WPF
                   startFigureSize = SelectedFigure.Figure.Size;
                   startFigurePosition = SelectedFigure.Figure.Position;
                   // ��������� �� �������
-                  if (_vm.FigureBound.OnBound(new Point2d(mouseDownPoint.X, mouseDownPoint.Y), 5f, out direction))
+                  if (_vm.FigureBound.OnBound(new Point2d(mouseDownPoint.X, mouseDownPoint.Y), 10f, out direction))
                   {
                      state = MoveState.RESIZING_FIGURE;
                      tmpPoint = point;
@@ -441,7 +441,7 @@ namespace GUI_WPF
          {
             var point = e.GetPosition(canvas);
             _vm.SelectFigures.Execute(new DataStructures.Geometry.Rect(new Point2d(mouseDownPoint.X, mouseDownPoint.Y), new Point2d(point.X, point.Y))).Subscribe();
-            _ = SelectedFigure;
+            //_ = SelectedFigure;
             OnPropertyChanged("SelectedFigure");
             selectedFiguresStartMovePosition.Clear();
             foreach (var selectedFigureId in _vm.SelectedFigures)
@@ -456,7 +456,8 @@ namespace GUI_WPF
             state = MoveState.SELECT;
             //bound.setNone();
             Cursor = Cursors.Arrow;
-           // _vm.SelectFigure.Execute(new DataStructures.Geometry.Point2d(e.GetPosition(canvas).X, e.GetPosition(canvas).Y)).Subscribe();
+            OnPropertyChanged("SelectedFigure");
+            //_vm.SelectFigure.Execute(new DataStructures.Geometry.Point2d(e.GetPosition(canvas).X, e.GetPosition(canvas).Y)).Subscribe();
          }
       }
 

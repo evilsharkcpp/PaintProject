@@ -72,13 +72,13 @@ namespace Logic.ViewModels
         {
             ResetSelect();
 
-            _figures.Add(_currentId, new Object() { DrawableObject = figure, IsSelected = true });
+            _figures.Add(_currentId, new Object() { DrawableObject = figure, IsSelected = false });
             _sortedFigures.Insert(0, _currentId++);
 
             _selectedFigure = _currentId - 1;
             _selectedFigures.Clear();
             _selectedFigures.Add(_selectedFigure);
-
+            _figureBound.Figures = _selectedFigures.Select(id => _figures[id].DrawableObject?.Figure);
             return _currentId - 1;
         }
 
