@@ -69,6 +69,8 @@ namespace Geometry.Figures
             }
         }
 
+        public Matrix3d ModelMatrix => _transform.Matrix;
+
 
         public Figure()
         {
