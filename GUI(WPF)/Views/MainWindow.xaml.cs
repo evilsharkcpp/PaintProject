@@ -13,6 +13,7 @@ using DataStructures.Geometry;
 using System.Windows.Media;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using ReactiveUI;
 
 namespace GUI_WPF
 {
@@ -519,11 +520,49 @@ namespace GUI_WPF
                 _vm.RemoveFigure.Execute(_vm.SelectedFigures.Last()).Subscribe();
         }
 
-        private void canvas_MouseLeave(object sender, MouseEventArgs e)
-        {
-            state = MoveState.SELECT;
-            this.Cursor = Cursors.Arrow;
-        }
+      private void canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+      {
+         if (SelectedFigure != null)
+         {
+            ContextMenu context = new ContextMenu();
+            canvas.ContextMenu = context;
+            IEnumerable<(string, ReactiveCommand<Point2d, bool>)> parameters = null;
+            _vm.GetContextCommands.Execute().Subscribe(a => parameters = a);
+            context.Items.Clear();
+            foreach (var p in parameters)
+            {
+               MenuItem mi = new MenuItem();
+               mi.Header = p.Item1;
+               mi.Click += MenuItem_Click;
+               context.Items.Add(mi);
+            }
+         }
+      }
+
+      private void MenuItem_Click(object sender, RoutedEventArgs e)
+      {
+         if (SelectedFigure != null)
+         {
+            var mi = sender as MenuItem;
+            IEnumerable<(string, ReactiveCommand<Point2d, bool>)> parameters = null;
+            _vm.GetContextCommands.Execute().Subscribe(a => parameters = a);
+            foreach (var p in parameters)
+            {
+               if (mi.Header.ToString() == p.Item1)
+               {
+                  p.Item2.Execute().Subscribe();
+                  break;
+               }
+            }
+            canvas.ContextMenu = null;
+         }
+      }
+
+      private void canvas_MouseLeave(object sender, MouseEventArgs e)
+      {
+         state = MoveState.SELECT;
+         this.Cursor = Cursors.Arrow;
+      }
 
         private void Create_Button(object sender, RoutedEventArgs e)
         {
